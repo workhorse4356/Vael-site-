@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vael Galerie — Admin</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg:#0f0f0f;--s1:#1a1a1a;--s2:#222;--s3:#2a2a2a;--bd:#333;--bd2:#444;--tx:#e8e4de;--tx2:#9a9690;--tx3:#666;--ac:#c0392b;--gold:#b8975a;--green:#2ecc71;--blue:#3498db;--orange:#e67e22;}
+body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--tx);font-size:13px;min-height:100vh;}
+
+/* LOGIN */
+#loginScreen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:linear-gradient(135deg,#0f0f0f,#1a1200);}
+.lbox{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:48px 44px;width:380px;text-align:center;}
+.lsym{font-family:'Cormorant Garamond',serif;font-size:48px;color:var(--gold);line-height:1;}
+.lname{font-size:12px;font-weight:700;letter-spacing:.45em;margin-top:4px;}
+.lsub{font-size:9px;letter-spacing:.3em;color:var(--tx3);margin-bottom:32px;}
+.ltitle{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:300;margin-bottom:6px;}
+.ldesc{font-size:11px;color:var(--tx3);margin-bottom:28px;}
+.lfield{margin-bottom:16px;text-align:left;}
+.lfield label{display:block;font-size:9px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--tx3);margin-bottom:6px;}
+.lfield input{width:100%;background:var(--s2);border:1px solid var(--bd);border-radius:4px;padding:11px 14px;color:var(--tx);font-family:'Montserrat',sans-serif;font-size:12px;outline:none;transition:border-color .15s;}
+.lfield input:focus{border-color:var(--gold);}
+.lbtn{width:100%;padding:13px;background:var(--gold);color:#111;font-size:10px;font-weight:700;letter-spacing:.25em;text-transform:uppercase;border:none;border-radius:4px;cursor:pointer;margin-top:8px;font-family:'Montserrat',sans-serif;transition:opacity .2s;}
+.lbtn:hover{opacity:.85;} .lbtn:disabled{opacity:.5;cursor:not-allowed;}
+.lerr{color:var(--ac);font-size:11px;margin-top:10px;min-height:18px;}
+
+/* SHELL */
+#app{display:none;} .wrap{display:flex;}
+
+/* SIDEBAR */
+.sidebar{width:230px;flex-shrink:0;background:var(--s1);border-right:1px solid var(--bd);display:flex;flex-direction:column;position:fixed;top:0;bottom:0;left:0;z-index:100;overflow-y:auto;}
+.slogo{padding:20px 18px 16px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:10px;}
+.slogo .sym{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--gold);}
+.slogo .nm{font-size:11px;font-weight:700;letter-spacing:.3em;}
+.slogo .badge{font-size:8px;font-weight:600;background:var(--ac);color:#fff;padding:2px 7px;border-radius:2px;margin-left:auto;}
+.nsec{padding:12px 0 4px 20px;font-size:8px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--tx3);}
+.snav{list-style:none;padding:0 8px;margin-bottom:6px;}
+.snav li a{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:4px;font-size:11px;font-weight:500;color:var(--tx2);cursor:pointer;transition:all .15s;}
+.snav li a:hover{background:var(--s3);color:var(--tx);}
+.snav li a.active{background:var(--s3);color:var(--tx);border-left:2px solid var(--gold);}
+.ico{width:16px;text-align:center;font-size:13px;}
+.sbot{margin-top:auto;padding:14px;border-top:1px solid var(--bd);}
+.semail{font-size:10px;color:var(--tx3);margin-bottom:10px;word-break:break-all;}
+.lout{width:100%;padding:8px;background:var(--s3);border:1px solid var(--bd);color:var(--tx2);font-size:9px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;border-radius:3px;font-family:'Montserrat',sans-serif;transition:all .2s;}
+.lout:hover{background:var(--ac);color:#fff;border-color:var(--ac);}
+
+/* MAIN */
+.main{margin-left:230px;flex:1;display:flex;flex-direction:column;min-width:0;}
+.topbar{background:var(--s1);border-bottom:1px solid var(--bd);padding:0 28px;height:58px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
+.topbar-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;}
+.topbar-right{display:flex;gap:8px;}
+.btn{padding:7px 16px;font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;border:none;cursor:pointer;font-family:'Montserrat',sans-serif;border-radius:3px;transition:all .15s;}
+.btn-p{background:var(--ac);color:#fff;} .btn-p:hover{background:#a93226;}
+.btn-s{background:var(--s3);color:var(--tx);border:1px solid var(--bd2);} .btn-s:hover{background:var(--bd2);}
+.btn-g{background:var(--green);color:#111;}
+.btn-sm{padding:5px 10px;font-size:9px;}
+.content{padding:24px 28px;flex:1;}
+.panel{display:none;} .panel.active{display:block;}
+
+/* STAT CARDS */
+.stats{display:grid;gap:12px;margin-bottom:20px;}
+.stats.c4{grid-template-columns:repeat(4,1fr);}
+.stats.c5{grid-template-columns:repeat(5,1fr);}
+.scard{background:var(--s1);border:1px solid var(--bd);border-radius:6px;padding:16px 18px;border-left:3px solid var(--gold);}
+.scard.r{border-left-color:var(--ac);} .scard.g{border-left-color:var(--green);}
+.scard.b{border-left-color:var(--blue);} .scard.o{border-left-color:var(--orange);}
+.slabel{font-size:8px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--tx3);margin-bottom:5px;}
+.sval{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:300;line-height:1;}
+.ssub{font-size:9px;color:var(--tx3);margin-top:3px;}
+
+/* CARD */
+.card{background:var(--s1);border:1px solid var(--bd);border-radius:6px;overflow:hidden;margin-bottom:14px;}
+.card-h{padding:12px 18px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;}
+.card-h h3{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--tx2);}
+.card-b{padding:18px;}
+.dgrid{display:grid;grid-template-columns:1fr 280px;gap:14px;}
+
+/* TABLE */
+.ttool{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-bottom:1px solid var(--bd);}
+.sbox{display:flex;align-items:center;gap:7px;background:var(--s2);border:1px solid var(--bd);border-radius:4px;padding:6px 11px;}
+.sbox input{background:none;border:none;outline:none;color:var(--tx);font-family:'Montserrat',sans-serif;font-size:12px;width:190px;}
+.sbox input::placeholder{color:var(--tx3);}
+.twrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;}
+thead th{text-align:left;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--tx3);padding:9px 13px;border-bottom:1px solid var(--bd);background:var(--s2);white-space:nowrap;}
+tbody tr{border-bottom:1px solid var(--bd);transition:background .1s;}
+tbody tr:hover{background:var(--s2);}
+tbody td{padding:10px 13px;font-size:12px;vertical-align:middle;}
+.thumb{width:42px;height:42px;object-fit:cover;border-radius:3px;border:1px solid var(--bd);}
+.tph{width:42px;height:42px;background:var(--s3);border-radius:3px;}
+.bx{display:inline-block;font-size:8px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:2px 7px;border-radius:2px;}
+.bx-new{background:rgba(184,151,90,.15);color:var(--gold);}
+.bx-feat{background:rgba(52,152,219,.15);color:var(--blue);}
+.bx-sold{background:rgba(102,102,102,.2);color:var(--tx3);}
+.bx-on{background:rgba(46,204,113,.15);color:var(--green);}
+.bx-avail{background:rgba(46,204,113,.15);color:var(--green);}
+.bx-upcoming{background:rgba(184,151,90,.15);color:var(--gold);}
+.bx-past{background:rgba(102,102,102,.2);color:var(--tx3);}
+.bx-pending{background:rgba(230,126,34,.15);color:var(--orange);}
+.bx-confirmed{background:rgba(52,152,219,.15);color:var(--blue);}
+.bx-shipped{background:rgba(184,151,90,.15);color:var(--gold);}
+.bx-delivered{background:rgba(46,204,113,.15);color:var(--green);}
+.bx-cancelled,.bx-refunded{background:rgba(192,57,43,.15);color:var(--ac);}
+.ra{display:flex;gap:5px;}
+.ib{width:27px;height:27px;border-radius:3px;border:1px solid var(--bd);background:var(--s3);color:var(--tx2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;transition:all .15s;}
+.ib:hover{background:var(--bd2);color:var(--tx);}
+.ib.del:hover{background:rgba(192,57,43,.2);color:var(--ac);border-color:var(--ac);}
+
+/* STOCK BAR */
+.sbar-wrap{display:flex;align-items:center;gap:7px;}
+.sbar{flex:1;height:5px;background:var(--bd);border-radius:3px;overflow:hidden;min-width:50px;}
+.sbar-fill{height:100%;border-radius:3px;}
+
+/* MODAL */
+.mo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:500;align-items:center;justify-content:center;}
+.mo.open{display:flex;}
+.mbox{background:var(--s1);border:1px solid var(--bd);border-radius:8px;width:620px;max-width:95vw;max-height:92vh;overflow-y:auto;}
+.mhdr{padding:18px 22px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--s1);z-index:1;}
+.mhdr h2{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;}
+.mcl{background:none;border:none;color:var(--tx2);font-size:20px;cursor:pointer;}
+.mbody{padding:22px;}
+.mfoot{padding:13px 22px;border-top:1px solid var(--bd);display:flex;justify-content:flex-end;gap:8px;position:sticky;bottom:0;background:var(--s1);}
+
+/* FORMS */
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.fg.c1{grid-template-columns:1fr;}
+.f{display:flex;flex-direction:column;gap:5px;}
+.f.full{grid-column:1/-1;}
+.f label{font-size:9px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--tx3);}
+.f input,.f select,.f textarea{background:var(--s2);border:1px solid var(--bd);border-radius:4px;padding:8px 11px;color:var(--tx);font-family:'Montserrat',sans-serif;font-size:12px;outline:none;transition:border-color .15s;width:100%;}
+.f input:focus,.f select:focus,.f textarea:focus{border-color:var(--gold);}
+.f textarea{height:76px;resize:vertical;}
+.f select option{background:var(--s2);}
+.ipreview{width:100%;height:140px;object-fit:cover;border-radius:4px;border:1px solid var(--bd);margin-top:6px;}
+.uzone{width:100%;margin-top:6px;border:2px dashed var(--bd);border-radius:4px;padding:16px;text-align:center;cursor:pointer;transition:all .15s;}
+.uzone:hover,.uzone.drag{border-color:var(--gold);background:rgba(184,151,90,.05);}
+.uzone input[type=file]{display:none;}
+.uzone p{font-size:10px;color:var(--tx3);}
+.uzone strong{color:var(--gold);}
+.itabs{display:flex;gap:2px;margin-bottom:5px;}
+.itab{flex:1;padding:5px;font-size:9px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;background:var(--s3);border:1px solid var(--bd);color:var(--tx3);cursor:pointer;transition:all .15s;text-align:center;border-radius:2px;}
+.itab.on{background:var(--gold);color:#1a1a1a;border-color:var(--gold);}
+.itab-p{display:none;} .itab-p.on{display:block;}
+.trow{display:flex;align-items:center;gap:8px;margin-top:6px;}
+.tog{width:34px;height:18px;background:var(--bd);border-radius:9px;position:relative;cursor:pointer;transition:background .2s;flex-shrink:0;}
+.tog.on{background:var(--green);}
+.tog::after{content:'';position:absolute;width:14px;height:14px;background:#fff;border-radius:50%;top:2px;left:2px;transition:left .2s;}
+.tog.on::after{left:18px;}
+.tlab{font-size:11px;color:var(--tx2);}
+
+/* DESIGN */
+.dsecs{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.dc{background:var(--s1);border:1px solid var(--bd);border-radius:6px;overflow:hidden;}
+.dch{padding:12px 16px;border-bottom:1px solid var(--bd);font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--tx2);}
+.dcb{padding:16px;}
+.crow{display:flex;gap:14px;flex-wrap:wrap;}
+.csw{display:flex;flex-direction:column;align-items:center;gap:4px;}
+.csw input[type=color]{width:42px;height:42px;border:2px solid var(--bd);border-radius:4px;cursor:pointer;padding:2px;}
+.csw label{font-size:9px;color:var(--tx3);}
+
+/* STB */
+.stb{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.stb h2{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;}
+
+/* TOAST */
+.toast{position:fixed;bottom:22px;right:22px;padding:11px 18px;border-radius:6px;font-size:11px;font-weight:600;letter-spacing:.1em;z-index:999;transform:translateY(80px);opacity:0;transition:all .3s;}
+.toast.show{transform:translateY(0);opacity:1;}
+.tok{background:var(--green);color:#111;} .terr{background:var(--ac);color:#fff;} .tinfo{background:var(--blue);color:#fff;}
+.loading{text-align:center;padding:36px;color:var(--tx3);font-size:12px;letter-spacing:.1em;}
+.empty{text-align:center;padding:28px;color:var(--tx3);}
+
+/* QUICK LINKS */
+.ql{display:flex;flex-direction:column;gap:6px;}
+.ql-item{display:flex;align-items:center;gap:9px;padding:8px 11px;background:var(--s2);border-radius:4px;cursor:pointer;border:1px solid var(--bd);transition:background .15s;font-size:11px;}
+.ql-item:hover{background:var(--s3);}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="lbox">
+    <div class="lsym">⌗</div>
+    <div class="lname">VAEL</div>
+    <div class="lsub">GALERIE · ADMIN</div>
+    <div class="ltitle">Admin Access</div>
+    <div class="ldesc">Sign in to manage your gallery</div>
+    <div class="lfield"><label>Email</label><input id="lemail" type="email" placeholder="admin@vaelgalerie.store" autocomplete="email"></div>
+    <div class="lfield"><label>Password</label><input id="lpass" type="password" placeholder="••••••••" autocomplete="current-password"></div>
+    <button class="lbtn" id="lbtn" onclick="doLogin()">Sign In</button>
+    <div class="lerr" id="lerr"></div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+<div class="wrap">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="slogo"><span class="sym">⌗</span><span class="nm">VAEL</span><span class="badge">CMS</span></div>
+  <p class="nsec">Overview</p>
+  <ul class="snav">
+    <li><a class="active" onclick="go('dashboard')" data-p="dashboard"><span class="ico">◈</span>Dashboard</a></li>
+    <li><a onclick="go('orders')" data-p="orders"><span class="ico">📦</span>Orders</a></li>
+    <li><a onclick="go('inventory')" data-p="inventory"><span class="ico">📊</span>Inventory</a></li>
+    <li><a onclick="go('revenue')" data-p="revenue"><span class="ico">₹</span>Revenue</a></li>
+  </ul>
+  <p class="nsec">Content</p>
+  <ul class="snav">
+    <li><a onclick="go('artworks')" data-p="artworks"><span class="ico">🖼</span>Artworks</a></li>
+    <li><a onclick="go('artists')" data-p="artists"><span class="ico">👤</span>Artists</a></li>
+    <li><a onclick="go('exhibitions')" data-p="exhibitions"><span class="ico">🏛</span>Exhibitions</a></li>
+    <li><a onclick="go('blog')" data-p="blog"><span class="ico">✍</span>Blog</a></li>
+    <li><a onclick="go('news')" data-p="news"><span class="ico">📰</span>News</a></li>
+  </ul>
+  <p class="nsec">Appearance</p>
+  <ul class="snav">
+    <li><a onclick="go('design')" data-p="design"><span class="ico">🎨</span>Design</a></li>
+    <li><a onclick="go('hero')" data-p="hero"><span class="ico">✦</span>Hero</a></li>
+    <li><a onclick="go('ticker')" data-p="ticker"><span class="ico">↔</span>Ticker</a></li>
+    <li><a onclick="go('settings')" data-p="settings"><span class="ico">⚙</span>Settings</a></li>
+  </ul>
+  <div class="sbot">
+    <div class="semail" id="admemail"></div>
+    <button class="lout" onclick="doLogout()">Sign Out</button>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+  <div class="topbar">
+    <span class="topbar-title" id="ptitle">Dashboard</span>
+    <div class="topbar-right">
+      <a href="https://vaelgalerie.store" target="_blank" class="btn btn-s btn-sm">↗ Live Site</a>
+      <button class="btn btn-p btn-sm" onclick="topSave()">Save Changes</button>
+    </div>
+  </div>
+  <div class="content">
+
+    <!-- DASHBOARD -->
+    <div class="panel active" id="panel-dashboard">
+      <div class="stats c5" id="dstats">
+        <div class="scard"><div class="slabel">Total Artworks</div><div class="sval" id="ds-art">—</div></div>
+        <div class="scard g"><div class="slabel">Available</div><div class="sval" id="ds-av">—</div></div>
+        <div class="scard r"><div class="slabel">Sold Out</div><div class="sval" id="ds-so">—</div></div>
+        <div class="scard o"><div class="slabel">Pending Orders</div><div class="sval" id="ds-po">—</div></div>
+        <div class="scard b"><div class="slabel">Total Revenue</div><div class="sval" id="ds-rev">—</div><div class="ssub">confirmed+delivered</div></div>
+      </div>
+      <div class="dgrid">
+        <div class="card">
+          <div class="card-h"><h3>Recent Orders</h3><button class="btn btn-s btn-sm" onclick="go('orders')">All →</button></div>
+          <div class="twrap"><table>
+            <thead><tr><th>Order</th><th>Artwork</th><th>Buyer</th><th>Amount</th><th>Status</th></tr></thead>
+            <tbody id="d-orders"><tr><td colspan="5" class="loading">Loading…</td></tr></tbody>
+          </table></div>
+        </div>
+        <div>
+          <div class="card" style="margin-bottom:12px;">
+            <div class="card-h"><h3>Collected Revenue</h3></div>
+            <div class="card-b">
+              <div style="font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;color:var(--green);" id="d-coll">—</div>
+              <div style="font-size:10px;color:var(--tx3);margin-top:4px;">delivered orders only</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-h"><h3>Quick Actions</h3></div>
+            <div class="card-b">
+              <div class="ql">
+                <div class="ql-item" onclick="openAdd('artwork')">➕ Add Artwork</div>
+                <div class="ql-item" onclick="openAdd('artist')">👤 Add Artist</div>
+                <div class="ql-item" onclick="go('orders')">📦 Manage Orders</div>
+                <div class="ql-item" onclick="go('inventory')">📊 View Inventory</div>
+                <div class="ql-item" onclick="go('design')">🎨 Edit Theme</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ORDERS -->
+    <div class="panel" id="panel-orders">
+      <div class="stb"><h2>Orders</h2></div>
+      <div class="stats c4">
+        <div class="scard o"><div class="slabel">Pending</div><div class="sval" id="o-pend">—</div></div>
+        <div class="scard b"><div class="slabel">Confirmed</div><div class="sval" id="o-conf">—</div></div>
+        <div class="scard"><div class="slabel">Shipped</div><div class="sval" id="o-ship">—</div></div>
+        <div class="scard g"><div class="slabel">Delivered</div><div class="sval" id="o-delv">—</div></div>
+      </div>
+      <div class="card">
+        <div class="ttool">
+          <div class="sbox">🔍<input id="osrch" placeholder="Search name, order no, artwork…" oninput="filterOrders()"></div>
+          <select class="btn btn-s btn-sm" id="ostat" onchange="filterOrders()" style="cursor:pointer;">
+            <option value="">All Status</option>
+            <option>pending</option><option>confirmed</option><option>shipped</option>
+            <option>delivered</option><option>cancelled</option><option>refunded</option>
+          </select>
+        </div>
+        <div class="twrap"><table>
+          <thead><tr><th>Order No</th><th>Date</th><th>Artwork</th><th>Buyer</th><th>Qty</th><th>Amount</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="otbody"><tr><td colspan="8" class="loading">Loading…</td></tr></tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- INVENTORY -->
+    <div class="panel" id="panel-inventory">
+      <div class="stb"><h2>Inventory</h2><button class="btn btn-p btn-sm" onclick="go('artworks')">+ Add Artwork</button></div>
+      <div class="card">
+        <div class="twrap"><table>
+          <thead><tr><th>Artwork</th><th>Artist</th><th>Cat</th><th>Price</th><th>Stock</th><th>Sold</th><th>Reserved</th><th>Remaining</th><th>Revenue Gen.</th></tr></thead>
+          <tbody id="invbody"><tr><td colspan="9" class="loading">Loading…</td></tr></tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- REVENUE -->
+    <div class="panel" id="panel-revenue">
+      <div class="stb"><h2>Revenue</h2></div>
+      <div class="stats c4">
+        <div class="scard b"><div class="slabel">Total Billed</div><div class="sval" id="rv-bill">—</div><div class="ssub">confirmed + above</div></div>
+        <div class="scard g"><div class="slabel">Collected</div><div class="sval" id="rv-coll">—</div><div class="ssub">delivered only</div></div>
+        <div class="scard o"><div class="slabel">In Transit</div><div class="sval" id="rv-tran">—</div><div class="ssub">shipped orders</div></div>
+        <div class="scard r"><div class="slabel">Refunded</div><div class="sval" id="rv-ref">—</div></div>
+      </div>
+      <div class="card">
+        <div class="card-h"><h3>Revenue by Artwork</h3></div>
+        <div class="twrap"><table>
+          <thead><tr><th>Artwork</th><th>Artist</th><th>Unit Price</th><th>Stock</th><th>Sold</th><th>Revenue</th><th>% Share</th></tr></thead>
+          <tbody id="rvbody"><tr><td colspan="7" class="loading">Loading…</td></tr></tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- ARTWORKS -->
+    <div class="panel" id="panel-artworks">
+      <div class="stb"><h2>Artworks</h2><button class="btn btn-p" onclick="openAdd('artwork')">+ Add Artwork</button></div>
+      <div class="card">
+        <div class="ttool">
+          <div class="sbox">🔍<input placeholder="Search…" oninput="ftbl(this.value,'awtbody',()=>allAW,'renderAW')"></div>
+          <select class="btn btn-s btn-sm" onchange="filterAWcat(this.value)" style="cursor:pointer;">
+            <option value="">All Categories</option>
+            <option>Painting</option><option>Photography</option><option>Digital</option><option>Mixed Media</option><option>Sculpture</option>
+          </select>
+        </div>
+        <div class="twrap"><table>
+          <thead><tr><th>Image</th><th>Title</th><th>Artist</th><th>Price</th><th>Cat</th><th>Status</th><th>Stock</th><th>Actions</th></tr></thead>
+          <tbody id="awtbody"><tr><td colspan="8" class="loading">Loading…</td></tr></tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- ARTISTS -->
+    <div class="panel" id="panel-artists">
+      <div class="stb"><h2>Artists</h2><button class="btn btn-p" onclick="openAdd('artist')">+ Add Artist</button></div>
+      <div class="card">
+        <div class="ttool"><div class="sbox">🔍<input placeholder="Search…" oninput="ftbl(this.value,'artbody',()=>allAR,'renderAR')"></div></div>
+        <div class="twrap"><table>
+          <thead><tr><th>Photo</th><th>Name</th><th>Nationality</th><th>Works</th><th>Actions</th></tr></thead>
+          <tbody id="artbody"><tr><td colspan="5" class="loading">Loading…</td></tr></tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- EXHIBITIONS -->
+    <div class="panel" id="panel-exhibitions">
+      <div class="stb"><h2>Exhibitions</h2><button class="btn btn-p" onclick="openAdd('exhibition')">+ Add</button></div>
+      <div class="card">
+        <div class="twrap"><table>
+          <thead><tr><th>Image</th><th>Title</th><th>Subtitle</th><th>Dates</th><th>Status</th><th>Featured</th><th>Actions</th></tr></thead>
+          <tbody id="exhbody"><tr><td colspan="7" class="loading">Loading…</td></tr></tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- BLOG -->
+    <div class="panel" id="panel-blog">
+      <div class="stb"><h2>Blog Posts</h2><button class="btn btn-p" onclick="openAdd('blog')">+ Add Post</button></div>
+      <div class="card">
+        <div class="twrap"><table>
+          <thead><tr><th>Image</th><th>Title</th><th>Category</th><th>Author</th><th>Date</th><th>Featured</th><th>Actions</th></tr></thead>
+          <tbody id="blgbody"><tr><td colspan="7" class="loading">Loading…</td></tr></tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- NEWS -->
+    <div class="panel" id="panel-news">
+      <div class="stb"><h2>News</h2><button class="btn btn-p" onclick="openAdd('news')">+ Add News</button></div>
+      <div class="card">
+        <div class="twrap"><table>
+          <thead><tr><th>Image</th><th>Title</th><th>Tag</th><th>Date</th><th>Actions</th></tr></thead>
+          <tbody id="nwsbody"><tr><td colspan="5" class="loading">Loading…</td></tr></tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- DESIGN -->
+    <div class="panel" id="panel-design">
+      <div class="stb"><h2>Design & Theme</h2><button class="btn btn-p" onclick="saveDesign()">Apply & Save</button></div>
+      <div class="dsecs">
+        <div class="dc">
+          <div class="dch">Color Palette</div>
+          <div class="dcb"><div class="crow" id="cpickers"></div></div>
+        </div>
+        <div class="dc">
+          <div class="dch">Logo & Branding</div>
+          <div class="dcb">
+            <div class="fg c1">
+              <div class="f"><label>Gallery Name</label><input id="d-name"></div>
+              <div class="f"><label>Tagline</label><input id="d-tag"></div>
+              <div class="f"><label>Logo Symbol</label><input id="d-sym"></div>
+            </div>
+          </div>
+        </div>
+        <div class="dc">
+          <div class="dch">Layout Options</div>
+          <div class="dcb">
+            <div class="fg c1">
+              <div class="f"><label>Artworks per row</label>
+                <select id="d-cols"><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>
+              </div>
+              <div class="f"><label>Hero Layout</label>
+                <div class="trow"><div class="tog" id="d-full" onclick="this.classList.toggle('on')"></div><span class="tlab">Full-width banner</span></div>
+              </div>
+              <div class="f"><label>Ticker Bar</label>
+                <div class="trow"><div class="tog on" id="d-tick" onclick="this.classList.toggle('on')"></div><span class="tlab">Show on homepage</span></div>
+              </div>
+              <div class="f"><label>Hero Counter</label>
+                <div class="trow"><div class="tog on" id="d-ctr" onclick="this.classList.toggle('on')"></div><span class="tlab">Show slide counter</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <div class="panel" id="panel-hero">
+      <div class="stb"><h2>Hero Section</h2><button class="btn btn-p" onclick="saveHero()">Save Hero</button></div>
+      <div class="card"><div class="card-b">
+        <div class="fg">
+          <div class="f"><label>Eyebrow Text</label><input id="h-ey"></div>
+          <div class="f"><label>Chip / Label</label><input id="h-ch"></div>
+          <div class="f"><label>Feature Name (use \n for line break)</label><input id="h-nm"></div>
+          <div class="f"><label>CTA Button Text</label><input id="h-cta"></div>
+          <div class="f full"><label>Description Line 1</label><input id="h-d1"></div>
+          <div class="f full"><label>Description Line 2</label><input id="h-d2"></div>
+          <div class="f full">
+            <label>Hero Image</label>
+            <div class="itabs">
+              <div class="itab on" onclick="swTab('hero','url',this)">🔗 URL</div>
+              <div class="itab" onclick="swTab('hero','upload',this)">📁 Upload</div>
+            </div>
+            <div class="itab-p on" id="hero-url-p"><input id="h-img" placeholder="https://..." oninput="prvImg('h-img','h-prv')"></div>
+            <div class="itab-p" id="hero-upload-p">
+              <div class="uzone" ondragover="event.preventDefault()" ondrop="dropImg(event,'h-img','h-prv')">
+                <input type="file" accept="image/*" onchange="upImg(event,'h-img','h-prv')">
+                <p>Drop or <strong onclick="this.closest('.uzone').querySelector('input').click()">browse</strong> — max 5MB</p>
+              </div>
+            </div>
+            <img id="h-prv" class="ipreview" style="display:none;">
+          </div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- TICKER -->
+    <div class="panel" id="panel-ticker">
+      <div class="stb"><h2>Ticker Bar</h2><button class="btn btn-p" onclick="saveTicker()">Save</button></div>
+      <div class="card"><div class="card-b">
+        <div class="f"><label>Messages (one per line)</label><textarea id="t-msgs" style="height:160px;"></textarea></div>
+        <div class="f" style="margin-top:14px;"><label>Speed</label>
+          <select id="t-spd"><option value="15s">Fast</option><option value="22s">Normal</option><option value="35s">Slow</option></select>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="panel" id="panel-settings">
+      <div class="stb"><h2>Settings</h2><button class="btn btn-p" onclick="saveSettings()">Save</button></div>
+      <div class="card"><div class="card-b">
+        <div class="fg">
+          <div class="f"><label>Gallery Name</label><input id="s-nm"></div>
+          <div class="f"><label>Email</label><input id="s-em" type="email"></div>
+          <div class="f"><label>Phone</label><input id="s-ph"></div>
+          <div class="f"><label>Currency Symbol</label><input id="s-cur" value="₹" style="max-width:70px;"></div>
+          <div class="f full"><label>Address</label><textarea id="s-addr" style="height:58px;"></textarea></div>
+          <div class="f full"><label>Opening Hours</label><textarea id="s-hrs" style="height:68px;"></textarea></div>
+          <div class="f"><label>Instagram URL</label><input id="s-ig" type="url"></div>
+          <div class="f"><label>Facebook URL</label><input id="s-fb" type="url"></div>
+        </div>
+      </div></div>
+    </div>
+
+  </div><!-- /content -->
+</main>
+</div><!-- /wrap -->
+</div><!-- /app -->
+
+<!-- MODAL -->
+<div class="mo" id="mo">
+  <div class="mbox">
+    <div class="mhdr"><h2 id="mtitle">Item</h2><button class="mcl" onclick="closeMo()">✕</button></div>
+    <div class="mbody" id="mbody"></div>
+    <div class="mfoot">
+      <button class="btn btn-s" onclick="closeMo()">Cancel</button>
+      <button class="btn btn-p" onclick="saveMo()">Save</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════════════
+// !! REPLACE THESE TWO VALUES WITH YOUR OWN !!
+const SB_URL = 'https://bevgzbfvhogirnbehifo.supabase.co/rest/v1/';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJldmd6YmZ2aG9naXJuYmVoaWZvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg0OTQ2NzksImV4cCI6MjA5NDA3MDY3OX0.QUzZFpFunth3IaXLgv4dnBgaJy-t9bn_g7y5-Zm1j4I';
+// ═══════════════════════════════════════════════════
+const BUCKET = 'vael-images';
+const sb = supabase.createClient(SB_URL, SB_KEY);
+
+// ── AUTH ──────────────────────────────────────────
+async function doLogin(){
+  const email=el('lemail').value.trim(), pass=el('lpass').value;
+  const btn=el('lbtn'), err=el('lerr');
+  if(!email||!pass){err.textContent='Email and password required.';return;}
+  btn.disabled=true; btn.textContent='Signing in…'; err.textContent='';
+  const {data,error}=await sb.auth.signInWithPassword({email,password:pass});
+  if(error){err.textContent=error.message;btn.disabled=false;btn.textContent='Sign In';return;}
+  boot(data.user);
+}
+async function doLogout(){
+  await sb.auth.signOut();
+  el('app').style.display='none';
+  el('loginScreen').style.display='flex';
+}
+async function checkSession(){
+  const {data:{session}}=await sb.auth.getSession();
+  if(session) boot(session.user);
+}
+function boot(user){
+  el('loginScreen').style.display='none';
+  el('app').style.display='block';
+  el('admemail').textContent=user.email;
+  loadDash();
+}
+
+// ── HELPERS ───────────────────────────────────────
+const el=id=>document.getElementById(id);
+const INR=n=>'₹'+Number(n||0).toLocaleString('en-IN');
+function toast(msg,type='tok'){
+  const t=el('toast'); t.textContent=msg; t.className='toast '+type;
+  setTimeout(()=>t.classList.add('show'),10);
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+function sbadge(s){return `<span class="bx bx-${s}">${s}</span>`;}
+function tph(url){return url?`<img class="thumb" src="${url}" onerror="this.style.display='none'">`:`<div class="tph"></div>`;}
+
+// ── PANEL ROUTING ──────────────────────────────────
+const TITLES={dashboard:'Dashboard',orders:'Orders',inventory:'Inventory',revenue:'Revenue',artworks:'Artworks',artists:'Artists',exhibitions:'Exhibitions',blog:'Blog Posts',news:'News',design:'Design & Theme',hero:'Hero Section',ticker:'Ticker Bar',settings:'Settings'};
+const LOADERS={dashboard:loadDash,orders:loadOrders,inventory:loadInv,revenue:loadRev,artworks:loadAW,artists:loadAR,exhibitions:loadExh,blog:loadBlg,news:loadNws,design:loadDesign,hero:loadHero,ticker:loadTicker,settings:loadSettings};
+function go(name){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.snav a').forEach(a=>a.classList.toggle('active',a.dataset.p===name));
+  el('panel-'+name).classList.add('active');
+  el('ptitle').textContent=TITLES[name]||name;
+  if(LOADERS[name]) LOADERS[name]();
+}
+function topSave(){
+  const active=document.querySelector('.panel.active')?.id?.replace('panel-','');
+  const sv={design:saveDesign,hero:saveHero,ticker:saveTicker,settings:saveSettings};
+  if(sv[active]) sv[active](); else toast('Use Save button in each section','tinfo');
+}
+
+// ── DASHBOARD ──────────────────────────────────────
+async function loadDash(){
+  const {data:s}=await sb.from('dashboard_stats').select('*').single();
+  if(s){
+    el('ds-art').textContent=s.total_artworks||0;
+    el('ds-av').textContent=s.available||0;
+    el('ds-so').textContent=s.sold_out||0;
+    el('ds-po').textContent=s.pending_orders||0;
+    el('ds-rev').textContent=INR(s.total_revenue);
+    el('d-coll').textContent=INR(s.collected_revenue);
+  }
+  const {data:orders}=await sb.from('orders').select('*').order('created_at',{ascending:false}).limit(5);
+  el('d-orders').innerHTML=(orders||[]).map(o=>`<tr>
+    <td><code style="font-size:10px;color:var(--gold);">${o.order_number||o.id.slice(0,8)}</code></td>
+    <td style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${o.artwork_title||'—'}</td>
+    <td>${o.buyer_name}</td><td>${INR(o.total_amount)}</td>
+    <td>${sbadge(o.status)}</td></tr>`).join('')||`<tr><td colspan="5" class="empty">No orders yet</td></tr>`;
+}
+
+// ── ORDERS ─────────────────────────────────────────
+let allOrders=[];
+async function loadOrders(){
+  const {data}=await sb.from('orders').select('*').order('created_at',{ascending:false});
+  allOrders=data||[];
+  renderOrders(allOrders);
+  ['pend','conf','ship','delv'].forEach((k,i)=>{
+    const st=['pending','confirmed','shipped','delivered'][i];
+    el('o-'+k).textContent=allOrders.filter(o=>o.status===st).length;
+  });
+}
+function renderOrders(list){
+  el('otbody').innerHTML=list.map(o=>`<tr>
+    <td><code style="font-size:10px;color:var(--gold);">${o.order_number||o.id.slice(0,8)}</code></td>
+    <td>${new Date(o.created_at).toLocaleDateString('en-IN')}</td>
+    <td style="max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${o.artwork_title||'—'}</td>
+    <td>${o.buyer_name}<br><span style="font-size:10px;color:var(--tx3);">${o.buyer_email}</span></td>
+    <td style="text-align:center;">${o.quantity}</td>
+    <td>${INR(o.total_amount)}</td>
+    <td>${sbadge(o.status)}</td>
+    <td><div class="ra">
+      <select style="background:var(--s3);border:1px solid var(--bd);color:var(--tx);font-size:10px;padding:3px 6px;border-radius:3px;cursor:pointer;" onchange="updOrder('${o.id}',this.value)">
+        ${['pending','confirmed','shipped','delivered','cancelled','refunded'].map(s=>`<option ${s===o.status?'selected':''}>${s}</option>`).join('')}
+      </select>
+      <button class="ib" onclick="showOrderDetail('${o.id}')" title="View">👁</button>
+    </div></td></tr>`).join('')||`<tr><td colspan="8" class="empty">No orders</td></tr>`;
+}
+function filterOrders(){
+  const q=el('osrch').value.toLowerCase(), st=el('ostat').value;
+  renderOrders(allOrders.filter(o=>{
+    const txt=(o.buyer_name+o.buyer_email+(o.order_number||'')+(o.artwork_title||'')).toLowerCase();
+    return txt.includes(q)&&(!st||o.status===st);
+  }));
+}
+async function updOrder(id,status){
+  const {error}=await sb.from('orders').update({status}).eq('id',id);
+  if(error){toast('Update failed','terr');return;}
+  toast('Order → '+status,'tok');
+  await loadOrders();
+}
+function showOrderDetail(id){
+  const o=allOrders.find(x=>x.id===id);if(!o)return;
+  el('mtitle').textContent='Order '+（o.order_number||o.id.slice(0,8));
+  el('mbody').innerHTML=`<div class="fg">
+    <div class="f"><label>Order No</label><input readonly value="${o.order_number||o.id}"></div>
+    <div class="f"><label>Date</label><input readonly value="${new Date(o.created_at).toLocaleString('en-IN')}"></div>
+    <div class="f"><label>Buyer Name</label><input readonly value="${o.buyer_name}"></div>
+    <div class="f"><label>Email</label><input readonly value="${o.buyer_email}"></div>
+    <div class="f"><label>Phone</label><input readonly value="${o.buyer_phone||'—'}"></div>
+    <div class="f"><label>Status</label><input readonly value="${o.status}"></div>
+    <div class="f full"><label>Address</label><textarea readonly style="height:56px;">${o.buyer_address||'—'}</textarea></div>
+    <div class="f"><label>Artwork</label><input readonly value="${o.artwork_title||'—'}"></div>
+    <div class="f"><label>Qty</label><input readonly value="${o.quantity}"></div>
+    <div class="f"><label>Unit Price</label><input readonly value="${INR(o.unit_price)}"></div>
+    <div class="f"><label>Total</label><input readonly value="${INR(o.total_amount)}"></div>
+    ${o.notes?`<div class="f full"><label>Notes</label><textarea readonly style="height:48px;">${o.notes}</textarea></div>`:''}
+  </div>`;
+  el('mo').classList.add('open');
+  moCtx={type:'info',id:null};
+}
+
+// ── INVENTORY ──────────────────────────────────────
+async function loadInv(){
+  const {data}=await sb.from('revenue_summary').select('*').order('revenue_generated',{ascending:false});
+  el('invbody').innerHTML=(data||[]).map(r=>{
+    const pct=r.total_stock>0?Math.round(r.sold_count/r.total_stock*100):0;
+    const col=pct>=100?'var(--ac)':pct>=75?'var(--orange)':'var(--green)';
+    return `<tr>
+      <td><strong>${r.title}</strong></td><td>${r.artist}</td><td>${r.cat}</td>
+      <td>${INR(r.price)}</td>
+      <td><div class="sbar-wrap"><div class="sbar"><div class="sbar-fill" style="width:${pct}%;background:${col};"></div></div><span style="font-size:10px;">${r.total_stock}</span></div></td>
+      <td style="color:var(--ac);">${r.sold_count}</td>
+      <td style="color:var(--orange);">${r.reserved}</td>
+      <td style="color:var(--green);font-weight:600;">${r.remaining}</td>
+      <td style="color:var(--gold);font-weight:600;">${INR(r.revenue_generated)}</td>
+    </tr>`;
+  }).join('')||`<tr><td colspan="9" class="empty">No data</td></tr>`;
+}
+
+// ── REVENUE ────────────────────────────────────────
+async function loadRev(){
+  const {data:s}=await sb.from('dashboard_stats').select('*').single();
+  if(s){el('rv-bill').textContent=INR(s.total_revenue);el('rv-coll').textContent=INR(s.collected_revenue);}
+  const {data:ords}=await sb.from('orders').select('status,total_amount');
+  const sum=(st)=>(ords||[]).filter(o=>o.status===st).reduce((a,o)=>a+Number(o.total_amount),0);
+  el('rv-tran').textContent=INR(sum('shipped'));
+  el('rv-ref').textContent=INR(sum('refunded'));
+  const {data:rv}=await sb.from('revenue_summary').select('*').order('revenue_generated',{ascending:false});
+  const tot=(rv||[]).reduce((a,r)=>a+Number(r.revenue_generated),0);
+  el('rvbody').innerHTML=(rv||[]).map(r=>{
+    const pct=tot>0?((r.revenue_generated/tot)*100).toFixed(1):'0.0';
+    return `<tr>
+      <td><strong>${r.title}</strong></td><td>${r.artist}</td>
+      <td>${INR(r.price)}</td>
+      <td style="text-align:center;">${r.total_stock}</td>
+      <td style="text-align:center;color:var(--ac);">${r.sold_count}</td>
+      <td style="color:var(--gold);font-weight:600;">${INR(r.revenue_generated)}</td>
+      <td><div class="sbar-wrap"><div class="sbar"><div class="sbar-fill" style="width:${pct}%;background:var(--gold);"></div></div><span style="font-size:10px;">${pct}%</span></div></td>
+    </tr>`;
+  }).join('');
+}
+
+// ── ARTWORKS ───────────────────────────────────────
+let allAW=[], allAR=[];
+async function loadAW(){
+  const {data}=await sb.from('artworks').select('*,inventory(total_stock,sold_count)').order('created_at',{ascending:false});
+  allAW=data||[]; renderAW(allAW);
+}
+function renderAW(list){
+  el('awtbody').innerHTML=list.map(a=>{
+    const inv=a.inventory?.[0]||{};
+    const rem=(inv.total_stock||0)-(inv.sold_count||0);
+    return `<tr>
+      <td>${tph(a.img)}</td>
+      <td><strong>${a.title}</strong>${a.badge?` <span class="bx bx-${a.badge.toLowerCase()}">${a.badge}</span>`:''}</td>
+      <td>${a.artist}</td><td>${INR(a.price)}</td><td>${a.cat||'—'}</td>
+      <td><span class="bx ${a.sold?'bx-sold':'bx-avail'}">${a.sold?'Sold Out':'Available'}</span></td>
+      <td style="color:${rem<=0?'var(--ac)':'var(--green)'};">${rem}/${inv.total_stock||0}</td>
+      <td><div class="ra">
+        <button class="ib" onclick="openEdit('artwork','${a.id}')">✎</button>
+        <button class="ib del" onclick="delItem('artworks','${a.id}','loadAW')">✕</button>
+      </div></td></tr>`;
+  }).join('')||`<tr><td colspan="8" class="empty">No artworks</td></tr>`;
+}
+function filterAWcat(c){renderAW(c?allAW.filter(a=>a.cat===c):allAW);}
+function ftbl(q,tbodyId,getter,renderer){
+  const lo=q.toLowerCase();
+  const filtered=getter().filter(x=>Object.values(x).join(' ').toLowerCase().includes(lo));
+  window[renderer](filtered);
+}
+
+// ── ARTISTS ────────────────────────────────────────
+async function loadAR(){
+  const {data}=await sb.from('artists').select('*').order('name');
+  allAR=data||[]; renderAR(allAR);
+}
+function renderAR(list){
+  el('artbody').innerHTML=list.map(a=>`<tr>
+    <td>${tph(a.img)}</td><td><strong>${a.name}</strong></td>
+    <td>${a.nationality||'—'}</td><td>${a.works}</td>
+    <td><div class="ra">
+      <button class="ib" onclick="openEdit('artist','${a.id}')">✎</button>
+      <button class="ib del" onclick="delItem('artists','${a.id}','loadAR')">✕</button>
+    </div></td></tr>`).join('')||`<tr><td colspan="5" class="empty">No artists</td></tr>`;
+}
+
+// ── EXHIBITIONS ────────────────────────────────────
+async function loadExh(){
+  const {data}=await sb.from('exhibitions').select('*').order('created_at',{ascending:false});
+  el('exhbody').innerHTML=(data||[]).map(e=>`<tr>
+    <td>${tph(e.img)}</td><td><strong>${e.title}</strong></td>
+    <td>${e.sub||'—'}</td><td>${e.dates||'—'}</td>
+    <td>${sbadge(e.status)}</td><td>${e.featured?'⭐':'—'}</td>
+    <td><div class="ra">
+      <button class="ib" onclick="openEdit('exhibition','${e.id}')">✎</button>
+      <button class="ib del" onclick="delItem('exhibitions','${e.id}','loadExh')">✕</button>
+    </div></td></tr>`).join('')||`<tr><td colspan="7" class="empty">No exhibitions</td></tr>`;
+}
+
+// ── BLOG ───────────────────────────────────────────
+async function loadBlg(){
+  const {data}=await sb.from('blog').select('*').order('created_at',{ascending:false});
+  el('blgbody').innerHTML=(data||[]).map(p=>`<tr>
+    <td>${tph(p.img)}</td><td><strong>${p.title}</strong></td>
+    <td>${p.cat||'—'}</td><td>${p.author||'—'}</td><td>${p.date||'—'}</td>
+    <td>${p.featured?'⭐':'—'}</td>
+    <td><div class="ra">
+      <button class="ib" onclick="openEdit('blog','${p.id}')">✎</button>
+      <button class="ib del" onclick="delItem('blog','${p.id}','loadBlg')">✕</button>
+    </div></td></tr>`).join('')||`<tr><td colspan="7" class="empty">No posts</td></tr>`;
+}
+
+// ── NEWS ───────────────────────────────────────────
+async function loadNws(){
+  const {data}=await sb.from('news').select('*').order('created_at',{ascending:false});
+  el('nwsbody').innerHTML=(data||[]).map(n=>`<tr>
+    <td>${tph(n.img)}</td><td><strong>${n.title}</strong></td>
+    <td><span class="bx bx-feat">${n.tag||'—'}</span></td><td>${n.date||'—'}</td>
+    <td><div class="ra">
+      <button class="ib" onclick="openEdit('news','${n.id}')">✎</button>
+      <button class="ib del" onclick="delItem('news','${n.id}','loadNws')">✕</button>
+    </div></td></tr>`).join('')||`<tr><td colspan="5" class="empty">No news</td></tr>`;
+}
+
+// ── DELETE ─────────────────────────────────────────
+async function delItem(table,id,reloader){
+  if(!confirm('Delete permanently?'))return;
+  const {error}=await sb.from(table).delete().eq('id',id);
+  if(error){toast('Delete failed','terr');return;}
+  toast('Deleted','tok');
+  if(window[reloader]) window[reloader]();
+}
+
+// ── MODAL / FORMS ──────────────────────────────────
+let moCtx={type:null,id:null};
+
+function imgField(src='',pfx='m'){
+  return `<div class="f full"><label>Image</label>
+    <div class="itabs">
+      <div class="itab on" onclick="swTab('${pfx}','url',this)">🔗 URL</div>
+      <div class="itab" onclick="swTab('${pfx}','upload',this)">📁 Upload</div>
+    </div>
+    <div class="itab-p on" id="${pfx}-url-p"><input id="${pfx}-img" value="${src}" placeholder="https://..." oninput="prvImg('${pfx}-img','${pfx}-prv')"></div>
+    <div class="itab-p" id="${pfx}-upload-p">
+      <div class="uzone" ondragover="event.preventDefault()" ondrop="dropImg(event,'${pfx}-img','${pfx}-prv')">
+        <input type="file" accept="image/*" onchange="upImg(event,'${pfx}-img','${pfx}-prv')">
+        <p>Drop or <strong onclick="this.closest('.uzone').querySelector('input').click()">browse</strong> — max 5MB</p>
+      </div>
+    </div>
+    <img id="${pfx}-prv" class="ipreview" src="${src}" style="${src?'':'display:none;'}">
+  </div>`;
+}
+
+const FORMS={
+  artwork:(d={})=>`<div class="fg">
+    ${imgField(d.img||'')}
+    <div class="f full"><label>Title</label><input id="f-ti" value="${d.title||''}"></div>
+    <div class="f"><label>Artist</label>
+      <select id="f-ar"><option value="">— Select —</option>${allAR.map(a=>`<option ${d.artist===a.name?'selected':''}>${a.name}</option>`).join('')}</select>
+    </div>
+    <div class="f"><label>Price (₹)</label><input id="f-pr" type="number" value="${d.price||''}"></div>
+    <div class="f"><label>Medium</label><input id="f-me" value="${d.medium||''}"></div>
+    <div class="f"><label>Edition</label><input id="f-ed" value="${d.edition||''}"></div>
+    <div class="f"><label>Category</label>
+      <select id="f-ca"><option>Painting</option><option>Photography</option><option>Digital</option><option>Mixed Media</option><option>Sculpture</option></select>
+    </div>
+    <div class="f"><label>Badge</label>
+      <select id="f-ba"><option value="">None</option><option>NEW</option><option>FEATURED</option><option>SALE</option></select>
+    </div>
+    <div class="f"><label>Status</label>
+      <select id="f-so"><option value="false">Available</option><option value="true" ${d.sold?'selected':''}>Sold Out</option></select>
+    </div>
+    <div class="f"><label>Total Stock</label><input id="f-stk" type="number" value="${d._stk||1}" min="0"></div>
+    <div class="f"><label>Sold Count</label><input id="f-sld" type="number" value="${d._sld||0}" min="0"></div>
+  </div>`,
+  artist:(d={})=>`<div class="fg">
+    ${imgField(d.img||'')}
+    <div class="f"><label>Full Name</label><input id="f-nm" value="${d.name||''}"></div>
+    <div class="f"><label>Nationality & Birth Year</label><input id="f-nat" value="${d.nationality||''}" placeholder="Indian, b. 1985"></div>
+    <div class="f"><label>Works Count</label><input id="f-wk" type="number" value="${d.works||0}"></div>
+    <div class="f full"><label>Biography</label><textarea id="f-bio">${d.bio||''}</textarea></div>
+  </div>`,
+  exhibition:(d={})=>`<div class="fg">
+    ${imgField(d.img||'')}
+    <div class="f"><label>Title</label><input id="f-ti" value="${d.title||''}"></div>
+    <div class="f"><label>Subtitle / Artist</label><input id="f-su" value="${d.sub||''}"></div>
+    <div class="f"><label>Dates</label><input id="f-dt" value="${d.dates||''}" placeholder="May 1 – Jun 30, 2025"></div>
+    <div class="f"><label>Status</label>
+      <select id="f-st"><option value="on" ${d.status==='on'?'selected':''}>On Now</option><option value="upcoming" ${d.status==='upcoming'?'selected':''}>Upcoming</option><option value="past" ${d.status==='past'?'selected':''}>Past</option></select>
+    </div>
+    <div class="f"><label>Featured?</label>
+      <select id="f-ft"><option value="false">No</option><option value="true" ${d.featured?'selected':''}>Yes — Hero</option></select>
+    </div>
+  </div>`,
+  blog:(d={})=>`<div class="fg">
+    ${imgField(d.img||'')}
+    <div class="f full"><label>Title</label><input id="f-ti" value="${d.title||''}"></div>
+    <div class="f"><label>Category</label>
+      <select id="f-ca"><option>Essay</option><option>Interview</option><option>Review</option><option>Opinion</option><option>News</option></select>
+    </div>
+    <div class="f"><label>Author</label><input id="f-au" value="${d.author||''}"></div>
+    <div class="f"><label>Date</label><input id="f-dt" value="${d.date||''}" placeholder="May 2025"></div>
+    <div class="f"><label>Featured?</label>
+      <select id="f-ft"><option value="false">No</option><option value="true" ${d.featured?'selected':''}>Yes</option></select>
+    </div>
+    <div class="f full"><label>Excerpt</label><textarea id="f-ex">${d.excerpt||''}</textarea></div>
+  </div>`,
+  news:(d={})=>`<div class="fg">
+    ${imgField(d.img||'')}
+    <div class="f full"><label>Title</label><input id="f-ti" value="${d.title||''}"></div>
+    <div class="f"><label>Tag</label><input id="f-tg" value="${d.tag||''}" placeholder="Announcement"></div>
+    <div class="f"><label>Date</label><input id="f-dt" value="${d.date||''}" placeholder="May 8, 2025"></div>
+    <div class="f full"><label>Excerpt</label><textarea id="f-ex">${d.excerpt||''}</textarea></div>
+  </div>`,
+};
+
+function openAdd(type){moCtx={type,id:null};openMo(type,{});}
+async function openEdit(type,id){
+  const tables={artwork:'artworks',artist:'artists',exhibition:'exhibitions',blog:'blog',news:'news'};
+  const tbl=tables[type];
+  let q=sb.from(tbl).select(type==='artwork'?'*,inventory(total_stock,sold_count)':'*').eq('id',id);
+  const {data}=await q.single();
+  if(!data)return;
+  if(type==='artwork'&&data.inventory?.[0]){data._stk=data.inventory[0].total_stock;data._sld=data.inventory[0].sold_count;}
+  moCtx={type,id};openMo(type,data);
+}
+function openMo(type,d){
+  el('mtitle').textContent=(moCtx.id?'Edit ':'Add ')+type.charAt(0).toUpperCase()+type.slice(1);
+  el('mbody').innerHTML=FORMS[type](d);
+  el('mo').classList.add('open');
+  setTimeout(()=>{
+    const sv=(id,v)=>{const e=el(id);if(e&&v)e.value=v;};
+    if(type==='artwork'){sv('f-ca',d.cat);sv('f-ba',d.badge||'');}
+    if(type==='blog') sv('f-ca',d.cat);
+  },20);
+}
+function closeMo(){el('mo').classList.remove('open');moCtx={type:null,id:null};}
+
+async function saveMo(){
+  if(moCtx.type==='info'){closeMo();return;}
+  const {type,id}=moCtx;
+  const v=i=>el(i)?.value||'';
+  const imgSrc=v('m-img')||el('m-prv')?.src||'';
+  let item={},table='';
+
+  if(type==='artwork'){
+    table='artworks';
+    item={title:v('f-ti'),artist:v('f-ar'),price:Number(v('f-pr')),medium:v('f-me'),edition:v('f-ed'),cat:v('f-ca'),badge:v('f-ba'),sold:v('f-so')==='true',img:await resolveImg(imgSrc)};
+    if(!item.title||!item.artist){toast('Title + artist required','terr');return;}
+  }else if(type==='artist'){
+    table='artists';
+    item={name:v('f-nm'),nationality:v('f-nat'),works:Number(v('f-wk'))||0,bio:v('f-bio'),img:await resolveImg(imgSrc)};
+    if(!item.name){toast('Name required','terr');return;}
+  }else if(type==='exhibition'){
+    table='exhibitions';
+    item={title:v('f-ti'),sub:v('f-su'),dates:v('f-dt'),status:v('f-st'),featured:v('f-ft')==='true',img:await resolveImg(imgSrc)};
+  }else if(type==='blog'){
+    table='blog';
+    item={title:v('f-ti'),cat:v('f-ca'),author:v('f-au'),date:v('f-dt'),excerpt:v('f-ex'),featured:v('f-ft')==='true',img:await resolveImg(imgSrc)};
+  }else if(type==='news'){
+    table='news';
+    item={title:v('f-ti'),tag:v('f-tg'),date:v('f-dt'),excerpt:v('f-ex'),img:await resolveImg(imgSrc)};
+  }
+
+  let resId=id;
+  if(id){
+    const {error}=await sb.from(table).update(item).eq('id',id);
+    if(error){toast('Save failed: '+error.message,'terr');return;}
+  }else{
+    const {data,error}=await sb.from(table).insert(item).select().single();
+    if(error){toast('Insert failed: '+error.message,'terr');return;}
+    resId=data.id;
+  }
+  if(type==='artwork'&&resId){
+    await sb.from('inventory').upsert({artwork_id:resId,total_stock:Number(v('f-stk'))||1,sold_count:Number(v('f-sld'))||0},{onConflict:'artwork_id'});
+  }
+  closeMo(); toast(id?'Updated!':'Added!','tok');
+  const rl={artwork:loadAW,artist:loadAR,exhibition:loadExh,blog:loadBlg,news:loadNws};
+  if(rl[type]) rl[type]();
+}
+
+// ── IMAGE UPLOAD → SUPABASE STORAGE ───────────────
+async function resolveImg(src){
+  if(!src||!src.startsWith('data:'))return src;
+  const b64=src.split(',')[1];
+  const mime=src.match(/data:(.*?);/)[1];
+  const ext=mime.split('/')[1]||'jpg';
+  const fname=`uploads/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+  const bytes=Uint8Array.from(atob(b64),c=>c.charCodeAt(0));
+  const {error}=await sb.storage.from(BUCKET).upload(fname,bytes.buffer,{contentType:mime,upsert:false});
+  if(error){toast('Image upload failed','terr');return src;}
+  const {data:{publicUrl}}=sb.storage.from(BUCKET).getPublicUrl(fname);
+  return publicUrl;
+}
+function prvImg(inputId,previewId){
+  const url=el(inputId)?.value;const prv=el(previewId);
+  if(url&&prv){prv.src=url;prv.style.display='block';}
+}
+function upImg(event,inputId,previewId){
+  const file=event.target.files[0];if(!file)return;
+  if(file.size>5*1024*1024){toast('Max 5MB','terr');return;}
+  const r=new FileReader();
+  r.onload=e=>{
+    const inp=el(inputId);const prv=el(previewId);
+    if(inp)inp.value=e.target.result;
+    if(prv){prv.src=e.target.result;prv.style.display='block';}
+    toast('Image ready — uploads on save','tinfo');
+  };
+  r.readAsDataURL(file);
+}
+function dropImg(event,inputId,previewId){
+  event.preventDefault();
+  const file=event.dataTransfer.files[0];if(!file)return;
+  upImg({target:{files:[file]}},inputId,previewId);
+}
+function swTab(pfx,tab,el2){
+  el2.closest('.itabs').querySelectorAll('.itab').forEach(t=>t.classList.remove('on'));
+  el2.classList.add('on');
+  document.querySelectorAll(`[id^="${pfx}-"][id$="-p"]`).forEach(p=>p.classList.remove('on'));
+  el(`${pfx}-${tab}-p`)?.classList.add('on');
+}
+
+// ── SETTINGS / DESIGN / HERO / TICKER ─────────────
+async function getSetting(key){const {data}=await sb.from('settings').select('value').eq('key',key).single();return data?.value||{};}
+async function setSetting(key,value){await sb.from('settings').upsert({key,value},{onConflict:'key'});toast('Saved!','tok');}
+
+async function loadDesign(){
+  const d=await getSetting('design');const c=d.colors||{};
+  el('cpickers').innerHTML=[['cream','Background'],['charcoal','Foreground'],['accent','Accent Red'],['gold','Gold']].map(([k,l])=>
+    `<div class="csw"><input type="color" id="dc-${k}" value="${c[k]||'#000000'}"><label>${l}</label></div>`).join('');
+  el('d-name').value=d.brandName||'';el('d-tag').value=d.brandTagline||'';el('d-sym').value=d.brandSymbol||'⌗';
+  el('d-cols').value=d.artPerRow||4;
+  if(d.heroFullwidth)el('d-full').classList.add('on');
+  if(!d.showTicker)el('d-tick').classList.remove('on');
+  if(!d.showCounter)el('d-ctr').classList.remove('on');
+}
+async function saveDesign(){
+  const gc=k=>el('dc-'+k)?.value;
+  await setSetting('design',{
+    colors:{cream:gc('cream'),charcoal:gc('charcoal'),accent:gc('accent'),gold:gc('gold')},
+    brandName:el('d-name').value,brandTagline:el('d-tag').value,brandSymbol:el('d-sym').value,
+    artPerRow:Number(el('d-cols').value),
+    heroFullwidth:el('d-full').classList.contains('on'),
+    showTicker:el('d-tick').classList.contains('on'),
+    showCounter:el('d-ctr').classList.contains('on'),
+  });
+}
+
+async function loadHero(){
+  const h=await getSetting('hero');
+  el('h-ey').value=h.eyebrow||'';el('h-ch').value=h.chip||'';
+  el('h-nm').value=(h.name||'').replace('\n','\\n');
+  el('h-cta').value=h.cta||'';el('h-d1').value=h.desc1||'';el('h-d2').value=h.desc2||'';
+  el('h-img').value=h.img||'';
+  if(h.img){el('h-prv').src=h.img;el('h-prv').style.display='block';}
+}
+async function saveHero(){
+  const img=await resolveImg(el('h-img').value||el('h-prv')?.src||'');
+  await setSetting('hero',{eyebrow:el('h-ey').value,chip:el('h-ch').value,name:el('h-nm').value.replace('\\n','\n'),cta:el('h-cta').value,desc1:el('h-d1').value,desc2:el('h-d2').value,img});
+}
+
+async function loadTicker(){
+  const t=await getSetting('ticker');
+  el('t-msgs').value=(t.messages||[]).join('\n');
+  el('t-spd').value=t.speed||'22s';
+}
+async function saveTicker(){
+  await setSetting('ticker',{messages:el('t-msgs').value.split('\n').map(s=>s.trim()).filter(Boolean),speed:el('t-spd').value});
+}
+
+async function loadSettings(){
+  const s=await getSetting('contact');
+  el('s-nm').value=s.name||'';el('s-em').value=s.email||'';el('s-ph').value=s.phone||'';
+  el('s-cur').value=s.currency||'₹';el('s-addr').value=s.address||'';el('s-hrs').value=s.hours||'';
+  el('s-ig').value=s.instagram||'';el('s-fb').value=s.facebook||'';
+}
+async function saveSettings(){
+  await setSetting('contact',{name:el('s-nm').value,email:el('s-em').value,phone:el('s-ph').value,currency:el('s-cur').value||'₹',address:el('s-addr').value,hours:el('s-hrs').value,instagram:el('s-ig').value,facebook:el('s-fb').value});
+}
+
+// ── BOOT ──────────────────────────────────────────
+el('lpass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
+checkSession();
+</script>
+</body>
+</html>
