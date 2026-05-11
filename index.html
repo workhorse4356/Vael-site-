@@ -8,36 +8,26 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-:root{
-  --cream:#f5f2ec;--charcoal:#1a1a1a;--warm-gray:#8a8278;
-  --accent:#c0392b;--gold:#b8975a;--white:#ffffff;
-  --border:#ddd9d2;--light:#faf8f4;
-}
+:root{--cream:#f5f2ec;--charcoal:#1a1a1a;--warm-gray:#8a8278;--accent:#c0392b;--gold:#b8975a;--white:#fff;--border:#ddd9d2;}
 html{scroll-behavior:smooth;}
-body{font-family:'Montserrat',sans-serif;background:var(--cream);color:var(--charcoal);font-size:13px;letter-spacing:.02em;overflow-x:hidden;}
+body{font-family:'Montserrat',sans-serif;background:var(--cream);color:var(--charcoal);font-size:13px;letter-spacing:.02em;overflow-x:hidden;padding-bottom:42px;}
 img{display:block;max-width:100%;}
 a{color:inherit;text-decoration:none;}
 button{font-family:inherit;cursor:pointer;}
-
-/* ── GLOBAL NAV ── */
 nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 52px;height:72px;background:rgba(245,242,236,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);}
 .logo{display:flex;flex-direction:column;align-items:center;cursor:pointer;}
 .logo-sym{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;letter-spacing:.15em;line-height:1;}
 .logo-name{font-size:10px;font-weight:700;letter-spacing:.4em;margin-top:1px;}
 .logo-sub{font-size:8px;font-weight:400;letter-spacing:.3em;color:var(--warm-gray);}
 .nav-links{display:flex;gap:32px;list-style:none;}
-.nav-links a{font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;transition:color .2s;}
+.nav-links a{font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;transition:color .2s;cursor:pointer;}
 .nav-links a:hover,.nav-links a.active{color:var(--accent);}
 .nav-right{display:flex;align-items:center;gap:20px;}
-.cart-btn{background:none;border:none;font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;}
+.cart-btn{background:none;border:none;font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;}
 .cart-badge{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:var(--accent);color:#fff;font-size:8px;margin-left:4px;}
-
-/* ── PAGE SYSTEM ── */
 .page{display:none;min-height:100vh;padding-top:72px;animation:pageIn .45s ease;}
 .page.active{display:block;}
 @keyframes pageIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-
-/* ── SHARED COMPONENTS ── */
 .section-header{display:flex;align-items:baseline;justify-content:space-between;padding:56px 52px 32px;border-bottom:1px solid var(--border);margin-bottom:48px;}
 .section-title{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;}
 .section-link{font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--warm-gray);cursor:pointer;transition:color .2s;}
@@ -46,24 +36,18 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .page-hero-eyebrow{font-size:9px;font-weight:500;letter-spacing:.35em;text-transform:uppercase;color:var(--warm-gray);margin-bottom:14px;}
 .page-hero-title{font-family:'Cormorant Garamond',serif;font-size:64px;font-weight:300;line-height:1.05;}
 .page-hero-sub{margin-top:16px;font-size:12px;font-weight:300;line-height:1.9;color:#555;max-width:560px;}
-
 .btn-dark{display:inline-flex;align-items:center;gap:8px;font-size:10px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;background:var(--charcoal);color:#fff;border:none;padding:13px 28px;cursor:pointer;transition:background .2s;}
 .btn-dark:hover{background:var(--accent);}
 .btn-outline{display:inline-flex;align-items:center;gap:8px;font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;border:1px solid var(--charcoal);padding:12px 24px;cursor:pointer;background:none;color:var(--charcoal);transition:all .2s;}
 .btn-outline:hover{background:var(--charcoal);color:#fff;}
 .btn-gold{display:inline-flex;align-items:center;gap:8px;font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;border:1px solid var(--gold);padding:12px 24px;cursor:pointer;background:none;color:var(--gold);transition:all .2s;}
 .btn-gold:hover{background:var(--gold);color:var(--charcoal);}
-
-/* ── TICKER ── */
 .ticker{background:var(--charcoal);color:#fff;padding:11px 0;overflow:hidden;}
-.ticker-inner{display:flex;gap:80px;white-space:nowrap;animation:tickAnim 22s linear infinite;}
+.ticker-inner{display:flex;gap:80px;white-space:nowrap;animation:tickAnim var(--tick-spd,22s) linear infinite;}
 .ticker-item{font-size:10px;font-weight:500;letter-spacing:.25em;text-transform:uppercase;flex-shrink:0;}
 .ticker-dot{color:var(--gold);margin:0 10px;}
 @keyframes tickAnim{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-
-/* ────────────────────────────────────────
-   HOME PAGE
-──────────────────────────────────────── */
+/* HOME — split mode (default) */
 .home-hero{display:grid;grid-template-columns:1fr 400px;min-height:calc(100vh - 72px);}
 .home-hero-img{position:relative;background:#e5e0d8;overflow:hidden;}
 .home-hero-img img{width:100%;height:100%;object-fit:cover;animation:fadeIn 1.2s .3s both;}
@@ -71,15 +55,28 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .home-hero-info{background:#fff;display:flex;flex-direction:column;justify-content:center;padding:64px 52px;position:relative;}
 .home-hero-info .eyebrow{font-size:9px;font-weight:500;letter-spacing:.35em;text-transform:uppercase;color:var(--warm-gray);margin-bottom:14px;animation:slideUp .7s .55s both;}
 .home-hero-info h1{font-family:'Cormorant Garamond',serif;font-size:56px;font-weight:300;line-height:1.05;margin-bottom:18px;animation:slideUp .7s .7s both;}
-.home-hero-info .desc{font-size:12px;font-weight:300;line-height:1.85;color:#555;margin-bottom:6px;animation:slideUp .7s .82s both;}
-.home-hero-info .links{display:flex;gap:4px;margin-bottom:36px;font-size:12px;animation:slideUp .7s .9s both;}
-.home-hero-info .links span{color:#555;}
-.home-hero-info .links a{color:var(--accent);text-decoration:underline;text-underline-offset:3px;}
+.home-hero-info .desc{font-size:12px;font-weight:300;line-height:1.85;color:#555;margin-bottom:16px;animation:slideUp .7s .82s both;}
 .home-counter{position:absolute;bottom:36px;right:52px;font-size:10px;letter-spacing:.15em;color:var(--warm-gray);animation:fadeIn 1s 1.2s both;}
 
-/* artworks grid */
-.artworks-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;padding:0 52px;margin-bottom:80px;}
-.artwork-card{background:#fff;cursor:pointer;position:relative;overflow:hidden;}
+/* HOME — fullwidth mode */
+.home-hero.fullwidth{grid-template-columns:1fr;}
+.home-hero.fullwidth .home-hero-info{display:none;}
+.home-hero.fullwidth .home-hero-img{min-height:calc(100vh - 72px);}
+.home-hero.fullwidth .hero-chip{color:#fff;background:rgba(0,0,0,.35);border-color:rgba(255,255,255,.3);}
+/* overlay text on fullwidth */
+.hero-overlay-text{display:none;position:absolute;bottom:64px;left:64px;color:#fff;max-width:560px;}
+.home-hero.fullwidth .hero-overlay-text{display:block;}
+.hero-overlay-text .eyebrow{font-size:9px;font-weight:500;letter-spacing:.35em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:14px;animation:slideUp .7s .55s both;}
+.hero-overlay-text h1{font-family:'Cormorant Garamond',serif;font-size:72px;font-weight:300;line-height:1;margin-bottom:20px;animation:slideUp .7s .7s both;text-shadow:0 2px 24px rgba(0,0,0,.3);}
+.hero-overlay-text .desc{font-size:13px;font-weight:300;line-height:1.85;color:rgba(255,255,255,.85);margin-bottom:6px;animation:slideUp .7s .82s both;}
+.hero-overlay-text .hero-cta-wrap{margin-top:28px;animation:slideUp .7s .95s both;}
+/* dark gradient so overlay text is readable */
+.home-hero.fullwidth .home-hero-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to right, rgba(0,0,0,.45) 0%, rgba(0,0,0,.1) 60%, transparent 100%);}
+.home-hero.fullwidth .home-hero-img img,.home-hero.fullwidth .home-hero-img .hero-chip,.home-hero.fullwidth .home-hero-img .hero-overlay-text{position:relative;z-index:1;}
+.home-hero.fullwidth .home-hero-img .hero-overlay-text{z-index:2;}
+.home-counter.fullwidth-counter{color:rgba(255,255,255,.6);}
+.artworks-grid{display:grid;grid-template-columns:repeat(var(--art-cols,4),1fr);gap:2px;padding:0 52px;margin-bottom:80px;}
+.artwork-card{background:#fff;cursor:pointer;overflow:hidden;}
 .artwork-img-wrap{aspect-ratio:3/4;overflow:hidden;position:relative;background:#e8e3db;}
 .artwork-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .55s ease;}
 .artwork-card:hover .artwork-img-wrap img{transform:scale(1.06);}
@@ -96,17 +93,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .aw-price{font-size:13px;font-weight:500;}
 .aw-medium{font-size:9px;color:var(--warm-gray);}
 .aw-sold{font-size:9px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--warm-gray);}
-
-/* home artists strip */
 .artists-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;padding:0 52px;margin-bottom:80px;}
 .artist-chip{text-align:center;padding:22px 14px;background:#fff;cursor:pointer;transition:background .2s;}
 .artist-chip:hover{background:var(--charcoal);}
 .artist-chip:hover .ac-name,.artist-chip:hover .ac-count{color:#fff;}
 .ac-avatar{width:68px;height:68px;border-radius:50%;background:var(--border);margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--warm-gray);overflow:hidden;}
+.ac-avatar img{width:100%;height:100%;object-fit:cover;}
 .ac-name{font-family:'Cormorant Garamond',serif;font-size:15px;margin-bottom:3px;transition:color .2s;}
 .ac-count{font-size:9px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--warm-gray);transition:color .2s;}
-
-/* editorial block */
 .editorial{margin:0 52px 80px;background:var(--charcoal);display:grid;grid-template-columns:1fr 2fr;overflow:hidden;}
 .ed-img{aspect-ratio:1;overflow:hidden;}
 .ed-img img{width:100%;height:100%;object-fit:cover;filter:grayscale(20%);}
@@ -114,12 +108,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .ed-tag{font-size:9px;font-weight:500;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:22px;}
 .ed-title{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:300;line-height:1.1;margin-bottom:18px;}
 .ed-body{font-size:12px;font-weight:300;line-height:2;color:rgba(255,255,255,.6);max-width:440px;margin-bottom:32px;}
-
-/* ────────────────────────────────────────
-   ARTISTS PAGE
-──────────────────────────────────────── */
+/* ARTISTS */
 .artists-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;padding:0 52px;margin-bottom:80px;}
-.artist-card-big{background:#fff;cursor:pointer;overflow:hidden;position:relative;}
+.artist-card-big{background:#fff;cursor:pointer;overflow:hidden;}
 .artist-card-big:hover .acb-img img{transform:scale(1.05);}
 .acb-img{aspect-ratio:4/3;overflow:hidden;background:#e8e3db;}
 .acb-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s;}
@@ -130,10 +121,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .acb-footer{display:flex;justify-content:space-between;align-items:center;padding-top:14px;border-top:1px solid var(--border);}
 .acb-works{font-size:9px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--warm-gray);}
 .acb-link{font-size:9px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);cursor:pointer;}
-
-/* ────────────────────────────────────────
-   EXHIBITIONS PAGE
-──────────────────────────────────────── */
+/* EXHIBITIONS */
 .exhibitions-list{padding:0 52px;margin-bottom:80px;}
 .exh-featured{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:2px;background:#fff;border:1px solid var(--border);}
 .exh-feat-img{aspect-ratio:16/9;overflow:hidden;background:#e8e3db;}
@@ -147,17 +135,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .exh-feat-title{font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:300;line-height:1.1;margin-bottom:10px;}
 .exh-feat-sub{font-style:italic;font-size:12px;color:var(--warm-gray);margin-bottom:6px;}
 .exh-dates{font-size:10px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--warm-gray);margin-bottom:28px;}
-
 .exh-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:2px;}
 .exh-card{background:#fff;cursor:pointer;overflow:hidden;}
 .exh-card-img{aspect-ratio:4/3;overflow:hidden;background:#e8e3db;}
 .exh-card-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s;}
 .exh-card:hover .exh-card-img img{transform:scale(1.05);}
 .exh-card-info{padding:18px 20px 20px;}
-
-/* ────────────────────────────────────────
-   GALLERY PAGE
-──────────────────────────────────────── */
+/* GALLERY */
 .gallery-filters{display:flex;gap:2px;padding:0 52px;margin-bottom:32px;flex-wrap:wrap;}
 .filter-btn{font-size:9px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;background:#fff;border:1px solid var(--border);padding:9px 18px;cursor:pointer;transition:all .2s;}
 .filter-btn.active,.filter-btn:hover{background:var(--charcoal);color:#fff;border-color:var(--charcoal);}
@@ -170,10 +154,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .gi-title{font-family:'Cormorant Garamond',serif;font-size:16px;color:#fff;transform:translateY(6px);opacity:0;transition:all .25s;}
 .gi-artist{font-size:10px;color:rgba(255,255,255,.7);transform:translateY(6px);opacity:0;transition:all .25s .05s;}
 .gallery-item:hover .gi-title,.gallery-item:hover .gi-artist{transform:translateY(0);opacity:1;}
-
-/* ────────────────────────────────────────
-   BLOG PAGE
-──────────────────────────────────────── */
+/* BLOG */
 .blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;padding:0 52px;margin-bottom:80px;}
 .blog-card{background:#fff;cursor:pointer;overflow:hidden;}
 .blog-card-img{aspect-ratio:16/10;overflow:hidden;background:#e8e3db;}
@@ -194,18 +175,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .blog-feat-tag{font-size:8px;font-weight:600;letter-spacing:.28em;text-transform:uppercase;background:var(--charcoal);color:#fff;padding:4px 10px;display:inline-block;margin-bottom:20px;width:fit-content;}
 .blog-feat-title{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;line-height:1.15;margin-bottom:14px;}
 .blog-feat-excerpt{font-size:12px;font-weight:300;line-height:1.9;color:#555;margin-bottom:28px;}
-
-/* ────────────────────────────────────────
-   NEWS PAGE
-──────────────────────────────────────── */
-.news-layout{display:grid;grid-template-columns:1fr 360px;gap:2px;padding:0 52px;margin-bottom:80px;align-start:start;}
-.news-list{}
+/* NEWS */
+.news-layout{display:grid;grid-template-columns:1fr 360px;gap:32px;padding:0 52px;margin-bottom:80px;}
 .news-item{display:grid;grid-template-columns:180px 1fr;gap:24px;padding:28px 0;border-bottom:1px solid var(--border);cursor:pointer;}
 .news-item:hover .news-item-title{color:var(--accent);}
 .news-item-img{aspect-ratio:4/3;overflow:hidden;background:#e8e3db;}
 .news-item-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s;}
 .news-item:hover .news-item-img img{transform:scale(1.05);}
-.news-item-body{}
 .news-tag{font-size:8px;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
 .news-item-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;line-height:1.2;margin-bottom:8px;transition:color .2s;}
 .news-item-excerpt{font-size:11px;font-weight:300;line-height:1.75;color:#666;margin-bottom:10px;}
@@ -216,10 +192,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .sidebar-item:last-child{border-bottom:none;}
 .si-title{font-size:12px;font-weight:400;margin-bottom:4px;line-height:1.4;}
 .si-date{font-size:9px;letter-spacing:.1em;color:var(--warm-gray);}
-
-/* ────────────────────────────────────────
-   CONTACT PAGE
-──────────────────────────────────────── */
+/* CONTACT */
 .contact-layout{display:grid;grid-template-columns:1fr 1fr;gap:2px;padding:0 52px;margin-bottom:80px;}
 .contact-info{padding:48px 48px 48px 0;}
 .contact-info h2{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;margin-bottom:24px;}
@@ -240,35 +213,28 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .form-success-icon{font-size:40px;margin-bottom:12px;}
 .form-success p{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;margin-bottom:6px;}
 .form-success span{font-size:11px;color:var(--warm-gray);}
-
-/* ────────────────────────────────────────
-   ABOUT PAGE
-──────────────────────────────────────── */
+/* ABOUT */
 .about-hero-img{width:100%;height:460px;overflow:hidden;background:#e5e0d8;}
 .about-hero-img img{width:100%;height:100%;object-fit:cover;object-position:center 30%;}
 .about-body{display:grid;grid-template-columns:1fr 1fr;gap:80px;padding:64px 52px 0;}
-.about-text{}
 .about-text h2{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;line-height:1.1;margin-bottom:28px;}
 .about-text p{font-size:12px;font-weight:300;line-height:2;color:#444;margin-bottom:18px;}
 .about-stats{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:48px;}
 .about-stat{background:#fff;padding:28px 24px;}
 .stat-num{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:300;color:var(--accent);line-height:1;}
 .stat-label{font-size:9px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--warm-gray);margin-top:6px;}
-.about-sidebar{}
-.about-team{margin-bottom:48px;}
 .about-team h3{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:300;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--border);}
 .team-member{display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--border);}
 .team-avatar{width:56px;height:56px;border-radius:50%;background:var(--border);flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--warm-gray);}
 .team-name{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:400;margin-bottom:2px;}
 .team-role{font-size:9px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--warm-gray);}
-.about-values{margin:0 52px 80px;margin-top:64px;}
+.about-values{margin:64px 52px 80px;}
 .values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
 .value-card{background:#fff;padding:36px 28px;}
 .value-icon{font-size:28px;margin-bottom:16px;}
 .value-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;margin-bottom:10px;}
 .value-desc{font-size:11px;font-weight:300;line-height:1.85;color:#555;}
-
-/* ── CART DRAWER ── */
+/* CART */
 .cart-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:300;backdrop-filter:blur(2px);}
 .cart-overlay.open{display:block;}
 .cart-drawer{position:fixed;top:0;right:-460px;bottom:0;width:420px;background:#fff;z-index:301;padding:36px 32px;transition:right .35s cubic-bezier(.4,0,.2,1);overflow-y:auto;}
@@ -289,9 +255,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .btn-full{width:100%;padding:15px;font-size:10px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;background:var(--charcoal);color:#fff;border:none;cursor:pointer;margin-bottom:8px;transition:background .2s;font-family:'Montserrat',sans-serif;}
 .btn-full:hover{background:var(--accent);}
 .btn-full-ghost{background:var(--cream);color:var(--charcoal);border:1px solid var(--border);}
-.btn-full-ghost:hover{background:var(--border);}
-
-/* ── FOOTER ── */
+/* FOOTER */
 footer{background:#111;color:rgba(255,255,255,.45);padding:60px 52px 28px;}
 .foot-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:52px;}
 .foot-brand .tagline{margin-top:14px;font-size:11px;font-weight:300;line-height:1.85;color:rgba(255,255,255,.35);max-width:220px;}
@@ -302,12 +266,7 @@ footer{background:#111;color:rgba(255,255,255,.45);padding:60px 52px 28px;}
 .foot-col a:hover{color:#fff;}
 .foot-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:24px;display:flex;justify-content:space-between;}
 .foot-copy{font-size:10px;letter-spacing:.08em;}
-
-/* ── ANIMATIONS ── */
-@keyframes fadeIn{to{opacity:1;}}
-@keyframes slideUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-
-/* ── LIGHTBOX ── */
+/* LIGHTBOX */
 .lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:400;align-items:center;justify-content:center;}
 .lightbox.open{display:flex;}
 .lb-img{max-width:80vw;max-height:80vh;object-fit:contain;}
@@ -315,32 +274,46 @@ footer{background:#111;color:rgba(255,255,255,.45);padding:60px 52px 28px;}
 .lb-info{position:absolute;bottom:32px;left:0;right:0;text-align:center;color:#fff;}
 .lb-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;}
 .lb-artist{font-size:11px;color:rgba(255,255,255,.55);margin-top:4px;}
-
-/* responsive */
+/* ADMIN BAR */
+.admin-bar{position:fixed;bottom:0;left:0;right:0;z-index:500;background:#111;border-top:1px solid #2a2a2a;display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:42px;}
+.admin-bar-left{display:flex;align-items:center;gap:16px;}
+.admin-bar span{font-size:10px;letter-spacing:.15em;color:rgba(255,255,255,.35);}
+.admin-bar-dot{width:6px;height:6px;border-radius:50%;background:#2ecc71;display:inline-block;margin-right:6px;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.admin-bar a{font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#b8975a;text-decoration:none;transition:color .2s;}
+.admin-bar a:hover{color:#fff;}
+/* ANIMS */
+@keyframes fadeIn{to{opacity:1;}}
+@keyframes slideUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+/* RESPONSIVE */
 @media(max-width:900px){
   nav{padding:0 20px;}
   .nav-links{display:none;}
   .home-hero{grid-template-columns:1fr;}
   .home-hero-img{height:55vw;}
-  .artworks-grid{grid-template-columns:repeat(2,1fr);padding:0 20px;}
-  .artists-strip,.artists-grid,.gallery-masonry,.exhibitions-list,.blog-grid,.news-layout,.contact-layout,.about-body{padding:0 20px;columns:auto;grid-template-columns:1fr;}
+  .artworks-grid{grid-template-columns:repeat(2,1fr)!important;padding:0 20px;}
+  .artists-strip{grid-template-columns:repeat(3,1fr);padding:0 20px;}
+  .artists-grid,.gallery-masonry,.exhibitions-list,.blog-grid,.contact-layout,.about-body{padding:0 20px;grid-template-columns:1fr;columns:auto;}
+  .news-layout{padding:0 20px;grid-template-columns:1fr;}
   .section-header{padding:40px 20px 24px;}
+  .editorial,.about-values{margin-left:0;margin-right:0;}
   .editorial{grid-template-columns:1fr;margin:0 20px 60px;}
   .ed-img{display:none;}
   .foot-top{grid-template-columns:1fr 1fr;}
+  .blog-featured,.exh-featured{grid-template-columns:1fr;}
 }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <div class="logo" onclick="showPage('home')">
-    <span class="logo-sym">⌗</span>
-    <span class="logo-name">VAEL</span>
+    <span class="logo-sym" id="navSym">⌗</span>
+    <span class="logo-name" id="navName">VAEL</span>
     <span class="logo-sub">GALERIE</span>
   </div>
-  <ul class="nav-links" id="navLinks">
+  <ul class="nav-links">
     <li><a onclick="showPage('artists')" data-page="artists">Artists</a></li>
     <li><a onclick="showPage('exhibitions')" data-page="exhibitions">Exhibitions</a></li>
     <li><a onclick="showPage('gallery')" data-page="gallery">Gallery</a></li>
@@ -354,98 +327,78 @@ footer{background:#111;color:rgba(255,255,255,.45);padding:60px 52px 28px;}
   </div>
 </nav>
 
-<!-- ══════════════ HOME ══════════════ -->
+<!-- HOME -->
 <div class="page active" id="page-home">
-  <section class="home-hero">
+  <section class="home-hero" id="homeHero">
     <div class="home-hero-img">
-      <span class="hero-chip">Featured Artist · 2025</span>
-      <img src="https://images.unsplash.com/photo-1634973357973-f2ed2657db3c?w=1200&q=80" alt="Hero art" style="opacity:0;animation:fadeIn 1.2s .3s forwards;">
+      <span class="hero-chip" id="heroChip">Featured Artist · 2025</span>
+      <img id="heroImg" src="https://images.unsplash.com/photo-1634973357973-f2ed2657db3c?w=1200&q=80" alt="Hero" style="opacity:0;">
+      <!-- overlay text — only visible in fullwidth mode -->
+      <div class="hero-overlay-text">
+        <p class="eyebrow" id="heroEyebrowFull">Currently on view</p>
+        <h1 id="heroNameFull">Espen<br>Kluge</h1>
+        <p class="desc" id="heroDesc1Full">"Alternatives" Generative Portrait Series</p>
+        <p class="desc" id="heroDesc2Full">Exclusively at Vael Galerie</p>
+        <div class="hero-cta-wrap">
+          <button class="btn-dark" onclick="showPage('gallery')" id="heroCtaBtnFull" style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.5);backdrop-filter:blur(4px);">View Collection →</button>
+        </div>
+        <div class="home-counter fullwidth-counter" id="heroCounterFull">01 / 06</div>
+      </div>
     </div>
-    <div class="home-hero-info">
-      <p class="eyebrow">Currently on view</p>
-      <h1>Espen<br>Kluge</h1>
-      <p class="desc">"Alternatives" Generative Portrait Series<br>New work available in</p>
-      <div class="links"><a href="#">digital</a><span>&nbsp;and&nbsp;</span><a href="#">print</a></div>
-      <p class="desc">Exclusively at Vael Galerie</p><br>
-      <button class="btn-dark" onclick="showPage('gallery')">View Collection →</button>
-      <div class="home-counter">01 / 06</div>
+    <div class="home-hero-info" id="heroInfoPanel">
+      <p class="eyebrow" id="heroEyebrow">Currently on view</p>
+      <h1 id="heroName">Espen<br>Kluge</h1>
+      <p class="desc" id="heroDesc1">"Alternatives" Generative Portrait Series</p>
+      <p class="desc" id="heroDesc2">Exclusively at Vael Galerie</p><br>
+      <button class="btn-dark" id="heroCtaBtn" onclick="showPage('gallery')">View Collection →</button>
+      <div class="home-counter" id="heroCounter">01 / 06</div>
     </div>
   </section>
-
-  <div class="ticker"><div class="ticker-inner">
-    <span class="ticker-item">New Acquisitions Available<span class="ticker-dot">✦</span></span>
-    <span class="ticker-item">Free Shipping Over $5,000<span class="ticker-dot">✦</span></span>
-    <span class="ticker-item">Automat Und Mensch — Now Open<span class="ticker-dot">✦</span></span>
-    <span class="ticker-item">Certificate of Authenticity Included<span class="ticker-dot">✦</span></span>
-    <span class="ticker-item">New Acquisitions Available<span class="ticker-dot">✦</span></span>
-    <span class="ticker-item">Free Shipping Over $5,000<span class="ticker-dot">✦</span></span>
-    <span class="ticker-item">Automat Und Mensch — Now Open<span class="ticker-dot">✦</span></span>
-    <span class="ticker-item">Certificate of Authenticity Included<span class="ticker-dot">✦</span></span>
-  </div></div>
-
+  <div class="ticker" id="tickerWrap"><div class="ticker-inner" id="tickerInner"></div></div>
   <div class="section-header"><h2 class="section-title">Available Works</h2><span class="section-link" onclick="showPage('gallery')">View All →</span></div>
   <div class="artworks-grid" id="homeArtGrid"></div>
-
   <div class="section-header"><h2 class="section-title">Our Artists</h2><span class="section-link" onclick="showPage('artists')">All Artists →</span></div>
   <div class="artists-strip" id="homeArtistStrip"></div>
-
   <div class="editorial">
     <div class="ed-img"><img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=700&q=80" alt="Journal"></div>
     <div class="ed-content">
       <p class="ed-tag">From the Galerie Journal</p>
-      <h3 class="ed-title">The New Language<br>of Generative Art</h3>
-      <p class="ed-body">As algorithms become collaborators, we find ourselves at a fascinating intersection — where code meets canvas, and the machine becomes a medium. This month we explore how contemporary artists navigate the tension between human intention and digital process.</p>
+      <h3 class="ed-title" id="edTitle">The New Language of Generative Art</h3>
+      <p class="ed-body" id="edBody">As algorithms become collaborators, we find ourselves at a fascinating intersection — where code meets canvas, and the machine becomes a medium.</p>
       <button class="btn-gold" onclick="showPage('blog')">Read the Essay →</button>
     </div>
   </div>
-
   <div id="homeFooter"></div>
 </div>
 
-<!-- ══════════════ ARTISTS ══════════════ -->
+<!-- ARTISTS -->
 <div class="page" id="page-artists">
-  <div class="page-hero">
-    <p class="page-hero-eyebrow">The Roster</p>
-    <h1 class="page-hero-title">Our Artists</h1>
-    <p class="page-hero-sub">Vael Galerie represents a curated selection of international artists working at the forefront of contemporary and digital practice.</p>
-  </div>
+  <div class="page-hero"><p class="page-hero-eyebrow">The Roster</p><h1 class="page-hero-title">Our Artists</h1><p class="page-hero-sub">Vael Galerie represents a curated selection of international artists working at the forefront of contemporary and digital practice.</p></div>
   <div class="section-header" style="padding-top:48px;"><h2 class="section-title">All Artists</h2><span class="section-link">A–Z</span></div>
   <div class="artists-grid" id="artistsGrid"></div>
   <div id="artistsFooter"></div>
 </div>
 
-<!-- ══════════════ EXHIBITIONS ══════════════ -->
+<!-- EXHIBITIONS -->
 <div class="page" id="page-exhibitions">
-  <div class="page-hero">
-    <p class="page-hero-eyebrow">On View & Upcoming</p>
-    <h1 class="page-hero-title">Exhibitions</h1>
-    <p class="page-hero-sub">From solo presentations to ambitious group shows, our programme spans the full breadth of contemporary art practice.</p>
-  </div>
+  <div class="page-hero"><p class="page-hero-eyebrow">On View & Upcoming</p><h1 class="page-hero-title">Exhibitions</h1><p class="page-hero-sub">From solo presentations to ambitious group shows, our programme spans the full breadth of contemporary art practice.</p></div>
   <div class="section-header" style="padding-top:48px;"><h2 class="section-title">Current & Upcoming</h2><span class="section-link">Past Exhibitions</span></div>
   <div class="exhibitions-list" id="exhibitionsList"></div>
   <div id="exhibFooter"></div>
 </div>
 
-<!-- ══════════════ GALLERY ══════════════ -->
+<!-- GALLERY -->
 <div class="page" id="page-gallery">
-  <div class="page-hero">
-    <p class="page-hero-eyebrow">The Collection</p>
-    <h1 class="page-hero-title">Gallery</h1>
-    <p class="page-hero-sub">Works available for acquisition — spanning painting, photography, digital art, and sculpture.</p>
-  </div>
-  <div class="section-header" style="padding-top:48px;"><h2 class="section-title">All Works</h2><span class="section-link" id="galleryCount">24 Works</span></div>
+  <div class="page-hero"><p class="page-hero-eyebrow">The Collection</p><h1 class="page-hero-title">Gallery</h1><p class="page-hero-sub">Works available for acquisition — spanning painting, photography, digital art, and sculpture.</p></div>
+  <div class="section-header" style="padding-top:48px;"><h2 class="section-title">All Works</h2><span class="section-link" id="galleryCount"></span></div>
   <div class="gallery-filters" id="galleryFilters"></div>
   <div class="gallery-masonry" id="galleryMasonry"></div>
   <div id="galleryFooter"></div>
 </div>
 
-<!-- ══════════════ BLOG ══════════════ -->
+<!-- BLOG -->
 <div class="page" id="page-blog">
-  <div class="page-hero">
-    <p class="page-hero-eyebrow">Writing & Ideas</p>
-    <h1 class="page-hero-title">Journal</h1>
-    <p class="page-hero-sub">Essays, interviews, and criticism from the Vael Galerie editorial team.</p>
-  </div>
+  <div class="page-hero"><p class="page-hero-eyebrow">Writing & Ideas</p><h1 class="page-hero-title">Journal</h1><p class="page-hero-sub">Essays, interviews, and criticism from the Vael Galerie editorial team.</p></div>
   <div class="section-header" style="padding-top:48px;"><h2 class="section-title">Featured</h2></div>
   <div class="blog-featured" id="blogFeatured"></div>
   <div class="section-header"><h2 class="section-title">Latest Posts</h2><span class="section-link">All Posts →</span></div>
@@ -453,85 +406,55 @@ footer{background:#111;color:rgba(255,255,255,.45);padding:60px 52px 28px;}
   <div id="blogFooter"></div>
 </div>
 
-<!-- ══════════════ NEWS ══════════════ -->
+<!-- NEWS -->
 <div class="page" id="page-news">
-  <div class="page-hero">
-    <p class="page-hero-eyebrow">Press & Announcements</p>
-    <h1 class="page-hero-title">News</h1>
-    <p class="page-hero-sub">The latest from Vael Galerie — press coverage, artist news, and galerie announcements.</p>
-  </div>
+  <div class="page-hero"><p class="page-hero-eyebrow">Press & Announcements</p><h1 class="page-hero-title">News</h1><p class="page-hero-sub">The latest from Vael Galerie — press coverage, artist news, and galerie announcements.</p></div>
   <div class="section-header" style="padding-top:48px;"><h2 class="section-title">Latest</h2></div>
   <div class="news-layout" id="newsLayout"></div>
   <div id="newsFooter"></div>
 </div>
 
-<!-- ══════════════ CONTACT ══════════════ -->
+<!-- CONTACT -->
 <div class="page" id="page-contact">
-  <div class="page-hero">
-    <p class="page-hero-eyebrow">Get in Touch</p>
-    <h1 class="page-hero-title">Contact</h1>
-    <p class="page-hero-sub">We welcome enquiries about artworks, exhibitions, and artist representation.</p>
-  </div>
+  <div class="page-hero"><p class="page-hero-eyebrow">Get in Touch</p><h1 class="page-hero-title">Contact</h1><p class="page-hero-sub">We welcome enquiries about artworks, exhibitions, and artist representation.</p></div>
   <div class="contact-layout" style="margin-top:56px;">
     <div class="contact-info">
       <h2>Visit the Galerie</h2>
-      <div class="contact-block">
-        <h4>Address</h4>
-        <p>14 Rue de l'Art Contemporain<br>75003 Paris, France</p>
-      </div>
-      <div class="contact-block">
-        <h4>Hours</h4>
-        <p>Tuesday – Saturday: 11:00 – 18:30<br>Sunday: 12:00 – 17:00<br>Monday: Closed</p>
-      </div>
-      <div class="contact-block">
-        <h4>Contact</h4>
-        <p>T: <a href="tel:+33140280000">+33 1 40 28 00 00</a><br>E: <a href="mailto:info@vaelgalerie.com">info@vaelgalerie.com</a></p>
-      </div>
-      <div class="contact-block">
-        <h4>Press & Partnerships</h4>
-        <p>E: <a href="mailto:press@vaelgalerie.com">press@vaelgalerie.com</a></p>
-      </div>
+      <div class="contact-block"><h4>Address</h4><p id="cAddr">14 Rue de l'Art Contemporain, 75003 Paris</p></div>
+      <div class="contact-block"><h4>Hours</h4><p id="cHours">Tue–Sat: 11:00–18:30 · Sun: 12:00–17:00 · Mon: Closed</p></div>
+      <div class="contact-block"><h4>Contact</h4><p id="cDetails">info@vaelgalerie.com</p></div>
       <div class="contact-map">[ MAP EMBED ]</div>
     </div>
     <div class="contact-form-wrap">
       <h2>Send an Enquiry</h2>
-      <div id="contactFormInner">
+      <div id="cFormInner">
         <div class="form-row">
           <div class="form-group"><label>First Name</label><input type="text" placeholder="Marie"></div>
           <div class="form-group"><label>Last Name</label><input type="text" placeholder="Dupont"></div>
         </div>
         <div class="form-group"><label>Email</label><input type="email" placeholder="marie@example.com"></div>
-        <div class="form-group"><label>Subject</label>
-          <select><option>Artwork Enquiry</option><option>Exhibition Info</option><option>Artist Representation</option><option>Press</option><option>Other</option></select>
-        </div>
+        <div class="form-group"><label>Subject</label><select><option>Artwork Enquiry</option><option>Exhibition Info</option><option>Artist Representation</option><option>Press</option><option>Other</option></select></div>
         <div class="form-group"><label>Message</label><textarea placeholder="I am interested in..."></textarea></div>
         <button class="btn-dark" onclick="submitForm()" style="width:100%;justify-content:center;">Send Message</button>
       </div>
-      <div class="form-success" id="formSuccess">
-        <div class="form-success-icon">✓</div>
-        <p>Message Received</p>
-        <span>We'll be in touch within 24 hours.</span>
-      </div>
+      <div class="form-success" id="formSuccess"><div class="form-success-icon">✓</div><p>Message Received</p><span>We'll be in touch within 24 hours.</span></div>
     </div>
   </div>
   <div id="contactFooter"></div>
 </div>
 
-<!-- ══════════════ ABOUT ══════════════ -->
+<!-- ABOUT -->
 <div class="page" id="page-about">
-  <div class="about-hero-img">
-    <img src="https://images.unsplash.com/photo-1518998053901-5348d3961a04?w=1400&q=80" alt="Galerie interior">
-  </div>
+  <div class="about-hero-img"><img src="https://images.unsplash.com/photo-1518998053901-5348d3961a04?w=1400&q=80" alt="Galerie interior"></div>
   <div class="about-body">
     <div class="about-text">
       <h2>A Space for<br>Contemporary Vision</h2>
-      <p>Founded in 2008, Vael Galerie has established itself as one of Europe's foremost platforms for contemporary and digital art. Located in the heart of Paris's Marais district, we represent a carefully curated roster of international artists working across painting, photography, sculpture, and emerging digital media.</p>
-      <p>Our programme is built on the belief that art has the power to transform how we see the world. We are committed to presenting work that challenges, provokes, and ultimately enriches public discourse — both within the galerie walls and through our expansive online presence.</p>
-      <p>Over seventeen years, we have placed work in major public and private collections across five continents, and organised exhibitions at international art fairs including Art Basel, FIAC, and Frieze.</p>
+      <p>Founded in 2008, Vael Galerie has established itself as one of Europe's foremost platforms for contemporary and digital art, located in the heart of Paris's Marais district.</p>
+      <p>Our programme is built on the belief that art has the power to transform how we see the world. Over seventeen years, we have placed work in major public and private collections across five continents, and organised exhibitions at Art Basel, FIAC, and Frieze.</p>
       <div class="about-stats">
         <div class="about-stat"><div class="stat-num">17</div><div class="stat-label">Years Active</div></div>
-        <div class="about-stat"><div class="stat-num">43</div><div class="stat-label">Artists</div></div>
-        <div class="about-stat"><div class="stat-num">200+</div><div class="stat-label">Exhibitions</div></div>
+        <div class="about-stat"><div class="stat-num" id="aArtists">—</div><div class="stat-label">Artists</div></div>
+        <div class="about-stat"><div class="stat-num" id="aWorks">—</div><div class="stat-label">Works</div></div>
         <div class="about-stat"><div class="stat-num">60+</div><div class="stat-label">Countries</div></div>
       </div>
     </div>
@@ -542,7 +465,6 @@ footer{background:#111;color:rgba(255,255,255,.45);padding:60px 52px 28px;}
         <div class="team-member"><div class="team-avatar">MB</div><div><div class="team-name">Marc Beaumont</div><div class="team-role">Senior Curator</div></div></div>
         <div class="team-member"><div class="team-avatar">SL</div><div><div class="team-name">Sofia Larsson</div><div class="team-role">Artist Relations</div></div></div>
         <div class="team-member"><div class="team-avatar">JR</div><div><div class="team-name">Jules Renard</div><div class="team-role">Head of Sales</div></div></div>
-        <div class="team-member"><div class="team-avatar">AT</div><div><div class="team-name">Aiko Tanaka</div><div class="team-role">Digital Programme</div></div></div>
       </div>
       <button class="btn-outline" style="width:100%;justify-content:center;" onclick="showPage('contact')">Work With Us →</button>
     </div>
@@ -550,7 +472,7 @@ footer{background:#111;color:rgba(255,255,255,.45);padding:60px 52px 28px;}
   <div class="about-values">
     <div class="section-header" style="padding:56px 0 32px;"><h2 class="section-title">What We Stand For</h2></div>
     <div class="values-grid">
-      <div class="value-card"><div class="value-icon">◈</div><div class="value-title">Curatorial Integrity</div><p class="value-desc">Every work in our programme is selected through rigorous curatorial process. We never compromise the integrity of our artists' visions for commercial convenience.</p></div>
+      <div class="value-card"><div class="value-icon">◈</div><div class="value-title">Curatorial Integrity</div><p class="value-desc">Every work is selected through rigorous curatorial process. We never compromise the integrity of our artists' visions for commercial convenience.</p></div>
       <div class="value-card"><div class="value-icon">◉</div><div class="value-title">Artist-First</div><p class="value-desc">Our relationships with artists are built on mutual trust and long-term partnership. We invest in careers, not just individual works.</p></div>
       <div class="value-card"><div class="value-icon">◌</div><div class="value-title">Global Reach</div><p class="value-desc">Through our international fair programme and online platform, we connect artists and collectors across continents and cultures.</p></div>
     </div>
@@ -561,13 +483,10 @@ footer{background:#111;color:rgba(255,255,255,.45);padding:60px 52px 28px;}
 <!-- CART DRAWER -->
 <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
 <div class="cart-drawer" id="cartDrawer">
-  <div class="cart-drawer-hdr">
-    <h2 class="cdr-title">Your Selection</h2>
-    <button class="close-x" onclick="toggleCart()">✕</button>
-  </div>
+  <div class="cart-drawer-hdr"><h2 class="cdr-title">Your Selection</h2><button class="close-x" onclick="toggleCart()">✕</button></div>
   <div id="cartItems"><div class="cart-empty">Your cart is empty.<br>Discover works in our collection.</div></div>
   <div class="cart-foot" id="cartFoot" style="display:none;">
-    <div class="cart-total-row"><span>Total</span><span id="cartTotal">$0</span></div>
+    <div class="cart-total-row"><span>Total</span><span id="cartTotal"></span></div>
     <button class="btn-full">Proceed to Checkout</button>
     <button class="btn-full btn-full-ghost" onclick="toggleCart()">Continue Browsing</button>
   </div>
@@ -580,315 +499,237 @@ footer{background:#111;color:rgba(255,255,255,.45);padding:60px 52px 28px;}
   <div class="lb-info"><div class="lb-title" id="lbTitle"></div><div class="lb-artist" id="lbArtist"></div></div>
 </div>
 
+<!-- ADMIN BAR -->
+<div class="admin-bar">
+  <div class="admin-bar-left">
+    <span><span class="admin-bar-dot"></span>CMS Connected</span>
+    <span>Changes from admin apply instantly</span>
+  </div>
+  <a href="https://vaelgalerie.store/admin.html" target="_blank">↗ Open Admin Panel</a>
+</div>
+
 <script>
-// ── DATA ──
-const ARTWORKS = [
-  {id:1,title:"Mirror Sequence I",artist:"Espen Kluge",price:4800,medium:"Digital Print",edition:"Ed. 1/5",img:"https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&q=80",badge:"NEW",sold:false,cat:"Digital"},
-  {id:2,title:"Chromatic Drift",artist:"María Valdés",price:7200,medium:"Oil on Canvas",edition:"Unique",img:"https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=600&q=80",badge:"",sold:false,cat:"Painting"},
-  {id:3,title:"Void Study #4",artist:"Theo Haas",price:3600,medium:"Archival Print",edition:"Ed. 2/10",img:"https://images.unsplash.com/photo-1547891654-e66ed7ebb968?w=600&q=80",badge:"",sold:true,cat:"Photography"},
-  {id:4,title:"Liminal Space",artist:"Lena Novak",price:9500,medium:"Mixed Media",edition:"Unique",img:"https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=600&q=80",badge:"FEATURED",sold:false,cat:"Mixed Media"},
-  {id:5,title:"Resonance Field",artist:"Rafael Cruz",price:2800,medium:"Digital Print",edition:"Ed. 3/7",img:"https://images.unsplash.com/photo-1536924940846-227afb31e2a5?w=600&q=80",badge:"",sold:false,cat:"Digital"},
-  {id:6,title:"Alternate Geometry",artist:"Espen Kluge",price:5400,medium:"Giclée Print",edition:"Ed. 1/3",img:"https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&q=80",badge:"NEW",sold:false,cat:"Digital"},
-  {id:7,title:"Soft Collapse",artist:"María Valdés",price:11000,medium:"Oil on Linen",edition:"Unique",img:"https://images.unsplash.com/photo-1549490349-8643362247b5?w=600&q=80",badge:"",sold:false,cat:"Painting"},
-  {id:8,title:"Fragmented Sky",artist:"Theo Haas",price:6300,medium:"C-Print",edition:"Ed. 2/5",img:"https://images.unsplash.com/photo-1432958576632-8a39f6b97dc7?w=600&q=80",badge:"",sold:true,cat:"Photography"},
-  {id:9,title:"Deep Current",artist:"Lena Novak",price:8200,medium:"Acrylic on Board",edition:"Unique",img:"https://images.unsplash.com/photo-1512389142860-9c449e58a543?w=600&q=80",badge:"",sold:false,cat:"Painting"},
-  {id:10,title:"Signal / Noise",artist:"Rafael Cruz",price:4100,medium:"Digital Print",edition:"Ed. 4/8",img:"https://images.unsplash.com/photo-1501366062246-723b4d3e4eb6?w=600&q=80",badge:"",sold:false,cat:"Digital"},
-  {id:11,title:"Peripheral Vision",artist:"Espen Kluge",price:3900,medium:"Giclée Print",edition:"Ed. 2/5",img:"https://images.unsplash.com/photo-1560015534-cee980ba7e13?w=600&q=80",badge:"",sold:false,cat:"Digital"},
-  {id:12,title:"Warm Threshold",artist:"María Valdés",price:13500,medium:"Oil on Canvas",edition:"Unique",img:"https://images.unsplash.com/photo-1483101974978-cf266fdf1138?w=600&q=80",badge:"FEATURED",sold:false,cat:"Painting"},
-];
+// ═══════════════════════════════════════════
+// !! REPLACE THESE TWO VALUES WITH YOUR OWN !!
+const SB_URL = 'https://bevgzbfvhogirnbehifo.supabase.co/rest/v1/';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJldmd6YmZ2aG9naXJuYmVoaWZvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg0OTQ2NzksImV4cCI6MjA5NDA3MDY3OX0.QUzZFpFunth3IaXLgv4dnBgaJy-t9bn_g7y5-Zm1j4I';
+// ═══════════════════════════════════════════
+const sb = supabase.createClient(SB_URL, SB_KEY);
 
-const ARTISTS = [
-  {name:"Espen Kluge",nationality:"Norwegian, b. 1979",works:12,bio:"Kluge explores the intersection of portraiture and algorithmic process. His 'Alternatives' series uses generative systems to produce works of haunting, fragmented intimacy.",img:"https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80"},
-  {name:"María Valdés",nationality:"Spanish, b. 1985",works:8,bio:"Valdés works in paint and mixed media, investigating the body's relationship to landscape and memory. Her surfaces accumulate gestural marks that suggest both erosion and growth.",img:"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80"},
-  {name:"Theo Haas",nationality:"German, b. 1977",works:21,bio:"Haas is one of Europe's most respected photographers. Working with long exposures and darkroom processes, he produces images that collapse time into a single, luminous plane.",img:"https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80"},
-  {name:"Lena Novak",nationality:"Czech, b. 1990",works:5,bio:"Novak's practice spans installation, sculpture, and painting. She is interested in the phenomenology of attention — how we focus, drift, and return.",img:"https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=600&q=80"},
-  {name:"Rafael Cruz",nationality:"Brazilian, b. 1983",works:17,bio:"Cruz makes digital works that question the boundaries between code and craft. His output ranges from intimate screen-based pieces to large-scale architectural projections.",img:"https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=600&q=80"},
-  {name:"Aiko Sato",nationality:"Japanese, b. 1988",works:9,bio:"Sato's delicate ink and digital hybrid works draw on Shinto ritual imagery and contemporary urban experience. She lives and works between Tokyo and Berlin.",img:"https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&q=80"},
-];
+// ── GLOBAL DATA ──
+let DB = { artworks:[], artists:[], exhibitions:[], blog:[], news:[], hero:{}, ticker:{messages:[],speed:'22s'}, design:{colors:{},artPerRow:4,showTicker:true,showCounter:true}, settings:{currency:'₹'} };
 
-const EXHIBITIONS = [
-  {title:"Automat Und Mensch",sub:"A History of AI and Generative Art",status:"on",dates:"May 20 – Oct 15, 2025",img:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=80",featured:true},
-  {title:"Soft Architecture",sub:"Lena Novak",status:"upcoming",dates:"Nov 8 – Jan 25, 2026",img:"https://images.unsplash.com/photo-1541754997-1b3ffe990b94?w=600&q=80",featured:false},
-  {title:"Dark Field Studies",sub:"Theo Haas",status:"on",dates:"Apr 2 – Jun 28, 2025",img:"https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=600&q=80",featured:false},
-  {title:"Chroma",sub:"María Valdés",status:"past",dates:"Jan 10 – Mar 15, 2025",img:"https://images.unsplash.com/photo-1547891654-e66ed7ebb968?w=600&q=80",featured:false},
-  {title:"Signal",sub:"Rafael Cruz",status:"past",dates:"Oct 2024",img:"https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&q=80",featured:false},
-];
+// ── LOAD ALL DATA FROM SUPABASE ──
+async function loadDB(){
+  const [aw, ar, ex, bl, nw, settingsRows] = await Promise.all([
+    sb.from('artworks').select('*').order('created_at',{ascending:false}),
+    sb.from('artists').select('*').order('name'),
+    sb.from('exhibitions').select('*').order('created_at',{ascending:false}),
+    sb.from('blog').select('*').order('created_at',{ascending:false}),
+    sb.from('news').select('*').order('created_at',{ascending:false}),
+    sb.from('settings').select('key,value'),
+  ]);
+  DB.artworks    = aw.data   || [];
+  DB.artists     = ar.data   || [];
+  DB.exhibitions = ex.data   || [];
+  DB.blog        = bl.data   || [];
+  DB.news        = nw.data   || [];
+  // Parse settings rows into DB keys
+  (settingsRows.data||[]).forEach(row => { DB[row.key] = row.value; });
+  // Ensure currency default
+  if(!DB.settings) DB.settings = {};
+  if(!DB.settings.currency) DB.settings.currency = '₹';
+}
 
-const BLOG_POSTS = [
-  {cat:"Essay",title:"The New Language of Generative Art",excerpt:"As algorithms become collaborators, artists navigate a new frontier between human intention and digital process.",author:"Véronique Keller",date:"May 2025",img:"https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=700&q=80",featured:true},
-  {cat:"Interview",title:"In the Studio: Espen Kluge on Portraiture and Code",excerpt:"We visit the Oslo studio of Espen Kluge, where he discusses his evolving relationship with generative systems.",author:"Marc Beaumont",date:"Apr 2025",img:"https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&q=80",featured:false},
-  {cat:"Review",title:"Automat Und Mensch: An Exhibition Review",excerpt:"The group show marks a decisive moment for digital art's relationship to institutional space.",author:"Sofia Larsson",date:"May 2025",img:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",featured:false},
-  {cat:"Opinion",title:"Why Painting Still Matters in 2025",excerpt:"María Valdés makes a case for the continued urgency of paint in an age of digital reproduction.",author:"Jules Renard",date:"Mar 2025",img:"https://images.unsplash.com/photo-1549490349-8643362247b5?w=600&q=80",featured:false},
-  {cat:"News",title:"Vael at Art Basel 2025",excerpt:"We will be presenting a curated booth of six artists at Art Basel 2025 in Hall 2.0.",author:"Vael Galerie",date:"Mar 2025",img:"https://images.unsplash.com/photo-1518998053901-5348d3961a04?w=600&q=80",featured:false},
-  {cat:"Essay",title:"Collecting Digital: A Primer for New Collectors",excerpt:"Everything you need to know about acquiring digital and NFT-adjacent works — from certificates to long-term care.",author:"Aiko Tanaka",date:"Feb 2025",img:"https://images.unsplash.com/photo-1536924940846-227afb31e2a5?w=600&q=80",featured:false},
-];
+// ── THEME ──
+function applyTheme(){
+  const c=DB.design&&DB.design.colors||{};const d=DB.design||{};const r=document.documentElement;
+  if(c.cream)r.style.setProperty('--cream',c.cream);
+  if(c.charcoal)r.style.setProperty('--charcoal',c.charcoal);
+  if(c.accent)r.style.setProperty('--accent',c.accent);
+  if(c.gold)r.style.setProperty('--gold',c.gold);
+  r.style.setProperty('--art-cols',d.artPerRow||4);
+  const sym=document.getElementById('navSym');const nm=document.getElementById('navName');
+  if(sym&&d.brandSymbol)sym.textContent=d.brandSymbol;
+  if(nm&&d.brandName)nm.textContent=d.brandName;
+  document.title=(d.brandName||'VAEL')+' — Contemporary Art Gallery';
+}
 
-const NEWS_ITEMS = [
-  {tag:"Announcement",title:"Vael Galerie Opens New Digital Programme",excerpt:"We are proud to announce the launch of our expanded online collecting platform, offering digital works by all gallery artists.",date:"May 8, 2025",img:"https://images.unsplash.com/photo-1536924940846-227afb31e2a5?w=400&q=80"},
-  {tag:"Press",title:"Espen Kluge Named in Time's 100 Most Influential Artists",excerpt:"The Oslo-based artist's 'Alternatives' series was cited as one of the most significant contributions to portrait art in a decade.",date:"Apr 22, 2025",img:"https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&q=80"},
-  {tag:"Fair",title:"Vael at Frieze New York 2025",excerpt:"Join us at Booth C12, Frieze New York, May 7–11. We'll be presenting new works by Kluge, Valdés, and Sato.",date:"Apr 15, 2025",img:"https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=400&q=80"},
-  {tag:"Announcement",title:"New Artist: Aiko Sato Joins the Roster",excerpt:"We are delighted to welcome Tokyo and Berlin-based artist Aiko Sato to the gallery. Her debut exhibition opens November 2025.",date:"Mar 30, 2025",img:"https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&q=80"},
-  {tag:"Press",title:"Automat Und Mensch Coverage in Le Monde",excerpt:"The exhibition received a full-page review in Le Monde's arts section, calling it 'the defining show of the season.'",date:"Mar 12, 2025",img:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80"},
-];
+// ── HERO ──
+function applyHero(){
+  const h=DB.hero||{};
+  // helper: set textContent safely
+  const s=(id,v)=>{const e=document.getElementById(id);if(e&&v!==undefined)e.textContent=v;};
+  const nameHTML = h.name ? h.name.replace('\n','<br>') : '';
+
+  // info panel (split mode)
+  s('heroChip',h.chip); s('heroEyebrow',h.eyebrow);
+  s('heroDesc1',h.desc1); s('heroDesc2',h.desc2);
+  if(nameHTML){const e=document.getElementById('heroName');if(e)e.innerHTML=nameHTML;}
+  if(h.cta){const e=document.getElementById('heroCtaBtn');if(e)e.textContent=h.cta;}
+
+  // overlay text (fullwidth mode) — mirror same values
+  s('heroEyebrowFull',h.eyebrow); s('heroDesc1Full',h.desc1); s('heroDesc2Full',h.desc2);
+  if(nameHTML){const e=document.getElementById('heroNameFull');if(e)e.innerHTML=nameHTML;}
+  if(h.cta){const e=document.getElementById('heroCtaBtnFull');if(e)e.textContent=h.cta;}
+
+  // image
+  if(h.img){const e=document.getElementById('heroImg');if(e)e.src=h.img;}
+
+  // fullwidth toggle — read from design.heroFullwidth
+  const fullwidth = DB.design && DB.design.heroFullwidth;
+  const hero = document.getElementById('homeHero');
+  if(hero) hero.classList.toggle('fullwidth', !!fullwidth);
+
+  // counter visibility
+  const ctr=document.getElementById('heroCounter');
+  const ctrF=document.getElementById('heroCounterFull');
+  const showCtr = !(DB.design && DB.design.showCounter===false);
+  if(ctr)  ctr.style.display  = showCtr ? '' : 'none';
+  if(ctrF) ctrF.style.display = showCtr ? '' : 'none';
+}
+
+// ── TICKER ──
+function applyTicker(){
+  const t=DB.ticker||{};const msgs=t.messages||[];
+  document.documentElement.style.setProperty('--tick-spd',t.speed||'22s');
+  const wrap=document.getElementById('tickerWrap');
+  if(DB.design&&DB.design.showTicker===false){if(wrap)wrap.style.display='none';return;}
+  if(wrap)wrap.style.display='';
+  const inner=document.getElementById('tickerInner');if(!inner)return;
+  const doubled=[...msgs,...msgs];
+  inner.innerHTML=doubled.map(m=>`<span class="ticker-item">${m}<span class="ticker-dot">✦</span></span>`).join('');
+}
+
+// ── CONTACT ──
+function applyContactInfo(){
+  const s=DB.settings||{};
+  const a=document.getElementById('cAddr');const h=document.getElementById('cHours');const d=document.getElementById('cDetails');
+  if(a&&s.address)a.innerHTML=s.address.replace(/\n/g,'<br>');
+  if(h&&s.hours)h.innerHTML=s.hours.replace(/\n/g,'<br>');
+  if(d)d.innerHTML=[s.phone?`T: <a href="tel:${s.phone}">${s.phone}</a>`:'',s.email?`E: <a href="mailto:${s.email}">${s.email}</a>`:''].filter(Boolean).join('<br>');
+}
+
+// ── CURRENCY ──
+const CUR=()=>(DB.settings&&DB.settings.currency)||'₹';
 
 // ── CART ──
-let cart = [];
-function addToCart(id){
-  const a = ARTWORKS.find(x=>x.id===id);
-  if(!a||a.sold) return;
-  if(!cart.find(x=>x.id===id)){cart.push(a);renderCart();}
-  toggleCart();
-}
+let cart=[];
+function addToCart(id){const a=DB.artworks.find(x=>x.id===id);if(!a||a.sold)return;if(!cart.find(x=>x.id===id)){cart.push(a);renderCart();}toggleCart();}
 function removeFromCart(id){cart=cart.filter(x=>x.id!==id);renderCart();}
 function renderCart(){
   document.getElementById('cartCount').textContent=cart.length;
-  const total=cart.reduce((s,a)=>s+a.price,0);
-  document.getElementById('cartTotal').textContent='$'+total.toLocaleString();
+  document.getElementById('cartTotal').textContent=CUR()+cart.reduce((s,a)=>s+a.price,0).toLocaleString();
   document.getElementById('cartFoot').style.display=cart.length?'block':'none';
   document.getElementById('cartItems').innerHTML=cart.length
-    ?cart.map(a=>`<div class="cart-item">
-      <img class="ci-img" src="${a.img}" alt="">
-      <div class="ci-info"><div class="ci-title">${a.title}</div><div class="ci-artist">${a.artist} · ${a.medium}</div><div class="ci-price">$${a.price.toLocaleString()}</div></div>
-      <button class="ci-remove" onclick="removeFromCart(${a.id})">Remove</button>
-    </div>`).join('')
+    ?cart.map(a=>`<div class="cart-item"><img class="ci-img" src="${a.img}" alt=""><div class="ci-info"><div class="ci-title">${a.title}</div><div class="ci-artist">${a.artist} · ${a.medium}</div><div class="ci-price">${CUR()}${a.price.toLocaleString()}</div></div><button class="ci-remove" onclick="removeFromCart(${a.id})">Remove</button></div>`).join('')
     :'<div class="cart-empty">Your cart is empty.<br>Discover works in our collection.</div>';
 }
-function toggleCart(){
-  document.getElementById('cartDrawer').classList.toggle('open');
-  document.getElementById('cartOverlay').classList.toggle('open');
-}
+function toggleCart(){document.getElementById('cartDrawer').classList.toggle('open');document.getElementById('cartOverlay').classList.toggle('open');}
 
-// ── ARTWORK CARD HTML ──
-function artworkCardHTML(a){
-  return `<div class="artwork-card">
-    <div class="artwork-img-wrap">
-      <img src="${a.img}" alt="${a.title}" loading="lazy">
-      <div class="artwork-overlay">
-        ${!a.sold?`<button class="atc-btn" onclick="addToCart(${a.id})">Add to Selection</button>`:''}
-      </div>
-    </div>
-    <div class="artwork-info">
-      ${a.badge?`<div class="aw-badge">${a.badge}</div>`:''}
-      <div class="aw-title">${a.title}</div>
-      <div class="aw-artist">${a.artist}</div>
-      <div class="aw-footer">
-        ${a.sold?`<span class="aw-sold">Sold</span>`:`<span class="aw-price">$${a.price.toLocaleString()}</span>`}
-        <span class="aw-medium">${a.medium}</span>
-      </div>
-    </div>
-  </div>`;
-}
+// ── ARTWORK CARD ──
+function artCard(a){return`<div class="artwork-card"><div class="artwork-img-wrap"><img src="${a.img}" alt="${a.title}" loading="lazy"><div class="artwork-overlay">${!a.sold?`<button class="atc-btn" onclick="addToCart(${a.id})">Add to Selection</button>`:''}</div></div><div class="artwork-info">${a.badge?`<div class="aw-badge">${a.badge}</div>`:''}<div class="aw-title">${a.title}</div><div class="aw-artist">${a.artist}</div><div class="aw-footer">${a.sold?`<span class="aw-sold">Sold</span>`:`<span class="aw-price">${CUR()}${Number(a.price).toLocaleString()}</span>`}<span class="aw-medium">${a.medium}</span></div></div></div>`;}
 
-// ── FOOTER HTML ──
+// ── FOOTER ──
 function footerHTML(){
-  return `<footer>
-    <div class="foot-top">
-      <div class="foot-brand">
-        <div class="logo" onclick="showPage('home')" style="align-items:flex-start;cursor:pointer;">
-          <span class="logo-sym" style="color:#fff;">⌗</span>
-          <span class="logo-name" style="color:#fff;">VAEL</span>
-          <span class="logo-sub">GALERIE</span>
-        </div>
-        <p class="tagline">Contemporary and digital art, curated for the discerning collector.</p>
-      </div>
-      <div class="foot-col"><h4>Explore</h4><ul>
-        <li><a onclick="showPage('artists')">Artists</a></li>
-        <li><a onclick="showPage('exhibitions')">Exhibitions</a></li>
-        <li><a onclick="showPage('gallery')">Gallery</a></li>
-        <li><a onclick="showPage('blog')">Journal</a></li>
-      </ul></div>
-      <div class="foot-col"><h4>Collect</h4><ul>
-        <li><a>How to Buy</a></li>
-        <li><a>Shipping & Insurance</a></li>
-        <li><a>Certificates</a></li>
-        <li><a>Returns</a></li>
-      </ul></div>
-      <div class="foot-col"><h4>Galerie</h4><ul>
-        <li><a onclick="showPage('about')">About Us</a></li>
-        <li><a onclick="showPage('contact')">Contact</a></li>
-        <li><a onclick="showPage('news')">Press</a></li>
-        <li><a>Newsletter</a></li>
-      </ul></div>
-    </div>
-    <div class="foot-bottom">
-      <span class="foot-copy">© 2025 Vael Galerie. All rights reserved.</span>
-      <span class="foot-copy">Privacy · Terms · Cookies</span>
-    </div>
-  </footer>`;
+  const d=DB.design||{};const s=DB.settings||{};const n=d.brandName||'VAEL';
+  return`<footer><div class="foot-top"><div class="foot-brand"><div class="logo" onclick="showPage('home')" style="align-items:flex-start;"><span class="logo-sym" style="color:#fff;">${d.brandSymbol||'⌗'}</span><span class="logo-name" style="color:#fff;">${n}</span><span class="logo-sub">GALERIE</span></div><p class="tagline">${d.brandTagline||'Contemporary art for the discerning collector.'}</p></div><div class="foot-col"><h4>Explore</h4><ul><li><a onclick="showPage('artists')">Artists</a></li><li><a onclick="showPage('exhibitions')">Exhibitions</a></li><li><a onclick="showPage('gallery')">Gallery</a></li><li><a onclick="showPage('blog')">Journal</a></li></ul></div><div class="foot-col"><h4>Collect</h4><ul><li><a>How to Buy</a></li><li><a>Shipping & Insurance</a></li><li><a>Certificates</a></li><li><a>Returns</a></li></ul></div><div class="foot-col"><h4>Galerie</h4><ul><li><a onclick="showPage('about')">About Us</a></li><li><a onclick="showPage('contact')">Contact</a></li><li><a onclick="showPage('news')">Press</a></li><li><a>Newsletter</a></li></ul></div></div><div class="foot-bottom"><span class="foot-copy">© ${new Date().getFullYear()} ${s.name||n}. All rights reserved.</span><span class="foot-copy">Privacy · Terms · Cookies</span></div></footer>`;
 }
 
-// ── RENDER PAGES ──
+// ── PAGE RENDERS ──
 function renderHome(){
-  document.getElementById('homeArtGrid').innerHTML=ARTWORKS.slice(0,8).map(artworkCardHTML).join('');
-  document.getElementById('homeArtistStrip').innerHTML=ARTISTS.map(a=>`
-    <div class="artist-chip" onclick="showPage('artists')">
-      <div class="ac-avatar">${a.name.split(' ').map(x=>x[0]).join('')}</div>
-      <div class="ac-name">${a.name}</div>
-      <div class="ac-count">${a.works} Works</div>
-    </div>`).join('');
+  DB=loadDB();applyTheme();applyHero();applyTicker();applyContactInfo();
+  const cols=(DB.design&&DB.design.artPerRow)||4;
+  document.getElementById('homeArtGrid').innerHTML=DB.artworks.slice(0,cols*2).map(artCard).join('');
+  document.getElementById('homeArtistStrip').innerHTML=DB.artists.map(a=>`<div class="artist-chip" onclick="showPage('artists')"><div class="ac-avatar">${a.img?`<img src="${a.img}" alt="">`:(a.name.split(' ').map(x=>x[0]).join(''))}</div><div class="ac-name">${a.name}</div><div class="ac-count">${a.works} Works</div></div>`).join('');
+  const feat=DB.blog&&DB.blog.find(p=>p.featured);
+  if(feat){const t=document.getElementById('edTitle');const b=document.getElementById('edBody');if(t)t.textContent=feat.title;if(b)b.textContent=feat.excerpt;}
   document.getElementById('homeFooter').innerHTML=footerHTML();
+  const aa=document.getElementById('aArtists');if(aa)aa.textContent=DB.artists.length;
+  const aw=document.getElementById('aWorks');if(aw)aw.textContent=DB.artworks.length;
 }
 
 function renderArtists(){
-  document.getElementById('artistsGrid').innerHTML=ARTISTS.map(a=>`
-    <div class="artist-card-big">
-      <div class="acb-img"><img src="${a.img}" alt="${a.name}" loading="lazy"></div>
-      <div class="acb-info">
-        <div class="acb-name">${a.name}</div>
-        <div class="acb-nationality">${a.nationality}</div>
-        <div class="acb-bio">${a.bio}</div>
-        <div class="acb-footer">
-          <span class="acb-works">${a.works} Available Works</span>
-          <span class="acb-link" onclick="showPage('gallery')">View Works →</span>
-        </div>
-      </div>
-    </div>`).join('');
+  document.getElementById('artistsGrid').innerHTML=DB.artists.map(a=>`<div class="artist-card-big"><div class="acb-img"><img src="${a.img}" alt="${a.name}" loading="lazy"></div><div class="acb-info"><div class="acb-name">${a.name}</div><div class="acb-nationality">${a.nationality||''}</div><div class="acb-bio">${a.bio||''}</div><div class="acb-footer"><span class="acb-works">${a.works} Available Works</span><span class="acb-link" onclick="showPage('gallery')">View Works →</span></div></div></div>`).join('');
   document.getElementById('artistsFooter').innerHTML=footerHTML();
 }
 
 function renderExhibitions(){
-  const feat=EXHIBITIONS.find(e=>e.featured);
-  const rest=EXHIBITIONS.filter(e=>!e.featured);
-  const statusLabel={on:'On Now',upcoming:'Upcoming',past:'Past'};
-  document.getElementById('exhibitionsList').innerHTML=`
-    <div class="exh-featured">
-      <div class="exh-feat-img"><img src="${feat.img}" alt="" loading="lazy"></div>
-      <div class="exh-feat-info">
-        <span class="exh-status ${feat.status}">${statusLabel[feat.status]}</span>
-        <div class="exh-feat-title">${feat.title}</div>
-        <div class="exh-feat-sub">${feat.sub}</div>
-        <div class="exh-dates">${feat.dates}</div>
-        <button class="btn-outline">Explore Exhibition →</button>
-      </div>
-    </div>
-    <div class="exh-grid">
-      ${rest.map(e=>`<div class="exh-card">
-        <div class="exh-card-img"><img src="${e.img}" alt="" loading="lazy"></div>
-        <div class="exh-card-info">
-          <span class="exh-status ${e.status}">${statusLabel[e.status]}</span>
-          <div class="exh-feat-title" style="font-size:22px;margin-top:10px;">${e.title}</div>
-          <div class="exh-feat-sub">${e.sub}</div>
-          <div class="exh-dates">${e.dates}</div>
-        </div>
-      </div>`).join('')}
-    </div>`;
+  const SL={on:'On Now',upcoming:'Upcoming',past:'Past'};
+  const feat=DB.exhibitions.find(e=>e.featured)||DB.exhibitions[0];
+  const rest=DB.exhibitions.filter(e=>e!==feat);
+  document.getElementById('exhibitionsList').innerHTML=`<div class="exh-featured"><div class="exh-feat-img"><img src="${feat.img}" alt="" loading="lazy"></div><div class="exh-feat-info"><span class="exh-status ${feat.status}">${SL[feat.status]||feat.status}</span><div class="exh-feat-title">${feat.title}</div><div class="exh-feat-sub">${feat.sub||''}</div><div class="exh-dates">${feat.dates||''}</div><button class="btn-outline">Explore Exhibition →</button></div></div><div class="exh-grid">${rest.map(e=>`<div class="exh-card"><div class="exh-card-img"><img src="${e.img}" alt="" loading="lazy"></div><div class="exh-card-info"><span class="exh-status ${e.status}">${SL[e.status]||e.status}</span><div class="exh-feat-title" style="font-size:22px;margin-top:10px;">${e.title}</div><div class="exh-feat-sub">${e.sub||''}</div><div class="exh-dates">${e.dates||''}</div></div></div>`).join('')}</div>`;
   document.getElementById('exhibFooter').innerHTML=footerHTML();
 }
 
-const FILTERS=['All','Painting','Photography','Digital','Mixed Media'];
+const CATS=['All','Painting','Photography','Digital','Mixed Media','Sculpture'];
 let activeFilter='All';
 function renderGallery(){
-  document.getElementById('galleryFilters').innerHTML=FILTERS.map(f=>`
-    <button class="filter-btn${f===activeFilter?' active':''}" onclick="setFilter('${f}')">${f}</button>`).join('');
-  const filtered=activeFilter==='All'?ARTWORKS:ARTWORKS.filter(a=>a.cat===activeFilter);
-  document.getElementById('galleryCount').textContent=filtered.length+' Works';
-  document.getElementById('galleryMasonry').innerHTML=filtered.map(a=>`
-    <div class="gallery-item" onclick="openLB('${a.img}','${a.title}','${a.artist}')">
-      <img src="${a.img}" alt="${a.title}" loading="lazy">
-      <div class="gallery-item-info">
-        <div class="gi-title">${a.title}</div>
-        <div class="gi-artist">${a.artist} · ${a.sold?'Sold':'$'+a.price.toLocaleString()}</div>
-      </div>
-    </div>`).join('');
-  if(!document.getElementById('galleryFooter').innerHTML)
-    document.getElementById('galleryFooter').innerHTML=footerHTML();
+  document.getElementById('galleryFilters').innerHTML=CATS.map(f=>`<button class="filter-btn${f===activeFilter?' active':''}" onclick="setFilter('${f}')">${f}</button>`).join('');
+  const list=activeFilter==='All'?DB.artworks:DB.artworks.filter(a=>a.cat===activeFilter);
+  document.getElementById('galleryCount').textContent=list.length+' Works';
+  document.getElementById('galleryMasonry').innerHTML=list.map(a=>`<div class="gallery-item" onclick="openLB('${a.img}','${a.title}','${a.artist}')"><img src="${a.img}" alt="${a.title}" loading="lazy"><div class="gallery-item-info"><div class="gi-title">${a.title}</div><div class="gi-artist">${a.artist} · ${a.sold?'Sold':CUR()+Number(a.price).toLocaleString()}</div></div></div>`).join('');
+  if(!document.getElementById('galleryFooter').innerHTML)document.getElementById('galleryFooter').innerHTML=footerHTML();
 }
 function setFilter(f){activeFilter=f;renderGallery();}
 
 function renderBlog(){
-  const feat=BLOG_POSTS[0];
-  const rest=BLOG_POSTS.slice(1);
-  document.getElementById('blogFeatured').innerHTML=`
-    <div class="blog-feat-img"><img src="${feat.img}" alt="" loading="lazy"></div>
-    <div class="blog-feat-body">
-      <span class="blog-feat-tag">${feat.cat}</span>
-      <div class="blog-feat-title">${feat.title}</div>
-      <p class="blog-feat-excerpt">${feat.excerpt}</p>
-      <div style="display:flex;justify-content:space-between;align-items:center;padding-top:16px;border-top:1px solid var(--border);">
-        <span style="font-size:11px;color:var(--warm-gray);">${feat.author}</span>
-        <span style="font-size:9px;letter-spacing:.1em;color:var(--warm-gray);">${feat.date}</span>
-      </div>
-    </div>`;
-  document.getElementById('blogGrid').innerHTML=rest.map(p=>`
-    <div class="blog-card">
-      <div class="blog-card-img"><img src="${p.img}" alt="" loading="lazy"></div>
-      <div class="blog-card-body">
-        <div class="blog-cat">${p.cat}</div>
-        <div class="blog-title">${p.title}</div>
-        <p class="blog-excerpt">${p.excerpt}</p>
-        <div class="blog-meta">
-          <span class="blog-author">${p.author}</span>
-          <span class="blog-date">${p.date}</span>
-        </div>
-      </div>
-    </div>`).join('');
+  const feat=DB.blog.find(p=>p.featured)||DB.blog[0];const rest=DB.blog.filter(p=>p!==feat);
+  document.getElementById('blogFeatured').innerHTML=`<div class="blog-feat-img"><img src="${feat.img}" alt="" loading="lazy"></div><div class="blog-feat-body"><span class="blog-feat-tag">${feat.cat}</span><div class="blog-feat-title">${feat.title}</div><p class="blog-feat-excerpt">${feat.excerpt}</p><div style="display:flex;justify-content:space-between;padding-top:16px;border-top:1px solid var(--border);"><span style="font-size:11px;color:var(--warm-gray);">${feat.author}</span><span style="font-size:9px;color:var(--warm-gray);">${feat.date}</span></div></div>`;
+  document.getElementById('blogGrid').innerHTML=rest.map(p=>`<div class="blog-card"><div class="blog-card-img"><img src="${p.img}" alt="" loading="lazy"></div><div class="blog-card-body"><div class="blog-cat">${p.cat}</div><div class="blog-title">${p.title}</div><p class="blog-excerpt">${p.excerpt}</p><div class="blog-meta"><span class="blog-author">${p.author}</span><span class="blog-date">${p.date}</span></div></div></div>`).join('');
   document.getElementById('blogFooter').innerHTML=footerHTML();
 }
 
 function renderNews(){
-  document.getElementById('newsLayout').innerHTML=`
-    <div class="news-list">
-      ${NEWS_ITEMS.map(n=>`<div class="news-item">
-        <div class="news-item-img"><img src="${n.img}" alt="" loading="lazy"></div>
-        <div class="news-item-body">
-          <div class="news-tag">${n.tag}</div>
-          <div class="news-item-title">${n.title}</div>
-          <p class="news-item-excerpt">${n.excerpt}</p>
-          <div class="news-item-date">${n.date}</div>
-        </div>
-      </div>`).join('')}
-    </div>
-    <div class="news-sidebar">
-      <div class="sidebar-title">Upcoming Events</div>
-      <div class="sidebar-item"><div class="si-title">Frieze New York — Booth C12</div><div class="si-date">May 7–11, 2025</div></div>
-      <div class="sidebar-item"><div class="si-title">Art Basel — Hall 2.0</div><div class="si-date">Jun 19–22, 2025</div></div>
-      <div class="sidebar-item"><div class="si-title">Soft Architecture Opening</div><div class="si-date">Nov 8, 2025</div></div>
-      <div class="sidebar-item"><div class="si-title">FIAC Paris</div><div class="si-date">Oct 2025</div></div>
-    </div>`;
+  document.getElementById('newsLayout').innerHTML=`<div class="news-list">${DB.news.map(n=>`<div class="news-item"><div class="news-item-img"><img src="${n.img}" alt="" loading="lazy"></div><div class="news-item-body"><div class="news-tag">${n.tag}</div><div class="news-item-title">${n.title}</div><p class="news-item-excerpt">${n.excerpt}</p><div class="news-item-date">${n.date}</div></div></div>`).join('')}</div><div class="news-sidebar"><div class="sidebar-title">Upcoming Events</div><div class="sidebar-item"><div class="si-title">Frieze New York — Booth C12</div><div class="si-date">May 7–11, 2025</div></div><div class="sidebar-item"><div class="si-title">Art Basel — Hall 2.0</div><div class="si-date">Jun 19–22, 2025</div></div><div class="sidebar-item"><div class="si-title">Soft Architecture Opening</div><div class="si-date">Nov 8, 2025</div></div><div class="sidebar-item"><div class="si-title">FIAC Paris</div><div class="si-date">Oct 2025</div></div></div>`;
   document.getElementById('newsFooter').innerHTML=footerHTML();
 }
 
-function renderContact(){
-  document.getElementById('contactFooter').innerHTML=footerHTML();
-}
+function renderContact(){applyContactInfo();document.getElementById('contactFooter').innerHTML=footerHTML();}
+
 function renderAbout(){
+  const aa=document.getElementById('aArtists');if(aa)aa.textContent=DB.artists.length;
+  const aw=document.getElementById('aWorks');if(aw)aw.textContent=DB.artworks.length;
   document.getElementById('aboutFooter').innerHTML=footerHTML();
 }
 
-// ── PAGE ROUTING ──
+// ── ROUTING ──
 const PAGES=['home','artists','exhibitions','gallery','blog','news','contact','about'];
-const renderers={home:renderHome,artists:renderArtists,exhibitions:renderExhibitions,gallery:renderGallery,blog:renderBlog,news:renderNews,contact:renderContact,about:renderAbout};
-const rendered={};
+const RENDERS={home:renderHome,artists:renderArtists,exhibitions:renderExhibitions,gallery:renderGallery,blog:renderBlog,news:renderNews,contact:renderContact,about:renderAbout};
 
-function showPage(name){
-  PAGES.forEach(p=>{
-    document.getElementById('page-'+p).classList.toggle('active',p===name);
-  });
-  document.querySelectorAll('.nav-links a').forEach(a=>{
-    a.classList.toggle('active',a.dataset.page===name);
-  });
-  if(!rendered[name]){renderers[name]();rendered[name]=true;}
+async function showPage(name){
+  await loadDB();
+  PAGES.forEach(p=>document.getElementById('page-'+p).classList.toggle('active',p===name));
+  document.querySelectorAll('.nav-links a').forEach(a=>a.classList.toggle('active',a.dataset.page===name));
+  applyTheme(); applyHero(); applyTicker(); applyContactInfo();
+  RENDERS[name]();
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
 // ── LIGHTBOX ──
-function openLB(src,title,artist){
-  document.getElementById('lbImg').src=src;
-  document.getElementById('lbTitle').textContent=title;
-  document.getElementById('lbArtist').textContent=artist;
-  document.getElementById('lightbox').classList.add('open');
-}
+function openLB(src,title,artist){document.getElementById('lbImg').src=src;document.getElementById('lbTitle').textContent=title;document.getElementById('lbArtist').textContent=artist;document.getElementById('lightbox').classList.add('open');}
 function closeLB(){document.getElementById('lightbox').classList.remove('open');}
 
-// ── CONTACT FORM ──
-function submitForm(){
-  document.getElementById('contactFormInner').style.display='none';
+// ── CONTACT FORM — save enquiry to Supabase orders table ──
+async function submitForm(){
+  const name  = document.querySelector('#cFormInner input[placeholder="Marie"]')?.value||'';
+  const lname = document.querySelector('#cFormInner input[placeholder="Dupont"]')?.value||'';
+  const email = document.querySelector('#cFormInner input[type="email"]')?.value||'';
+  const msg   = document.querySelector('#cFormInner textarea')?.value||'';
+  // Save as a basic enquiry record
+  if(email){
+    await sb.from('customers').upsert({email, name:`${name} ${lname}`.trim()},{onConflict:'email'});
+  }
+  document.getElementById('cFormInner').style.display='none';
   document.getElementById('formSuccess').style.display='block';
 }
 
 // ── INIT ──
-renderHome();
-rendered['home']=true;
+(async()=>{
+  await loadDB();
+  applyTheme(); applyHero(); applyTicker(); applyContactInfo();
+  renderHome();
+})();
 </script>
 </body>
 </html>
