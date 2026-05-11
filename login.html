@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Orders — Vael Galerie</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--cream:#f5f2ec;--charcoal:#1a1a1a;--warm-gray:#8a8278;--accent:#c0392b;--gold:#b8975a;--border:#ddd9d2;--white:#fff;}
+body{font-family:'Montserrat',sans-serif;background:var(--cream);color:var(--charcoal);font-size:13px;min-height:100vh;}
+
+/* NAV */
+nav{background:rgba(245,242,236,.96);border-bottom:1px solid var(--border);padding:0 52px;height:72px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;backdrop-filter:blur(10px);}
+.logo{display:flex;flex-direction:column;align-items:center;cursor:pointer;text-decoration:none;}
+.logo-sym{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:300;color:var(--charcoal);}
+.logo-name{font-size:10px;font-weight:700;letter-spacing:.4em;}
+.logo-sub{font-size:8px;letter-spacing:.3em;color:var(--warm-gray);}
+.nav-right{display:flex;gap:24px;align-items:center;}
+.nav-link{font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;color:var(--charcoal);transition:color .2s;}
+.nav-link:hover{color:var(--accent);}
+
+/* SCREENS */
+.screen{display:none;min-height:calc(100vh - 72px);}
+.screen.active{display:flex;align-items:center;justify-content:center;padding:60px 24px;}
+
+/* LOGIN CARD */
+.login-card{background:var(--white);border:1px solid var(--border);padding:52px 48px;width:440px;max-width:100%;}
+.login-card h1{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;margin-bottom:6px;}
+.login-card .sub{font-size:11px;color:var(--warm-gray);margin-bottom:36px;line-height:1.7;}
+.field{margin-bottom:20px;}
+.field label{display:block;font-size:9px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--warm-gray);margin-bottom:8px;}
+.field input{width:100%;background:var(--cream);border:1px solid var(--border);padding:12px 14px;font-family:'Montserrat',sans-serif;font-size:12px;color:var(--charcoal);outline:none;transition:border-color .2s;}
+.field input:focus{border-color:var(--charcoal);}
+.btn-main{width:100%;padding:14px;background:var(--charcoal);color:#fff;font-size:10px;font-weight:600;letter-spacing:.25em;text-transform:uppercase;border:none;cursor:pointer;font-family:'Montserrat',sans-serif;transition:background .2s;margin-top:8px;}
+.btn-main:hover{background:var(--accent);}
+.btn-main:disabled{opacity:.5;cursor:not-allowed;}
+.err{color:var(--accent);font-size:11px;margin-top:10px;min-height:16px;}
+.otp-info{font-size:11px;color:var(--warm-gray);margin-top:12px;line-height:1.7;text-align:center;}
+.divider{display:flex;align-items:center;gap:12px;margin:24px 0;}
+.divider span{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--warm-gray);}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
+.track-note{margin-top:20px;padding:14px;background:var(--cream);border:1px solid var(--border);font-size:11px;color:var(--warm-gray);line-height:1.7;}
+.track-note strong{color:var(--charcoal);}
+
+/* ORDERS SCREEN */
+.orders-wrap{min-height:calc(100vh - 72px);padding:52px;}
+.orders-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:36px;padding-bottom:20px;border-bottom:1px solid var(--border);}
+.orders-header h1{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:300;}
+.orders-header .customer-name{font-size:11px;color:var(--warm-gray);}
+.logout-link{font-size:10px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--warm-gray);cursor:pointer;transition:color .2s;}
+.logout-link:hover{color:var(--accent);}
+.empty-orders{text-align:center;padding:80px 0;}
+.empty-orders .icon{font-size:48px;margin-bottom:16px;}
+.empty-orders h2{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;margin-bottom:10px;}
+.empty-orders p{font-size:12px;color:var(--warm-gray);margin-bottom:28px;}
+
+/* ORDER CARDS */
+.order-card{background:var(--white);border:1px solid var(--border);margin-bottom:2px;overflow:hidden;}
+.order-card-header{display:grid;grid-template-columns:1fr 1fr 1fr 1fr auto;gap:0;border-bottom:1px solid var(--border);}
+.order-col{padding:16px 20px;border-right:1px solid var(--border);}
+.order-col:last-child{border-right:none;}
+.order-col-label{font-size:8px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--warm-gray);margin-bottom:5px;}
+.order-col-value{font-size:12px;font-weight:500;}
+.order-col-value.mono{font-family:monospace;font-size:11px;color:var(--gold);}
+.status-pill{display:inline-block;font-size:8px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;padding:4px 10px;border-radius:2px;}
+.s-pending{background:#fff3e0;color:#e65100;}
+.s-confirmed{background:#e3f2fd;color:#1565c0;}
+.s-shipped{background:#fff8e1;color:#f57f17;}
+.s-delivered{background:#e8f5e9;color:#2e7d32;}
+.s-cancelled,.s-refunded{background:#fce4ec;color:#c62828;}
+.order-body{display:grid;grid-template-columns:100px 1fr auto;gap:24px;padding:20px;align-items:center;}
+.order-img{width:100px;height:120px;object-fit:cover;border:1px solid var(--border);}
+.order-img-ph{width:100px;height:120px;background:var(--cream);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:28px;}
+.order-details{}
+.order-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;margin-bottom:4px;}
+.order-artist{font-size:11px;color:var(--warm-gray);margin-bottom:12px;}
+.order-meta{font-size:11px;color:var(--warm-gray);line-height:2;}
+.order-amount{text-align:right;}
+.order-amount .amount{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;}
+.order-amount .qty{font-size:10px;color:var(--warm-gray);margin-top:4px;}
+
+/* PROGRESS BAR */
+.order-progress{padding:16px 20px;background:var(--cream);border-top:1px solid var(--border);}
+.prog-steps{display:flex;align-items:center;}
+.prog-step{display:flex;flex-direction:column;align-items:center;flex:1;position:relative;}
+.prog-step:not(:last-child)::after{content:'';position:absolute;top:10px;left:calc(50% + 12px);right:calc(-50% + 12px);height:2px;background:var(--border);}
+.prog-step.done:not(:last-child)::after{background:var(--gold);}
+.prog-dot{width:20px;height:20px;border-radius:50%;border:2px solid var(--border);background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:9px;margin-bottom:6px;z-index:1;}
+.prog-step.done .prog-dot{background:var(--gold);border-color:var(--gold);color:#fff;}
+.prog-step.active .prog-dot{border-color:var(--charcoal);background:var(--charcoal);color:#fff;}
+.prog-label{font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--warm-gray);text-align:center;}
+.prog-step.done .prog-label,.prog-step.active .prog-label{color:var(--charcoal);}
+
+/* TRACK BY ORDER # */
+.track-form{display:flex;gap:8px;margin-top:12px;}
+.track-form input{flex:1;background:var(--cream);border:1px solid var(--border);padding:10px 13px;font-family:'Montserrat',sans-serif;font-size:12px;outline:none;transition:border-color .2s;}
+.track-form input:focus{border-color:var(--charcoal);}
+.track-form button{padding:10px 20px;background:var(--charcoal);color:#fff;border:none;font-size:9px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;font-family:'Montserrat',sans-serif;white-space:nowrap;transition:background .2s;}
+.track-form button:hover{background:var(--accent);}
+.track-result{margin-top:16px;}
+
+/* LOADING */
+.loading{text-align:center;padding:60px;color:var(--warm-gray);font-size:12px;letter-spacing:.1em;}
+.spin{display:inline-block;width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--charcoal);border-radius:50%;animation:spin .7s linear infinite;margin-bottom:10px;}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* FOOTER */
+footer{background:#111;color:rgba(255,255,255,.4);padding:32px 52px;display:flex;justify-content:space-between;align-items:center;}
+footer .fl{font-size:10px;letter-spacing:.1em;}
+footer a{color:rgba(255,255,255,.4);text-decoration:none;font-size:10px;letter-spacing:.1em;transition:color .2s;}
+footer a:hover{color:#fff;}
+
+@media(max-width:700px){
+  nav{padding:0 20px;}
+  .orders-wrap{padding:28px 20px;}
+  .order-card-header{grid-template-columns:1fr 1fr;gap:0;}
+  .order-body{grid-template-columns:72px 1fr;}
+  .order-amount{grid-column:1/-1;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">
+    <span class="logo-sym" id="navSym">⌗</span>
+    <span class="logo-name" id="navName">VAEL</span>
+    <span class="logo-sub">GALERIE</span>
+  </a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-link">← Back to Gallery</a>
+    <span class="logout-link" id="logoutBtn" style="display:none;" onclick="logout()">Sign Out</span>
+  </div>
+</nav>
+
+<!-- LOGIN SCREEN -->
+<div class="screen active" id="loginScreen">
+  <div class="login-card">
+    <h1>Track Your Orders</h1>
+    <p class="sub">Sign in with your email to view your purchases and track delivery status.</p>
+
+    <!-- Email OTP login -->
+    <div id="emailStep">
+      <div class="field"><label>Email Address</label><input id="emailInput" type="email" placeholder="you@example.com" autocomplete="email"></div>
+      <button class="btn-main" id="sendOtpBtn" onclick="sendOTP()">Send One-Time Password</button>
+      <div class="err" id="emailErr"></div>
+      <p class="otp-info">We'll send a 6-digit code to your email. No password needed.</p>
+    </div>
+
+    <!-- OTP verify -->
+    <div id="otpStep" style="display:none;">
+      <div class="field"><label>6-Digit Code</label><input id="otpInput" type="text" placeholder="123456" maxlength="6" autocomplete="one-time-code" inputmode="numeric"></div>
+      <button class="btn-main" id="verifyBtn" onclick="verifyOTP()">Verify & View Orders</button>
+      <div class="err" id="otpErr"></div>
+      <p class="otp-info">Didn't get it? <span style="color:var(--charcoal);cursor:pointer;text-decoration:underline;" onclick="backToEmail()">Try again</span></p>
+    </div>
+
+    <div class="divider"><span>or</span></div>
+
+    <!-- Track by order number (no login) -->
+    <div class="track-note">
+      <strong>Track without signing in</strong><br>
+      Enter your order number below to check its status.
+    </div>
+    <div class="track-form">
+      <input id="trackInput" type="text" placeholder="VGL-20250501-ABC123">
+      <button onclick="trackByNumber()">Track</button>
+    </div>
+    <div class="track-result" id="trackResult"></div>
+  </div>
+</div>
+
+<!-- ORDERS SCREEN -->
+<div class="screen" id="ordersScreen" style="display:none;align-items:flex-start;">
+  <div class="orders-wrap" style="width:100%;max-width:1000px;margin:0 auto;">
+    <div class="orders-header">
+      <div>
+        <h1>Your Orders</h1>
+        <div class="customer-name" id="customerName"></div>
+      </div>
+      <span class="logout-link" onclick="logout()">Sign Out</span>
+    </div>
+    <div id="ordersContainer"><div class="loading"><div class="spin"></div><br>Loading your orders…</div></div>
+  </div>
+</div>
+
+<footer>
+  <span class="fl" id="footerName">© 2025 Vael Galerie. All rights reserved.</span>
+  <div style="display:flex;gap:24px;">
+    <a href="index.html">Gallery</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+</footer>
+
+<script>
+// ═══════════════════════════════════════════
+// !! REPLACE WITH YOUR OWN !!
+const SB_URL = 'https://bevgzbfvhogirnbehifo.supabase.co/rest/v1/';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJldmd6YmZ2aG9naXJuYmVoaWZvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg0OTQ2NzksImV4cCI6MjA5NDA3MDY3OX0.QUzZFpFunth3IaXLgv4dnBgaJy-t9bn_g7y5-Zm1j4I';
+// ═══════════════════════════════════════════
+const sb = supabase.createClient(SB_URL, SB_KEY);
+
+let currentEmail = '';
+
+// ── LOAD BRANDING FROM SETTINGS ──
+async function loadBranding(){
+  const {data} = await sb.from('settings').select('key,value').in('key',['design','contact']);
+  (data||[]).forEach(row => {
+    if(row.key==='design'){
+      const d=row.value||{};
+      if(d.brandSymbol) document.getElementById('navSym').textContent=d.brandSymbol;
+      if(d.brandName)   document.getElementById('navName').textContent=d.brandName;
+      const r=document.documentElement;
+      if(d.colors?.cream)    r.style.setProperty('--cream',   d.colors.cream);
+      if(d.colors?.charcoal) r.style.setProperty('--charcoal',d.colors.charcoal);
+      if(d.colors?.accent)   r.style.setProperty('--accent',  d.colors.accent);
+      if(d.colors?.gold)     r.style.setProperty('--gold',    d.colors.gold);
+    }
+    if(row.key==='contact'){
+      const s=row.value||{};
+      const n=s.name||'Vael Galerie';
+      document.getElementById('footerName').textContent=`© ${new Date().getFullYear()} ${n}. All rights reserved.`;
+      document.title=`My Orders — ${n}`;
+    }
+  });
+}
+
+// ── OTP LOGIN ──
+async function sendOTP(){
+  const email=document.getElementById('emailInput').value.trim();
+  if(!email||!email.includes('@')){document.getElementById('emailErr').textContent='Enter a valid email.';return;}
+  const btn=document.getElementById('sendOtpBtn');
+  btn.disabled=true; btn.textContent='Sending…';
+  document.getElementById('emailErr').textContent='';
+  const {error}=await sb.auth.signInWithOtp({email, options:{shouldCreateUser:true}});
+  if(error){document.getElementById('emailErr').textContent=error.message;btn.disabled=false;btn.textContent='Send One-Time Password';return;}
+  currentEmail=email;
+  document.getElementById('emailStep').style.display='none';
+  document.getElementById('otpStep').style.display='block';
+}
+
+async function verifyOTP(){
+  const token=document.getElementById('otpInput').value.trim();
+  if(!token||token.length!==6){document.getElementById('otpErr').textContent='Enter the 6-digit code.';return;}
+  const btn=document.getElementById('verifyBtn');
+  btn.disabled=true; btn.textContent='Verifying…';
+  document.getElementById('otpErr').textContent='';
+  const {data,error}=await sb.auth.verifyOtp({email:currentEmail, token, type:'email'});
+  if(error){document.getElementById('otpErr').textContent=error.message;btn.disabled=false;btn.textContent='Verify & View Orders';return;}
+  showOrders(data.user);
+}
+
+function backToEmail(){
+  document.getElementById('otpStep').style.display='none';
+  document.getElementById('emailStep').style.display='block';
+  document.getElementById('sendOtpBtn').disabled=false;
+  document.getElementById('sendOtpBtn').textContent='Send One-Time Password';
+}
+
+// ── CHECK SESSION ON LOAD ──
+async function checkSession(){
+  const {data:{session}}=await sb.auth.getSession();
+  if(session) showOrders(session.user);
+}
+
+// ── SHOW ORDERS ──
+async function showOrders(user){
+  document.getElementById('loginScreen').classList.remove('active');
+  document.getElementById('loginScreen').style.display='none';
+  document.getElementById('ordersScreen').style.display='flex';
+  document.getElementById('logoutBtn').style.display='block';
+
+  const email=user.email;
+  document.getElementById('customerName').textContent=email;
+
+  // Fetch orders by email
+  const {data:orders,error}=await sb.from('orders').select('*').eq('buyer_email',email).order('created_at',{ascending:false});
+
+  if(error||!orders||orders.length===0){
+    document.getElementById('ordersContainer').innerHTML=`
+      <div class="empty-orders">
+        <div class="icon">🖼</div>
+        <h2>No orders yet</h2>
+        <p>You haven't purchased any artworks yet.<br>Explore our collection to find your perfect piece.</p>
+        <button class="btn-main" style="width:auto;padding:13px 32px;" onclick="window.location.href='index.html'">Browse Gallery</button>
+      </div>`;
+    return;
+  }
+
+  document.getElementById('ordersContainer').innerHTML=orders.map(o=>orderCardHTML(o)).join('');
+}
+
+// ── ORDER CARD HTML ──
+function orderCardHTML(o){
+  const steps=['pending','confirmed','shipped','delivered'];
+  const idx=steps.indexOf(o.status);
+  const cancelled=o.status==='cancelled'||o.status==='refunded';
+  const date=new Date(o.created_at).toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'});
+  const INR=n=>'₹'+Number(n||0).toLocaleString('en-IN');
+
+  const progressHTML = cancelled ? `
+    <div class="order-progress">
+      <div style="font-size:11px;color:var(--accent);font-weight:500;letter-spacing:.1em;text-transform:uppercase;">
+        Order ${o.status === 'refunded' ? 'Refunded' : 'Cancelled'}
+      </div>
+    </div>` : `
+    <div class="order-progress">
+      <div class="prog-steps">
+        ${steps.map((s,i)=>`
+          <div class="prog-step ${i<idx?'done':i===idx?'active':''}">
+            <div class="prog-dot">${i<idx?'✓':i+1}</div>
+            <div class="prog-label">${s.charAt(0).toUpperCase()+s.slice(1)}</div>
+          </div>`).join('')}
+      </div>
+    </div>`;
+
+  return `<div class="order-card">
+    <div class="order-card-header">
+      <div class="order-col">
+        <div class="order-col-label">Order Number</div>
+        <div class="order-col-value mono">${o.order_number||o.id.slice(0,10)}</div>
+      </div>
+      <div class="order-col">
+        <div class="order-col-label">Date</div>
+        <div class="order-col-value">${date}</div>
+      </div>
+      <div class="order-col">
+        <div class="order-col-label">Payment</div>
+        <div class="order-col-value">${o.payment_mode||'Online'}</div>
+      </div>
+      <div class="order-col">
+        <div class="order-col-label">Status</div>
+        <div class="order-col-value"><span class="status-pill s-${o.status}">${o.status.charAt(0).toUpperCase()+o.status.slice(1)}</span></div>
+      </div>
+    </div>
+    <div class="order-body">
+      ${o.artwork_img
+        ? `<img class="order-img" src="${o.artwork_img}" alt="${o.artwork_title||''}">`
+        : `<div class="order-img-ph">🖼</div>`}
+      <div class="order-details">
+        <div class="order-title">${o.artwork_title||'Artwork'}</div>
+        <div class="order-artist">Quantity: ${o.quantity}</div>
+        <div class="order-meta">
+          ${o.buyer_address?`<span>📦 ${o.buyer_address.replace(/\n/g,', ')}</span><br>`:''}
+          ${o.notes?`<span>📝 ${o.notes}</span>`:''}
+        </div>
+      </div>
+      <div class="order-amount">
+        <div class="amount">${INR(o.total_amount)}</div>
+        <div class="qty">Unit: ${INR(o.unit_price)}</div>
+      </div>
+    </div>
+    ${progressHTML}
+  </div>`;
+}
+
+// ── TRACK BY ORDER NUMBER (no login) ──
+async function trackByNumber(){
+  const num=document.getElementById('trackInput').value.trim().toUpperCase();
+  if(!num){return;}
+  const res=document.getElementById('trackResult');
+  res.innerHTML='<div class="loading"><div class="spin"></div><br>Looking up order…</div>';
+  const {data:o,error}=await sb.from('orders').select('*').eq('order_number',num).single();
+  if(error||!o){
+    res.innerHTML=`<div style="font-size:12px;color:var(--accent);padding:12px 0;">Order not found. Check the number and try again.</div>`;
+    return;
+  }
+  res.innerHTML=orderCardHTML(o);
+}
+
+// ── LOGOUT ──
+async function logout(){
+  await sb.auth.signOut();
+  document.getElementById('ordersScreen').style.display='none';
+  document.getElementById('loginScreen').style.display='flex';
+  document.getElementById('loginScreen').classList.add('active');
+  document.getElementById('logoutBtn').style.display='none';
+  document.getElementById('emailStep').style.display='block';
+  document.getElementById('otpStep').style.display='none';
+  document.getElementById('emailInput').value='';
+  document.getElementById('otpInput').value='';
+  document.getElementById('trackResult').innerHTML='';
+}
+
+// ── ENTER KEY SHORTCUTS ──
+document.getElementById('emailInput').addEventListener('keydown',e=>{if(e.key==='Enter')sendOTP();});
+document.getElementById('otpInput').addEventListener('keydown',e=>{if(e.key==='Enter')verifyOTP();});
+document.getElementById('trackInput').addEventListener('keydown',e=>{if(e.key==='Enter')trackByNumber();});
+
+// ── INIT ──
+loadBranding();
+checkSession();
+</script>
+</body>
+</html>
