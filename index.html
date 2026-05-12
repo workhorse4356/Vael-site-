@@ -624,15 +624,19 @@ function footerHTML(){
 
 // ── PAGE RENDERS ──
 function renderHome(){
-  DB=loadDB();applyTheme();applyHero();applyTicker();applyContactInfo();
+  applyTheme();applyHero();applyTicker();applyContactInfo();
   const cols=(DB.design&&DB.design.artPerRow)||4;
-  document.getElementById('homeArtGrid').innerHTML=DB.artworks.slice(0,cols*2).map(artCard).join('');
-  document.getElementById('homeArtistStrip').innerHTML=DB.artists.map(a=>`<div class="artist-chip" onclick="showPage('artists')"><div class="ac-avatar">${a.img?`<img src="${a.img}" alt="">`:(a.name.split(' ').map(x=>x[0]).join(''))}</div><div class="ac-name">${a.name}</div><div class="ac-count">${a.works} Works</div></div>`).join('');
+  const artworks=DB.artworks||[];
+  const artists=DB.artists||[];
+  document.getElementById('homeArtGrid').innerHTML=artworks.length
+    ? artworks.slice(0,cols*2).map(artCard).join('')
+    : '<div style="grid-column:1/-1;text-align:center;padding:48px;color:#8a8278;font-size:12px;letter-spacing:.1em;">No artworks yet — add some in the admin panel.</div>';
+  document.getElementById('homeArtistStrip').innerHTML=artists.map(a=>`<div class="artist-chip" onclick="showPage('artists')"><div class="ac-avatar">${a.img?`<img src="${a.img}" alt="">`:(a.name.split(' ').map(x=>x[0]).join(''))}</div><div class="ac-name">${a.name}</div><div class="ac-count">${a.works} Works</div></div>`).join('');
   const feat=DB.blog&&DB.blog.find(p=>p.featured);
   if(feat){const t=document.getElementById('edTitle');const b=document.getElementById('edBody');if(t)t.textContent=feat.title;if(b)b.textContent=feat.excerpt;}
   document.getElementById('homeFooter').innerHTML=footerHTML();
-  const aa=document.getElementById('aArtists');if(aa)aa.textContent=DB.artists.length;
-  const aw=document.getElementById('aWorks');if(aw)aw.textContent=DB.artworks.length;
+  const aa=document.getElementById('aArtists');if(aa)aa.textContent=artists.length;
+  const aw=document.getElementById('aWorks');if(aw)aw.textContent=artworks.length;
 }
 
 function renderArtists(){
@@ -642,8 +646,10 @@ function renderArtists(){
 
 function renderExhibitions(){
   const SL={on:'On Now',upcoming:'Upcoming',past:'Past'};
-  const feat=DB.exhibitions.find(e=>e.featured)||DB.exhibitions[0];
-  const rest=DB.exhibitions.filter(e=>e!==feat);
+  const exh=DB.exhibitions||[];
+  if(!exh.length){document.getElementById('exhibitionsList').innerHTML='<div style="text-align:center;padding:60px;color:#8a8278;">No exhibitions yet.</div>';document.getElementById('exhibFooter').innerHTML=footerHTML();return;}
+  const feat=exh.find(e=>e.featured)||exh[0];
+  const rest=exh.filter(e=>e!==feat);
   document.getElementById('exhibitionsList').innerHTML=`<div class="exh-featured"><div class="exh-feat-img"><img src="${feat.img}" alt="" loading="lazy"></div><div class="exh-feat-info"><span class="exh-status ${feat.status}">${SL[feat.status]||feat.status}</span><div class="exh-feat-title">${feat.title}</div><div class="exh-feat-sub">${feat.sub||''}</div><div class="exh-dates">${feat.dates||''}</div><button class="btn-outline">Explore Exhibition →</button></div></div><div class="exh-grid">${rest.map(e=>`<div class="exh-card"><div class="exh-card-img"><img src="${e.img}" alt="" loading="lazy"></div><div class="exh-card-info"><span class="exh-status ${e.status}">${SL[e.status]||e.status}</span><div class="exh-feat-title" style="font-size:22px;margin-top:10px;">${e.title}</div><div class="exh-feat-sub">${e.sub||''}</div><div class="exh-dates">${e.dates||''}</div></div></div>`).join('')}</div>`;
   document.getElementById('exhibFooter').innerHTML=footerHTML();
 }
@@ -660,7 +666,9 @@ function renderGallery(){
 function setFilter(f){activeFilter=f;renderGallery();}
 
 function renderBlog(){
-  const feat=DB.blog.find(p=>p.featured)||DB.blog[0];const rest=DB.blog.filter(p=>p!==feat);
+  const blog=DB.blog||[];
+  if(!blog.length){document.getElementById('blogFeatured').innerHTML='';document.getElementById('blogGrid').innerHTML='<div style="text-align:center;padding:60px;color:#8a8278;">No posts yet.</div>';document.getElementById('blogFooter').innerHTML=footerHTML();return;}
+  const feat=blog.find(p=>p.featured)||blog[0];const rest=blog.filter(p=>p!==feat);
   document.getElementById('blogFeatured').innerHTML=`<div class="blog-feat-img"><img src="${feat.img}" alt="" loading="lazy"></div><div class="blog-feat-body"><span class="blog-feat-tag">${feat.cat}</span><div class="blog-feat-title">${feat.title}</div><p class="blog-feat-excerpt">${feat.excerpt}</p><div style="display:flex;justify-content:space-between;padding-top:16px;border-top:1px solid var(--border);"><span style="font-size:11px;color:var(--warm-gray);">${feat.author}</span><span style="font-size:9px;color:var(--warm-gray);">${feat.date}</span></div></div>`;
   document.getElementById('blogGrid').innerHTML=rest.map(p=>`<div class="blog-card"><div class="blog-card-img"><img src="${p.img}" alt="" loading="lazy"></div><div class="blog-card-body"><div class="blog-cat">${p.cat}</div><div class="blog-title">${p.title}</div><p class="blog-excerpt">${p.excerpt}</p><div class="blog-meta"><span class="blog-author">${p.author}</span><span class="blog-date">${p.date}</span></div></div></div>`).join('');
   document.getElementById('blogFooter').innerHTML=footerHTML();
