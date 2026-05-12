@@ -10,7 +10,7 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{--cream:#f5f2ec;--charcoal:#1a1a1a;--warm-gray:#8a8278;--accent:#c0392b;--gold:#b8975a;--white:#fff;--border:#ddd9d2;}
 html{scroll-behavior:smooth;}
-body{font-family:'Montserrat',sans-serif;background:var(--cream);color:var(--charcoal);font-size:13px;letter-spacing:.02em;overflow-x:hidden;padding-bottom:42px;}
+body{font-family:'Montserrat',sans-serif;background:var(--cream);color:var(--charcoal);font-size:13px;letter-spacing:.02em;overflow-x:hidden;}
 img{display:block;max-width:100%;}
 a{color:inherit;text-decoration:none;}
 button{font-family:inherit;cursor:pointer;}
@@ -274,14 +274,7 @@ footer{background:#111;color:rgba(255,255,255,.45);padding:60px 52px 28px;}
 .lb-info{position:absolute;bottom:32px;left:0;right:0;text-align:center;color:#fff;}
 .lb-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;}
 .lb-artist{font-size:11px;color:rgba(255,255,255,.55);margin-top:4px;}
-/* ADMIN BAR */
-.admin-bar{position:fixed;bottom:0;left:0;right:0;z-index:500;background:#111;border-top:1px solid #2a2a2a;display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:42px;}
-.admin-bar-left{display:flex;align-items:center;gap:16px;}
-.admin-bar span{font-size:10px;letter-spacing:.15em;color:rgba(255,255,255,.35);}
-.admin-bar-dot{width:6px;height:6px;border-radius:50%;background:#2ecc71;display:inline-block;margin-right:6px;animation:pulse 2s infinite;}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-.admin-bar a{font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#b8975a;text-decoration:none;transition:color .2s;}
-.admin-bar a:hover{color:#fff;}
+/* ADMIN BAR — removed */
 /* ANIMS */
 @keyframes fadeIn{to{opacity:1;}}
 @keyframes slideUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
@@ -499,20 +492,13 @@ footer{background:#111;color:rgba(255,255,255,.45);padding:60px 52px 28px;}
   <div class="lb-info"><div class="lb-title" id="lbTitle"></div><div class="lb-artist" id="lbArtist"></div></div>
 </div>
 
-<!-- ADMIN BAR -->
-<div class="admin-bar">
-  <div class="admin-bar-left">
-    <span><span class="admin-bar-dot"></span>CMS Connected</span>
-    <span>Changes from admin apply instantly</span>
-  </div>
-  <a href="https://vaelgalerie.store/admin.html" target="_blank">↗ Open Admin Panel</a>
-</div>
+
 
 <script>
 // ═══════════════════════════════════════════
 // !! REPLACE THESE TWO VALUES WITH YOUR OWN !!
-const SB_URL = 'https://bevgzbfvhogirnbehifo.supabase.co/rest/v1/';
-const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJldmd6YmZ2aG9naXJuYmVoaWZvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg0OTQ2NzksImV4cCI6MjA5NDA3MDY3OX0.QUzZFpFunth3IaXLgv4dnBgaJy-t9bn_g7y5-Zm1j4I';
+const SB_URL = 'https://YOUR_PROJECT_ID.supabase.co';
+const SB_KEY = 'YOUR_ANON_PUBLIC_KEY';
 // ═══════════════════════════════════════════
 const sb = supabase.createClient(SB_URL, SB_KEY);
 
