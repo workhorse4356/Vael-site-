@@ -639,7 +639,7 @@ async function updOrder(id,status){
 }
 function showOrderDetail(id){
   const o=allOrders.find(x=>x.id===id);if(!o)return;
-  el('mtitle').textContent='Order '+（o.order_number||o.id.slice(0,8));
+  el('mtitle').textContent='Order '+(o.order_number||o.id.slice(0,8));
   el('mbody').innerHTML=`<div class="fg">
     <div class="f"><label>Order No</label><input readonly value="${o.order_number||o.id}"></div>
     <div class="f"><label>Date</label><input readonly value="${new Date(o.created_at).toLocaleString('en-IN')}"></div>
