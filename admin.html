@@ -172,6 +172,41 @@ tbody td{padding:10px 13px;font-size:12px;vertical-align:middle;}
 .loading{text-align:center;padding:36px;color:var(--tx3);font-size:12px;letter-spacing:.1em;}
 .empty{text-align:center;padding:28px;color:var(--tx3);}
 
+/* MEGA MENU EDITOR */
+.nav-item-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--bd);}
+.nav-item-row:last-child{border-bottom:none;}
+.nav-item-label{flex:1;font-size:12px;font-weight:500;}
+.mega-col-block{background:var(--s2);border:1px solid var(--bd);border-radius:4px;padding:16px;margin-bottom:10px;}
+.mega-col-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.mega-col-head input{background:var(--s3);border:1px solid var(--bd);border-radius:3px;padding:6px 10px;color:var(--tx);font-family:'Montserrat',sans-serif;font-size:12px;outline:none;flex:1;margin-right:8px;}
+.mega-link-row{display:flex;align-items:center;gap:6px;margin-bottom:6px;}
+.mega-link-row input{flex:1;background:var(--s3);border:1px solid var(--bd);border-radius:3px;padding:5px 9px;color:var(--tx);font-family:'Montserrat',sans-serif;font-size:11px;outline:none;}
+.mega-link-row .bdg{width:70px;}
+.del-x{background:none;border:none;color:var(--tx3);cursor:pointer;font-size:14px;padding:2px 4px;transition:color .15s;}
+.del-x:hover{color:var(--ac);}
+
+/* PAGE BUILDER */
+.pb-section{background:var(--s2);border:1px solid var(--bd);border-radius:6px;margin-bottom:10px;overflow:hidden;}
+.pb-section-header{display:flex;align-items:center;gap:12px;padding:14px 18px;cursor:pointer;user-select:none;transition:background .15s;}
+.pb-section-header:hover{background:var(--s3);}
+.pb-drag{color:var(--tx3);font-size:16px;cursor:grab;}
+.pb-section-name{flex:1;font-size:12px;font-weight:600;letter-spacing:.08em;}
+.pb-section-type{font-size:9px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--tx3);background:var(--s3);padding:2px 8px;border-radius:2px;}
+.pb-chevron{font-size:11px;color:var(--tx3);transition:transform .2s;}
+.pb-section.open .pb-chevron{transform:rotate(180deg);}
+.pb-section-body{display:none;padding:16px 18px;border-top:1px solid var(--bd);}
+.pb-section.open .pb-section-body{display:block;}
+.pb-field{margin-bottom:14px;}
+.pb-field label{display:block;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--tx3);margin-bottom:6px;}
+.pb-field input,.pb-field textarea,.pb-field select{width:100%;background:var(--s3);border:1px solid var(--bd);border-radius:3px;padding:8px 10px;color:var(--tx);font-family:'Montserrat',sans-serif;font-size:12px;outline:none;resize:vertical;}
+.pb-field textarea{height:70px;}
+.pb-add-section{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.pb-type-btn{padding:8px 16px;font-size:10px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;background:var(--s2);border:1px solid var(--bd);color:var(--tx2);cursor:pointer;border-radius:3px;font-family:'Montserrat',sans-serif;transition:all .15s;}
+.pb-type-btn:hover{background:var(--gold);color:#111;border-color:var(--gold);}
+.pb-vis-row{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--bd);}
+.pb-vis-row label{font-size:10px;color:var(--tx2);}
+.section-preview{margin-top:10px;padding:10px;background:var(--s1);border-radius:3px;font-size:10px;color:var(--tx3);letter-spacing:.05em;}
+
 /* QUICK LINKS */
 .ql{display:flex;flex-direction:column;gap:6px;}
 .ql-item{display:flex;align-items:center;gap:9px;padding:8px 11px;background:var(--s2);border-radius:4px;cursor:pointer;border:1px solid var(--bd);transition:background .15s;font-size:11px;}
@@ -211,9 +246,9 @@ tbody td{padding:10px 13px;font-size:12px;vertical-align:middle;}
   </ul>
   <p class="nsec">Content</p>
   <ul class="snav">
-    <li><a onclick="go('artworks')" data-p="artworks"><span class="ico">🖼</span>Artworks</a></li>
-    <li><a onclick="go('artists')" data-p="artists"><span class="ico">👤</span>Artists</a></li>
-    <li><a onclick="go('exhibitions')" data-p="exhibitions"><span class="ico">🏛</span>Exhibitions</a></li>
+    <li><a onclick="go('artworks')" data-p="artworks"><span class="ico">🪴</span>Products</a></li>
+    <li><a onclick="go('artists')" data-p="artists"><span class="ico">👤</span>Designers</a></li>
+    <li><a onclick="go('exhibitions')" data-p="exhibitions"><span class="ico">📦</span>Collections</a></li>
     <li><a onclick="go('blog')" data-p="blog"><span class="ico">✍</span>Blog</a></li>
     <li><a onclick="go('news')" data-p="news"><span class="ico">📰</span>News</a></li>
   </ul>
@@ -221,6 +256,8 @@ tbody td{padding:10px 13px;font-size:12px;vertical-align:middle;}
   <ul class="snav">
     <li><a onclick="go('design')" data-p="design"><span class="ico">🎨</span>Design</a></li>
     <li><a onclick="go('hero')" data-p="hero"><span class="ico">✦</span>Hero</a></li>
+    <li><a onclick="go('megamenu')" data-p="megamenu"><span class="ico">☰</span>Mega Menu</a></li>
+    <li><a onclick="go('pagebuilder')" data-p="pagebuilder"><span class="ico">⬛</span>Page Builder</a></li>
     <li><a onclick="go('ticker')" data-p="ticker"><span class="ico">↔</span>Ticker</a></li>
     <li><a onclick="go('settings')" data-p="settings"><span class="ico">⚙</span>Settings</a></li>
   </ul>
@@ -244,7 +281,7 @@ tbody td{padding:10px 13px;font-size:12px;vertical-align:middle;}
     <!-- DASHBOARD -->
     <div class="panel active" id="panel-dashboard">
       <div class="stats c5" id="dstats">
-        <div class="scard"><div class="slabel">Total Artworks</div><div class="sval" id="ds-art">—</div></div>
+        <div class="scard"><div class="slabel">Total Pieces</div><div class="sval" id="ds-art">—</div></div>
         <div class="scard g"><div class="slabel">Available</div><div class="sval" id="ds-av">—</div></div>
         <div class="scard r"><div class="slabel">Sold Out</div><div class="sval" id="ds-so">—</div></div>
         <div class="scard o"><div class="slabel">Pending Orders</div><div class="sval" id="ds-po">—</div></div>
@@ -270,8 +307,8 @@ tbody td{padding:10px 13px;font-size:12px;vertical-align:middle;}
             <div class="card-h"><h3>Quick Actions</h3></div>
             <div class="card-b">
               <div class="ql">
-                <div class="ql-item" onclick="openAdd('artwork')">➕ Add Artwork</div>
-                <div class="ql-item" onclick="openAdd('artist')">👤 Add Artist</div>
+                <div class="ql-item" onclick="openAdd('artwork')">➕ Add New Product</div>
+                <div class="ql-item" onclick="openAdd('artist')">👤 Add New Designer</div>
                 <div class="ql-item" onclick="go('orders')">📦 Manage Orders</div>
                 <div class="ql-item" onclick="go('inventory')">📊 View Inventory</div>
                 <div class="ql-item" onclick="go('design')">🎨 Edit Theme</div>
@@ -338,13 +375,14 @@ tbody td{padding:10px 13px;font-size:12px;vertical-align:middle;}
 
     <!-- ARTWORKS -->
     <div class="panel" id="panel-artworks">
-      <div class="stb"><h2>Artworks</h2><button class="btn btn-p" onclick="openAdd('artwork')">+ Add Artwork</button></div>
+      <div class="stb"><h2>Products</h2><button class="btn btn-p" onclick="openAdd('artwork')">+ Add Product</button></div>
       <div class="card">
         <div class="ttool">
           <div class="sbox">🔍<input placeholder="Search…" oninput="ftbl(this.value,'awtbody',()=>allAW,'renderAW')"></div>
           <select class="btn btn-s btn-sm" onchange="filterAWcat(this.value)" style="cursor:pointer;">
             <option value="">All Categories</option>
-            <option>Painting</option><option>Photography</option><option>Digital</option><option>Mixed Media</option><option>Sculpture</option>
+            <option>Ceramics</option><option>Textiles</option><option>Furniture</option>
+            <option>Lighting</option><option>Wall Decor</option><option>Accessories</option>
           </select>
         </div>
         <div class="twrap"><table>
@@ -356,7 +394,7 @@ tbody td{padding:10px 13px;font-size:12px;vertical-align:middle;}
 
     <!-- ARTISTS -->
     <div class="panel" id="panel-artists">
-      <div class="stb"><h2>Artists</h2><button class="btn btn-p" onclick="openAdd('artist')">+ Add Artist</button></div>
+      <div class="stb"><h2>Designers</h2><button class="btn btn-p" onclick="openAdd('artist')">+ Add Designer</button></div>
       <div class="card">
         <div class="ttool"><div class="sbox">🔍<input placeholder="Search…" oninput="ftbl(this.value,'artbody',()=>allAR,'renderAR')"></div></div>
         <div class="twrap"><table>
@@ -368,7 +406,7 @@ tbody td{padding:10px 13px;font-size:12px;vertical-align:middle;}
 
     <!-- EXHIBITIONS -->
     <div class="panel" id="panel-exhibitions">
-      <div class="stb"><h2>Exhibitions</h2><button class="btn btn-p" onclick="openAdd('exhibition')">+ Add</button></div>
+      <div class="stb"><h2>Collections</h2><button class="btn btn-p" onclick="openAdd('exhibition')">+ Add Collection</button></div>
       <div class="card">
         <div class="twrap"><table>
           <thead><tr><th>Image</th><th>Title</th><th>Subtitle</th><th>Dates</th><th>Status</th><th>Featured</th><th>Actions</th></tr></thead>
@@ -497,6 +535,79 @@ tbody td{padding:10px 13px;font-size:12px;vertical-align:middle;}
       </div></div>
     </div>
 
+    <!-- MEGA MENU EDITOR -->
+    <div class="panel" id="panel-megamenu">
+      <div class="stb"><h2>Mega Menu Editor</h2><button class="btn btn-p" onclick="saveMegaMenu()">Save & Publish</button></div>
+
+      <!-- NAV ITEMS -->
+      <div class="card" style="margin-bottom:14px;">
+        <div class="card-h"><h3>Top Navigation Items</h3><span style="font-size:10px;color:var(--tx3);">Drag to reorder (coming soon)</span></div>
+        <div class="card-b">
+          <p style="font-size:11px;color:var(--tx3);margin-bottom:16px;">These are the top-level nav links. Toggle visibility or rename each one.</p>
+          <div id="navItemsList"></div>
+        </div>
+      </div>
+
+      <!-- SHOP MEGA COLUMNS -->
+      <div class="card" style="margin-bottom:14px;">
+        <div class="card-h"><h3>Shop Mega Menu — Columns</h3><button class="btn btn-s btn-sm" onclick="addMegaCol()">+ Add Column</button></div>
+        <div class="card-b">
+          <p style="font-size:11px;color:var(--tx3);margin-bottom:16px;">Each column appears in the Shop dropdown. Add a heading and links.</p>
+          <div id="megaColsList"></div>
+        </div>
+      </div>
+
+      <!-- MEGA FEATURE IMAGE -->
+      <div class="card">
+        <div class="card-h"><h3>Featured Editorial Image</h3></div>
+        <div class="card-b">
+          <div class="fg">
+            <div class="f full">
+              <label>Image URL</label>
+              <div style="display:flex;gap:8px;">
+                <input id="mega-feat-img" type="text" placeholder="https://..." oninput="prvImg('mega-feat-img','mega-feat-prv')">
+                <button class="btn btn-s btn-sm" onclick="prvImg('mega-feat-img','mega-feat-prv')">Preview</button>
+              </div>
+              <img id="mega-feat-prv" class="ipreview" style="margin-top:8px;display:none;">
+            </div>
+            <div class="f"><label>Title</label><input id="mega-feat-title" placeholder="New Arrivals"></div>
+            <div class="f"><label>Subtitle</label><input id="mega-feat-sub" placeholder="Spring Edit 2025"></div>
+            <div class="f"><label>Link to</label>
+              <select id="mega-feat-link">
+                <option value="gallery">Shop All</option>
+                <option value="exhibitions">Collections</option>
+                <option value="blog">Journal</option>
+                <option value="artists">Makers</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE BUILDER -->
+    <div class="panel" id="panel-pagebuilder">
+      <div class="stb"><h2>Page Builder</h2><button class="btn btn-p" onclick="savePageBuilder()">Save & Publish</button></div>
+
+      <!-- PAGE SELECTOR -->
+      <div class="card" style="margin-bottom:14px;">
+        <div class="card-h"><h3>Select Page to Edit</h3></div>
+        <div class="card-b" style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="btn btn-s" id="pb-tab-home"    onclick="selectPBPage('home')">Home</button>
+          <button class="btn btn-s" id="pb-tab-shop"    onclick="selectPBPage('shop')">Shop</button>
+          <button class="btn btn-s" id="pb-tab-makers"  onclick="selectPBPage('makers')">Makers</button>
+          <button class="btn btn-s" id="pb-tab-journal" onclick="selectPBPage('journal')">Journal</button>
+          <button class="btn btn-s" id="pb-tab-contact" onclick="selectPBPage('contact')">Contact</button>
+          <button class="btn btn-s" id="pb-tab-about"   onclick="selectPBPage('about')">About</button>
+        </div>
+      </div>
+
+      <!-- SECTIONS LIST -->
+      <div id="pbSectionsList">
+        <div class="empty" style="padding:48px;">← Select a page above to start editing its sections.</div>
+      </div>
+    </div>
+
   </div><!-- /content -->
 </main>
 </div><!-- /wrap -->
@@ -519,8 +630,8 @@ tbody td{padding:10px 13px;font-size:12px;vertical-align:middle;}
 <script>
 // ═══════════════════════════════════════════════════
 // !! REPLACE THESE TWO VALUES WITH YOUR OWN !!
-const SB_URL = 'https://bevgzbfvhogirnbehifo.supabase.co/';
-const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJldmd6YmZ2aG9naXJuYmVoaWZvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg0OTQ2NzksImV4cCI6MjA5NDA3MDY3OX0.QUzZFpFunth3IaXLgv4dnBgaJy-t9bn_g7y5-Zm1j4I';
+const SB_URL = 'https://YOUR_PROJECT_ID.supabase.co';
+const SB_KEY = 'YOUR_ANON_PUBLIC_KEY';
 // ═══════════════════════════════════════════════════
 const BUCKET = 'vael-images';
 const sb = supabase.createClient(SB_URL, SB_KEY);
@@ -563,8 +674,8 @@ function sbadge(s){return `<span class="bx bx-${s}">${s}</span>`;}
 function tph(url){return url?`<img class="thumb" src="${url}" onerror="this.style.display='none'">`:`<div class="tph"></div>`;}
 
 // ── PANEL ROUTING ──────────────────────────────────
-const TITLES={dashboard:'Dashboard',orders:'Orders',inventory:'Inventory',revenue:'Revenue',artworks:'Artworks',artists:'Artists',exhibitions:'Exhibitions',blog:'Blog Posts',news:'News',design:'Design & Theme',hero:'Hero Section',ticker:'Ticker Bar',settings:'Settings'};
-const LOADERS={dashboard:loadDash,orders:loadOrders,inventory:loadInv,revenue:loadRev,artworks:loadAW,artists:loadAR,exhibitions:loadExh,blog:loadBlg,news:loadNws,design:loadDesign,hero:loadHero,ticker:loadTicker,settings:loadSettings};
+const TITLES={dashboard:'Dashboard',orders:'Orders',inventory:'Inventory',revenue:'Revenue',artworks:'Products',artists:'Designers',exhibitions:'Collections',blog:'Blog Posts',news:'News',design:'Design & Theme',hero:'Hero Section',megamenu:'Mega Menu Editor',pagebuilder:'Page Builder',ticker:'Ticker Bar',settings:'Settings'};
+const LOADERS={dashboard:loadDash,orders:loadOrders,inventory:loadInv,revenue:loadRev,artworks:loadAW,artists:loadAR,exhibitions:loadExh,blog:loadBlg,news:loadNws,design:loadDesign,hero:loadHero,megamenu:loadMegaMenu,pagebuilder:loadPageBuilder,ticker:loadTicker,settings:loadSettings};
 function go(name){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.snav a').forEach(a=>a.classList.toggle('active',a.dataset.p===name));
@@ -821,7 +932,7 @@ const FORMS={
     <div class="f"><label>Medium</label><input id="f-me" value="${d.medium||''}"></div>
     <div class="f"><label>Edition</label><input id="f-ed" value="${d.edition||''}"></div>
     <div class="f"><label>Category</label>
-      <select id="f-ca"><option>Painting</option><option>Photography</option><option>Digital</option><option>Mixed Media</option><option>Sculpture</option></select>
+      <select id="f-ca"><option>Ceramics</option><option>Textiles</option><option>Furniture</option><option>Lighting</option><option>Wall Decor</option><option>Accessories</option></select>
     </div>
     <div class="f"><label>Badge</label>
       <select id="f-ba"><option value="">None</option><option>NEW</option><option>FEATURED</option><option>SALE</option></select>
@@ -835,15 +946,15 @@ const FORMS={
   artist:(d={})=>`<div class="fg">
     ${imgField(d.img||'')}
     <div class="f"><label>Full Name</label><input id="f-nm" value="${d.name||''}"></div>
-    <div class="f"><label>Nationality & Birth Year</label><input id="f-nat" value="${d.nationality||''}" placeholder="Indian, b. 1985"></div>
-    <div class="f"><label>Works Count</label><input id="f-wk" type="number" value="${d.works||0}"></div>
-    <div class="f full"><label>Biography</label><textarea id="f-bio">${d.bio||''}</textarea></div>
+    <div class="f"><label>Location & Specialty</label><input id="f-nat" value="${d.nationality||''}" placeholder="Mumbai · Ceramics"></div>
+    <div class="f"><label>Pieces Count</label><input id="f-wk" type="number" value="${d.works||0}"></div>
+    <div class="f full"><label>About the Designer</label><textarea id="f-bio">${d.bio||''}</textarea></div>
   </div>`,
   exhibition:(d={})=>`<div class="fg">
     ${imgField(d.img||'')}
-    <div class="f"><label>Title</label><input id="f-ti" value="${d.title||''}"></div>
-    <div class="f"><label>Subtitle / Artist</label><input id="f-su" value="${d.sub||''}"></div>
-    <div class="f"><label>Dates</label><input id="f-dt" value="${d.dates||''}" placeholder="May 1 – Jun 30, 2025"></div>
+    <div class="f"><label>Collection Name</label><input id="f-ti" value="${d.title||''}"></div>
+    <div class="f"><label>Subtitle / Theme</label><input id="f-su" value="${d.sub||''}"></div>
+    <div class="f"><label>Period / Season</label><input id="f-dt" value="${d.dates||''}" placeholder="Summer 2025"></div>
     <div class="f"><label>Status</label>
       <select id="f-st"><option value="on" ${d.status==='on'?'selected':''}>On Now</option><option value="upcoming" ${d.status==='upcoming'?'selected':''}>Upcoming</option><option value="past" ${d.status==='past'?'selected':''}>Past</option></select>
     </div>
@@ -1035,6 +1146,334 @@ async function loadSettings(){
 }
 async function saveSettings(){
   await setSetting('contact',{name:el('s-nm').value,email:el('s-em').value,phone:el('s-ph').value,currency:el('s-cur').value||'₹',address:el('s-addr').value,hours:el('s-hrs').value,instagram:el('s-ig').value,facebook:el('s-fb').value});
+}
+
+// ══════════════════════════════════════════════════════
+// MEGA MENU EDITOR
+// ══════════════════════════════════════════════════════
+const DEFAULT_NAV_ITEMS = [
+  {id:'shop',   label:'Shop',    visible:true,  hasMega:true},
+  {id:'makers', label:'Makers',  visible:true,  hasMega:false},
+  {id:'journal',label:'Journal', visible:true,  hasMega:false},
+  {id:'contact',label:'Contact', visible:true,  hasMega:false},
+  {id:'about',  label:'About',   visible:false, hasMega:false},
+  {id:'news',   label:'Press',   visible:false, hasMega:false},
+];
+const DEFAULT_MEGA_COLS = [
+  {id:'c1', heading:'Objects', links:[
+    {label:'New In',          badge:'New', page:'gallery', filter:'All'},
+    {label:'Ceramics',        badge:'',    page:'gallery', filter:'Ceramics'},
+    {label:'Candles & Scent', badge:'',    page:'gallery', filter:'Candles & Scent'},
+    {label:'Mirrors',         badge:'',    page:'gallery', filter:'Mirrors'},
+  ]},
+  {id:'c2', heading:'Home', links:[
+    {label:'Wall Pieces',    badge:'', page:'gallery', filter:'Wall Pieces'},
+    {label:'Trays & Vessels',badge:'', page:'gallery', filter:'Trays & Vessels'},
+    {label:'Kitchen & Table',badge:'', page:'gallery', filter:'Kitchen & Table'},
+    {label:'Accessories',    badge:'', page:'gallery', filter:'Accessories'},
+  ]},
+  {id:'c3', heading:'Discover', links:[
+    {label:'Collections',    badge:'', page:'exhibitions', filter:''},
+    {label:'Meet the Makers',badge:'', page:'artists',     filter:''},
+    {label:'Journal',        badge:'', page:'blog',        filter:''},
+  ]},
+];
+const DEFAULT_MEGA_FEATURE = {
+  img:'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=560&q=80',
+  title:'New Arrivals',sub:'Spring Edit 2025',link:'gallery'
+};
+
+let megaData = {navItems:[...DEFAULT_NAV_ITEMS], cols:[...DEFAULT_MEGA_COLS], feature:{...DEFAULT_MEGA_FEATURE}};
+
+async function loadMegaMenu(){
+  const saved = await getSetting('megamenu');
+  if(saved && saved.navItems) megaData = saved;
+  else megaData = {navItems:[...DEFAULT_NAV_ITEMS], cols:JSON.parse(JSON.stringify(DEFAULT_MEGA_COLS)), feature:{...DEFAULT_MEGA_FEATURE}};
+  renderNavItems();
+  renderMegaCols();
+  // feature image
+  el('mega-feat-img').value   = megaData.feature.img||'';
+  el('mega-feat-title').value = megaData.feature.title||'';
+  el('mega-feat-sub').value   = megaData.feature.sub||'';
+  el('mega-feat-link').value  = megaData.feature.link||'gallery';
+  if(megaData.feature.img){el('mega-feat-prv').src=megaData.feature.img;el('mega-feat-prv').style.display='block';}
+}
+
+function renderNavItems(){
+  el('navItemsList').innerHTML = megaData.navItems.map((item,i)=>`
+    <div class="nav-item-row">
+      <span style="color:var(--tx3);cursor:grab;">⠿</span>
+      <div class="tog ${item.visible?'on':''}" onclick="toggleNavVis(${i})"></div>
+      <span class="nav-item-label">${item.label}</span>
+      <input style="background:var(--s3);border:1px solid var(--bd);border-radius:3px;padding:5px 9px;color:var(--tx);font-family:'Montserrat',sans-serif;font-size:11px;outline:none;width:140px;"
+        value="${item.label}" onchange="megaData.navItems[${i}].label=this.value">
+      ${item.hasMega?`<span style="font-size:9px;color:var(--gold);letter-spacing:.1em;">HAS DROPDOWN</span>`:''}
+    </div>`).join('');
+}
+function toggleNavVis(i){
+  megaData.navItems[i].visible=!megaData.navItems[i].visible;
+  renderNavItems();
+}
+
+function renderMegaCols(){
+  el('megaColsList').innerHTML = megaData.cols.map((col,ci)=>`
+    <div class="mega-col-block">
+      <div class="mega-col-head">
+        <input value="${col.heading}" placeholder="Column heading" onchange="megaData.cols[${ci}].heading=this.value">
+        <button class="btn btn-s btn-sm" onclick="addMegaLink(${ci})">+ Link</button>
+        <button class="del-x" onclick="removeMegaCol(${ci})">✕</button>
+      </div>
+      <div id="col-links-${ci}">
+        ${col.links.map((lnk,li)=>`
+          <div class="mega-link-row">
+            <input value="${lnk.label}" placeholder="Link label" onchange="megaData.cols[${ci}].links[${li}].label=this.value">
+            <input class="bdg" value="${lnk.badge}" placeholder="Badge" onchange="megaData.cols[${ci}].links[${li}].badge=this.value">
+            <select onchange="megaData.cols[${ci}].links[${li}].page=this.value" style="background:var(--s3);border:1px solid var(--bd);color:var(--tx);font-size:11px;padding:4px 6px;border-radius:3px;outline:none;">
+              ${['gallery','artists','exhibitions','blog','news','contact','about'].map(p=>`<option value="${p}" ${lnk.page===p?'selected':''}>${p}</option>`).join('')}
+            </select>
+            <input value="${lnk.filter||''}" placeholder="Filter" onchange="megaData.cols[${ci}].links[${li}].filter=this.value" style="width:90px;">
+            <button class="del-x" onclick="removeMegaLink(${ci},${li})">✕</button>
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
+}
+function addMegaCol(){
+  megaData.cols.push({id:'c'+Date.now(),heading:'New Column',links:[]});
+  renderMegaCols();
+}
+function removeMegaCol(ci){ megaData.cols.splice(ci,1); renderMegaCols(); }
+function addMegaLink(ci){ megaData.cols[ci].links.push({label:'New Link',badge:'',page:'gallery',filter:''}); renderMegaCols(); }
+function removeMegaLink(ci,li){ megaData.cols[ci].links.splice(li,1); renderMegaCols(); }
+
+async function saveMegaMenu(){
+  megaData.feature = {
+    img:el('mega-feat-img').value,
+    title:el('mega-feat-title').value,
+    sub:el('mega-feat-sub').value,
+    link:el('mega-feat-link').value,
+  };
+  await setSetting('megamenu', megaData);
+  toast('Mega menu saved!','tok');
+}
+
+// ══════════════════════════════════════════════════════
+// PAGE BUILDER
+// ══════════════════════════════════════════════════════
+const SECTION_TYPES = {
+  hero:       {label:'Hero Banner',     icon:'🖼'},
+  text_image: {label:'Text + Image',    icon:'📄'},
+  grid:       {label:'Product Grid',    icon:'⬛'},
+  strip:      {label:'Makers Strip',    icon:'👤'},
+  editorial:  {label:'Editorial Block', icon:'✍'},
+  ticker:     {label:'Ticker Bar',      icon:'↔'},
+  quote:      {label:'Pull Quote',      icon:'❝'},
+  newsletter: {label:'Newsletter CTA',  icon:'✉'},
+  spacer:     {label:'Spacer',          icon:'—'},
+};
+
+const DEFAULT_PAGES = {
+  home:[
+    {id:'s1',type:'hero',      visible:true,  data:{title:'New Arrivals',subtitle:'Curated objects for the considered home',cta:'Shop Now'}},
+    {id:'s2',type:'ticker',    visible:true,  data:{note:'Uses ticker settings'}},
+    {id:'s3',type:'grid',      visible:true,  data:{heading:'Featured Pieces',count:8,filter:'All'}},
+    {id:'s4',type:'strip',     visible:true,  data:{heading:'Our Makers'}},
+    {id:'s5',type:'editorial', visible:true,  data:{heading:'From the Journal',body:'Stories about craft, materials, and the makers behind each piece.'}},
+  ],
+  shop:[
+    {id:'s1',type:'grid',   visible:true, data:{heading:'All Pieces',count:24,filter:'All'}},
+  ],
+  makers:[
+    {id:'s1',type:'text_image',visible:true, data:{heading:'The Makers',body:'Independent designers and craftspeople behind every piece.'}},
+    {id:'s2',type:'strip',     visible:true, data:{heading:''}},
+  ],
+  journal:[
+    {id:'s1',type:'editorial',visible:true, data:{heading:'Journal',body:'Essays, interviews, and stories from the world of craft and design.'}},
+  ],
+  contact:[
+    {id:'s1',type:'text_image',visible:true, data:{heading:'Get in Touch',body:'We welcome enquiries about products, maker collaborations, and press.'}}
+  ],
+  about:[
+    {id:'s1',type:'text_image',visible:true,data:{heading:'About Vael',body:'Founded to bring considered, crafted objects into the everyday home.'}},
+    {id:'s2',type:'quote',     visible:true,data:{text:'Design is not what it looks like. Design is how it works.'}},
+  ],
+};
+
+let pbPages = {};
+let currentPBPage = null;
+
+async function loadPageBuilder(){
+  const saved = await getSetting('pagebuilder');
+  pbPages = (saved && saved.pages) ? saved.pages : JSON.parse(JSON.stringify(DEFAULT_PAGES));
+  if(currentPBPage) selectPBPage(currentPBPage);
+  else el('pbSectionsList').innerHTML='<div class="empty" style="padding:48px;">← Select a page above to edit its sections.</div>';
+  // highlight active tab
+  ['home','shop','makers','journal','contact','about'].forEach(p=>{
+    const t=el('pb-tab-'+p);
+    if(t) t.style.background=p===currentPBPage?'var(--gold)':'';
+  });
+}
+
+function selectPBPage(page){
+  currentPBPage=page;
+  if(!pbPages[page]) pbPages[page]=JSON.parse(JSON.stringify(DEFAULT_PAGES[page]||[]));
+  // tab highlight
+  ['home','shop','makers','journal','contact','about'].forEach(p=>{
+    const t=el('pb-tab-'+p);
+    if(t){t.style.background=p===page?'var(--gold)':'';t.style.color=p===page?'#111':'';}
+  });
+  renderPBSections(page);
+}
+
+function renderPBSections(page){
+  const sections = pbPages[page]||[];
+  el('pbSectionsList').innerHTML=`
+    <div class="card">
+      <div class="card-h">
+        <h3>${page.toUpperCase()} PAGE — ${sections.length} Section${sections.length!==1?'s':''}</h3>
+        <span style="font-size:10px;color:var(--tx3);">Click section to expand & edit</span>
+      </div>
+      <div class="card-b">
+        ${sections.map((s,i)=>pbSectionHTML(s,i,page)).join('')}
+        <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--bd);">
+          <div style="font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--tx3);margin-bottom:10px;">Add Section</div>
+          <div class="pb-add-section">
+            ${Object.entries(SECTION_TYPES).map(([type,{label,icon}])=>`
+              <button class="pb-type-btn" onclick="addPBSection('${page}','${type}')">${icon} ${label}</button>`).join('')}
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function pbSectionHTML(s,i,page){
+  const typeInfo = SECTION_TYPES[s.type]||{label:s.type,icon:'◻'};
+  const fields = pbFieldsForType(s,i,page);
+  return `<div class="pb-section ${s._open?'open':''}" id="pbs-${i}">
+    <div class="pb-section-header" onclick="togglePBS(${i},'${page}')">
+      <span class="pb-drag">⠿</span>
+      <div class="tog ${s.visible?'on':''}" onclick="event.stopPropagation();togglePBVis(${i},'${page}')"></div>
+      <span class="pb-section-name">${typeInfo.icon} ${s.data?.heading||typeInfo.label}</span>
+      <span class="pb-section-type">${typeInfo.label}</span>
+      <div style="display:flex;gap:6px;margin-left:8px;">
+        ${i>0?`<button class="del-x" onclick="event.stopPropagation();movePBS(${i},-1,'${page}')" title="Move up">↑</button>`:''}
+        ${i<(pbPages[page]?.length-1)?`<button class="del-x" onclick="event.stopPropagation();movePBS(${i},1,'${page}')" title="Move down">↓</button>`:''}
+        <button class="del-x" onclick="event.stopPropagation();deletePBS(${i},'${page}')" title="Delete">✕</button>
+      </div>
+      <span class="pb-chevron">▾</span>
+    </div>
+    <div class="pb-section-body">${fields}</div>
+  </div>`;
+}
+
+function pbFieldsForType(s,i,page){
+  const d=s.data||{};
+  const inp=(key,label,type='text',placeholder='')=>`
+    <div class="pb-field">
+      <label>${label}</label>
+      <input type="${type}" value="${d[key]||''}" placeholder="${placeholder}"
+        onchange="pbPages['${page}'][${i}].data['${key}']=this.value;updatePBSectionName(${i},'${page}')">
+    </div>`;
+  const ta=(key,label,placeholder='')=>`
+    <div class="pb-field">
+      <label>${label}</label>
+      <textarea placeholder="${placeholder}"
+        onchange="pbPages['${page}'][${i}].data['${key}']=this.value">${d[key]||''}</textarea>
+    </div>`;
+  const imgField=(key,label)=>`
+    <div class="pb-field">
+      <label>${label}</label>
+      <div style="display:flex;gap:8px;">
+        <input type="text" value="${d[key]||''}" placeholder="https://..."
+          id="pbimg-${i}-${key}"
+          onchange="pbPages['${page}'][${i}].data['${key}']=this.value;prevPBImg(${i},'${key}','${page}')">
+        <button class="btn btn-s btn-sm" onclick="prevPBImg(${i},'${key}','${page}')">Preview</button>
+      </div>
+      <img id="pbprv-${i}-${key}" style="margin-top:6px;width:100%;height:120px;object-fit:cover;border-radius:3px;border:1px solid var(--bd);${d[key]?'':'display:none;'}" src="${d[key]||''}">
+    </div>`;
+
+  switch(s.type){
+    case 'hero': return `
+      ${inp('title','Heading','text','New Arrivals')}
+      ${inp('subtitle','Subheading','text','Curated objects for the considered home')}
+      ${inp('cta','CTA Button Text','text','Shop Now')}
+      ${imgField('img','Background Image')}`;
+    case 'text_image': return `
+      ${inp('heading','Heading')}
+      ${ta('body','Body Text')}
+      ${imgField('img','Image')}
+      <div class="pb-field"><label>Image Position</label>
+        <select onchange="pbPages['${page}'][${i}].data.imgPos=this.value">
+          <option value="right" ${d.imgPos==='right'?'selected':''}>Image Right</option>
+          <option value="left"  ${d.imgPos==='left'?'selected':''}>Image Left</option>
+        </select>
+      </div>`;
+    case 'grid': return `
+      ${inp('heading','Section Heading','text','Featured Pieces')}
+      <div class="pb-field"><label>Number of Products</label>
+        <select onchange="pbPages['${page}'][${i}].data.count=Number(this.value)">
+          ${[4,8,12,16,24].map(n=>`<option ${d.count===n?'selected':''}>${n}</option>`).join('')}
+        </select>
+      </div>
+      <div class="pb-field"><label>Category Filter</label>
+        <select onchange="pbPages['${page}'][${i}].data.filter=this.value">
+          ${['All','Ceramics','Candles & Scent','Mirrors','Wall Pieces','Trays & Vessels','Kitchen & Table','Accessories'].map(c=>`<option ${d.filter===c?'selected':''}>${c}</option>`).join('')}
+        </select>
+      </div>`;
+    case 'strip': return inp('heading','Heading','text','Our Makers');
+    case 'editorial': return `
+      ${inp('heading','Heading')}
+      ${ta('body','Body Text')}
+      ${imgField('img','Background Image')}`;
+    case 'ticker': return `<div class="section-preview">Uses Ticker settings from the Ticker Bar panel.</div>`;
+    case 'quote': return ta('text','Quote Text','Great design is born of considered intention.');
+    case 'newsletter': return `
+      ${inp('heading','Heading','text','Join the Edit')}
+      ${inp('subtext','Subtext','text','Occasional stories, new arrivals, nothing more.')}
+      ${inp('cta','Button Text','text','Subscribe')}`;
+    case 'spacer': return `<div class="pb-field"><label>Height (px)</label>
+      <input type="number" value="${d.height||60}" onchange="pbPages['${page}'][${i}].data.height=Number(this.value)"></div>`;
+    default: return `<div class="section-preview">${s.type} — no fields available.</div>`;
+  }
+}
+
+function prevPBImg(i,key,page){
+  const val=document.getElementById(`pbimg-${i}-${key}`)?.value;
+  const prv=document.getElementById(`pbprv-${i}-${key}`);
+  if(val&&prv){prv.src=val;prv.style.display='block';}
+}
+function togglePBS(i,page){
+  pbPages[page][i]._open=!pbPages[page][i]._open;
+  renderPBSections(page);
+}
+function togglePBVis(i,page){
+  pbPages[page][i].visible=!pbPages[page][i].visible;
+  renderPBSections(page);
+}
+function movePBS(i,dir,page){
+  const arr=pbPages[page];
+  const j=i+dir;
+  if(j<0||j>=arr.length) return;
+  [arr[i],arr[j]]=[arr[j],arr[i]];
+  renderPBSections(page);
+}
+function deletePBS(i,page){
+  if(!confirm('Remove this section?')) return;
+  pbPages[page].splice(i,1);
+  renderPBSections(page);
+}
+function addPBSection(page,type){
+  pbPages[page].push({id:'s'+Date.now(),type,visible:true,_open:true,data:{}});
+  renderPBSections(page);
+}
+function updatePBSectionName(i,page){
+  // Re-render just the header name (lightweight)
+  const el2=document.querySelector(`#pbs-${i} .pb-section-name`);
+  const s=pbPages[page][i];
+  if(el2) el2.textContent=(SECTION_TYPES[s.type]?.icon||'')+ ' ' +(s.data?.heading||SECTION_TYPES[s.type]?.label||s.type);
+}
+async function savePageBuilder(){
+  await setSetting('pagebuilder',{pages:pbPages});
+  toast('Page layout saved!','tok');
 }
 
 // ── BOOT ──────────────────────────────────────────
